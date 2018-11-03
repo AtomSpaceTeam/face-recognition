@@ -28,32 +28,17 @@
                     </ul>
                 </div>
                 <div class='register-block'>
-                    <!-- <form>
-                        <div class="row">
-                         <h3 class="register-text">Add new Resident</h3>
-                            <div class='form-block'>
-                                    <div class="col" style="margin-bottom: 5%">
-                                        <input name="firstname" type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col" style="margin-bottom: 5%">
-                                        <input name="lastname" type="text" class="form-control" placeholder="Last name">
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                    <label for="exampleFormControlFile1">Add your image</label>
-                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            </div>
-                            <div class="register-buttom">
-                                <button class="btn btn-primary" type="submit">Add</button>
-                            </div>
-                      </form> -->
+                    <form style="display:grid;" action="" method="post">
+                      {% csrf_token %}
                       {{ form }}
-                    </div>
-                      <a href="/residents/">
-                        <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Residents</button>
-                    </a>
+                      <input style="width: 29%;margin-top: 1em;" type="submit" value="Register" class="btn btn-primary">                        
+                    </form>
                 </div>
-              </div>
+                    <a href="/residents/">
+                    <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Residents</button>
+                </a>
             </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
