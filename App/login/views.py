@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as django_logout
 # import datetime
 import os
 from django.http import StreamingHttpResponse
@@ -60,3 +61,8 @@ def list_owners(request):
 @login_required
 def online_camera(request):
     return render(request, 'camera/online-camera.html')
+
+@login_required
+def logout(request):
+    django_logout(request)
+    return  HttpResponseRedirect('/login')

@@ -10,4 +10,5 @@ urlpatterns = [
     path('owners', views.list_owners, name='list_owners'),
     path('camera', views.online_camera, name='online_camera'),
     path('login/', auth_views.LoginView.as_view(template_name='login/login.html')),
+    path('logout', views.logout, name='logout'),
 ]
