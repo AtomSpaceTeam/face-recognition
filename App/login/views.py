@@ -43,6 +43,26 @@ def index(request):
     else:
         return render(request, 'home/index.html', {'form_resident': ResidentForm(), 'form_mentor': MentorForm(), 'form_owner': OwnerForm()})
 
+def test(request):
+    if request.method == 'GET':
+        return render(request, 'test/index.html', {'form_resident': ResidentForm()})
+    if request.method == 'POST':
+        f = ResidentForm(request.POST, request.FILES)
+        if f.is_valid():
+            resident = Resident()
+            resident.name = request.POST['name']
+            resident.surname = request.POST['surname']
+            resident.age = request.POST['age']
+            resident.photo_1 = request.FILES['photo_1']
+            resident.photo_2 = request.FILES['photo_2']
+            resident.photo_3 = request.FILES['photo_3']
+            resident.photo_4 = request.FILES['photo_4']
+            resident.photo_5 = request.FILES['photo_5']
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/residents/{resident.name} {resident.surname}')
+            resident.save()
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media')
+        return HttpResponseRedirect('/test')
+
 @login_required
 def list_residents(request):
     residents_list = Resident.objects.all()
