@@ -1,0 +1,85 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <div class="login-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h2 style="text-align:center">Face security system</h2>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <a style="display: flex;justify-content: center;" href="{% url 'online_camera' %}">
+                            <button class="btn btn-primary" type="submit" >Online Camera</button>
+                        </a>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row" style="padding: 5%">
+              <div class="col">
+                <div class="userjoin-block">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Максим Осадчий - зашел в 14:59 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Алексей Белоченко - зашел в 15:43 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Михаил Будиш - зашел в 15:49 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Дима Блажевский - зашел в 16:21 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Максим Осадчий - зашел в 14:59 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Алексей Белоченко - зашел в 15:43 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Михаил Будиш - зашел в 15:49 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Дима Блажевский - зашел в 16:21 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Максим Осадчий - зашел в 14:59 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Алексей Белоченко - зашел в 15:43 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Михаил Будиш - зашел в 15:49 12.02.2018</li>
+                        <li class="list-group-item" style="display:flex;justify-content: center;">Дима Блажевский - зашел в 16:21 12.02.2018</li>
+                        <li class="list-group-item disabled" style="display:flex;justify-content: center;">...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm" style="margin-bottom: 2%;">
+                    <h3>Add Resident</h3>
+                    <div class='register-block'>
+                        <form style="display:grid;" action="" method="post">
+                        {% csrf_token %}
+                        {{ form_resident }}
+                        <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
+                        </form>
+                        <a href="{% url 'list_residents' %}">
+                            <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Residents</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm" style="margin-bottom: 2%;">
+                    <h3>Add Mentor</h3>
+                    <div class='register-block'>
+                        <form style="display:grid;" action="" method="post">
+                        {% csrf_token %}
+                        {{ form_mentor }}
+                        <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
+                        </form>
+                        <a href="{% url 'list_mentors' %}">
+                            <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Mentors</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm" style="margin-bottom: 2%;">
+                    <h3>Add Owner</h3>              
+                    <div class='register-block'>
+                        <form style="display:grid;" action="" method="post">
+                        {% csrf_token %}
+                        {{ form_owner }}
+                        <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
+                        </form>
+                        <a href="{% url 'list_owners' %}">
+                            <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Owners</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

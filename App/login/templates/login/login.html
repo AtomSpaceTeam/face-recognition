@@ -1,0 +1,22 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+    <div class="col-sm">
+        <div class="login-block" style='display: table-caption;'>
+        <form style="display:grid;" action="" method="post">
+            <h3 class="list-text">Login</h3>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input style="width: 100%;margin-top: 1em;" type="submit" value="Log in" class="btn btn-primary">       
+        </form>
+        </div>
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>
+{% endblock %}
