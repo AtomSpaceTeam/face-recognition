@@ -20,7 +20,12 @@ def index(request):
             post.name = request.POST['name']
             post.surname = request.POST['surname']
             post.age = request.POST['age']
-            os.makedirs(f'residents/{post.surname}')
+            post.photo_1 = request.FILES['photo_1']
+            post.photo_2 = request.FILES['photo_2']
+            post.photo_3 = request.FILES['photo_3']
+            post.photo_4 = request.FILES['photo_4']
+            post.photo_5 = request.FILES['photo_5']
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/residents/{resident.name} {resident.surname}')
             post.save()
             return HttpResponseRedirect('/residents/')
         if mentor_form.is_valid():
@@ -28,7 +33,12 @@ def index(request):
             post.name = request.POST['name']
             post.surname = request.POST['surname']
             post.age = request.POST['age']
-            os.makedirs(f'mentors/{post.surname}')
+            post.photo_1 = request.FILES['photo_1']
+            post.photo_2 = request.FILES['photo_2']
+            post.photo_3 = request.FILES['photo_3']
+            post.photo_4 = request.FILES['photo_4']
+            post.photo_5 = request.FILES['photo_5']
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/mentors/{resident.name} {resident.surname}')
             post.save()
             return HttpResponseRedirect('/mentors/')
         if owner_form.is_valid():
@@ -36,9 +46,14 @@ def index(request):
             post.name = request.POST['name']
             post.surname = request.POST['surname']
             post.age = request.POST['age']
-            os.makedirs(f'owners/{post.surname}')
+            post.photo_1 = request.FILES['photo_1']
+            post.photo_2 = request.FILES['photo_2']
+            post.photo_3 = request.FILES['photo_3']
+            post.photo_4 = request.FILES['photo_4']
+            post.photo_5 = request.FILES['photo_5']
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/owners/{resident.name} {resident.surname}')
             post.save()
-            return HttpResponseRedirect('/mentors/')
+            return HttpResponseRedirect('/owners/')
         # print(request.POST['name'])
     else:
         return render(request, 'home/index.html', {'form_resident': ResidentForm(), 'form_mentor': MentorForm(), 'form_owner': OwnerForm()})
