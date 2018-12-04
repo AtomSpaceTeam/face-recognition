@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm" style="margin-bottom: 2%;"></div>
+        <div class="col-sm" style="margin-bottom: 2%;">
+            <h3>Add User</h3>
+            <div class='register-block'>
+                <form style="display:grid;" enctype="multipart/form-data" action="" method="post">
+                {% csrf_token %}
+                {{ user_form }}
+                <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
+                </form>
+            </div>
+        </div>
+        <div class="col-sm" style="margin-bottom: 2%;"></div>
+    </div>
+</div>
+
+{% endblock %}

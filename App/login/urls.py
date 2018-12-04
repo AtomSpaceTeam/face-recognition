@@ -15,6 +15,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login/login.html')),
     path('logout', views.logout, name='logout'),
     path('test', views.test, name='test'),
+    path('create_user', views.create_user, name='create_user'),
+
 ]
 
 if settings.DEBUG:
