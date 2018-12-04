@@ -38,7 +38,7 @@ def index(request):
             post.photo_3 = request.FILES['photo_3']
             post.photo_4 = request.FILES['photo_4']
             post.photo_5 = request.FILES['photo_5']
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/mentors/{resident.name} {resident.surname}')
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/mentors/{mentor.name} {mentor.surname}')
             post.save()
             return HttpResponseRedirect('/mentors/')
         if owner_form.is_valid():
@@ -51,7 +51,7 @@ def index(request):
             post.photo_3 = request.FILES['photo_3']
             post.photo_4 = request.FILES['photo_4']
             post.photo_5 = request.FILES['photo_5']
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/owners/{resident.name} {resident.surname}')
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/owners/{owner.name} {owner.surname}')
             post.save()
             return HttpResponseRedirect('/owners/')
         # print(request.POST['name'])
