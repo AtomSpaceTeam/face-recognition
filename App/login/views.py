@@ -97,6 +97,7 @@ def list_owners(request):
 def online_camera(request):
     return render(request, 'camera/index.html')
 
+@login_required
 def create_user(request):
     if request.method == 'GET':
         return render(request, 'create_user/index.html', {'user_form': UserForm()})
