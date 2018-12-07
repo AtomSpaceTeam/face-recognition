@@ -50,6 +50,7 @@ class User(models.Model):
     surname = models.CharField(max_length=30)
     age = models.IntegerField()
     status = models.CharField(max_length=15, choices=status, default=None)
+    last_seen = models.DateTimeField(auto_now=True)
     photo_1 = models.FileField(null=True, blank=True)
     photo_2 = models.FileField(null=True, blank=True)
     photo_3 = models.FileField(null=True, blank=True)
