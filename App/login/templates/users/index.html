@@ -12,13 +12,13 @@
         <div class="userlist-block">
             <ul class="list-group list-join">
                 {% for item in list_residents %}
-                    <li class="list-group-item">{{ item.name }} {{ item.surname }}</li>
+                    <a href="/user/{{ item.id }}"><li class="list-group-item">{{ item.name }} {{ item.surname }}</li></a>
                 {% endfor %}
                 {% for item in list_mentors %}
-                    <li class="list-group-item">{{ item.name }} {{ item.surname }}</li>
+                    <a href="/user/{{ item.id }}"><li class="list-group-item">{{ item.name }} {{ item.surname }}</li></a>
                 {% endfor %}
                 {% for item in list_owners %}
-                    <li class="list-group-item">{{ item.name }} {{ item.surname }}</li>
+                    <a href="/user/{{ item.id }}"><li class="list-group-item">{{ item.name }} {{ item.surname }}</li></a>
                 {% endfor %}
             </ul>
         </div>

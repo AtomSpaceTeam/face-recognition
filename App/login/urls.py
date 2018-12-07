@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
 from django.contrib.auth.views import LoginView
@@ -16,6 +17,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('test', views.test, name='test'),
     path('create_user', views.create_user, name='create_user'),
+    url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
 
 ]
 
