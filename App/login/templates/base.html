@@ -10,6 +10,18 @@
     <link rel="stylesheet" media="all" href="{% static 'css/base.css' %}" type="text/css">
 </head>
 <body>
+    {% if user.is_authenticated %}
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-brand"> <a class="navbar-link" href="{% url 'index' %}">Home</a> </div>                
+                <a href="{% url 'list_residents' %}"> Residents </a>
+                <a href="{% url 'list_mentors' %}"> Mentors </a>
+                <a href="{% url 'list_owners' %}"> Owners </a>
+                <a href="{% url 'create_user' %}"> Create user </a>
+                <a href="{% url 'logout' %}"><button class="btn btn-primary" type="submit" >Log out</button></a>
+            </div>
+        </nav>
+    {% endif %}
     {% block content %}
     {% endblock %}
 </body>
