@@ -18,7 +18,7 @@ urlpatterns = [
     path('create_user', views.create_user, name='create_user'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user/(?P<pk>\d+)/edit$', views.edit_profile, name='edit_profile'),
-
+    url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
 ]
 
 if settings.DEBUG:

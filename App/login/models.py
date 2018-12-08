@@ -1,5 +1,5 @@
 from django.db import models
-
+ 
 status = (
     ('resident', 'resident'),
     ('mentor', 'mentor'),
