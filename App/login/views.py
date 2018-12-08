@@ -46,6 +46,7 @@ def create_user(request):
             user.photo_3 = request.FILES['photo_3']
             user.photo_4 = request.FILES['photo_4']
             user.photo_5 = request.FILES['photo_5']
+            user.profile_photo = request.FILES['profile_photo']
             settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/{user.status}s/{user.name} {user.surname}')
             user.save()
             settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media')
