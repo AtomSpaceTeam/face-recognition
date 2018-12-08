@@ -8,7 +8,10 @@ from .forms import UserForm
 
 @login_required
 def index(request):
-        return render(request, 'home/index.html')
+        residents = User.objects.filter(status='resident').count()
+        mentors = User.objects.filter(status='mentor').count()
+        owners = User.objects.filter(status='owner').count()
+        return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 def test(request):
     if request.method == 'GET':
@@ -81,3 +84,13 @@ def user_profile(request, pk):
 def logout(request):
     django_logout(request)
     return  HttpResponseRedirect('/login')
+
+@login_required
+def edit_profile(request, pk):
+    if request.method == 'GET':
+        return render(request, 'edit/index.html')
+
+@login_required
+def delete_profile(request, pk):
+    User.objects.get(id=pk).delete()
+    return HttpResponseRedirect('/')

@@ -38,18 +38,16 @@
                                 <div class="container list-group">
                                     <div class="row">
                                         <div class="col-sm">
-                                            {% for item in list_residents %}
                                                 <a href="/user/{{ item.id }}"><p style="text-align:center;margin: 0;line-height: 2;">{{ item.name }} {{ item.surname }}</p></a>
-                                            {% endfor %}
                                         </div>
                                         <div class="col-sm">
-                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">Resident</p>
+                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">{{item.status}}</p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="width:70%;">Change</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
                                         </div>
                                         <div class="col-sm">
                                             <p style="text-align:center;margin: 0;line-height: 2;">no connection</p>
@@ -63,18 +61,16 @@
                                 <div class="container list-group">
                                     <div class="row">
                                         <div class="col-sm">
-                                            {% for item in list_mentors %}
                                                 <a href="/user/{{ item.id }}"><p style="text-align:center;margin: 0;line-height: 2;">{{ item.name }} {{ item.surname }}</p></a>
-                                            {% endfor %}
                                         </div>
                                         <div class="col-sm">
-                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">Mentor</p>
+                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">{{item.status}}</p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="width:70%;">Change</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
                                         </div>
                                         <div class="col-sm">
                                             <p style="text-align:center;margin: 0;line-height: 2;">no connection</p>
@@ -88,18 +84,16 @@
                                 <div class="container list-group">
                                     <div class="row">
                                         <div class="col-sm">
-                                            {% for item in list_owners %}
                                                 <a href="/user/{{ item.id }}"><p style="text-align:center;margin: 0;line-height: 2;">{{ item.name }} {{ item.surname }}</p></a>
-                                            {% endfor %}
                                         </div>
                                         <div class="col-sm">
-                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">Owner</p>
+                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">{{item.status}}</p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="width:70%;">Change</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
                                         </div>
                                         <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="\"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
                                         </div>
                                         <div class="col-sm">
                                             <p style="text-align:center;margin: 0;line-height: 2;">no connection</p>
