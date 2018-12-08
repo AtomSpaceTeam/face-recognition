@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+            <h3>{{profile.name}} {{profile.surname}}</h3>
+            <h4> Status: {{profile.status}} </h4>
+            <h4> Age: {{profile.age}} </h4>
+            <h4> Last seen: {{profile.last_seen}} </h4>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</div>
+
+{% endblock  %}
