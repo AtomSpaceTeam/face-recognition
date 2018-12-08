@@ -8,26 +8,52 @@
     {% load staticfiles %}
     <link rel="stylesheet" media="all" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
     <link rel="stylesheet" media="all" href="{% static 'css/base.css' %}" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                datasets: [{
+                    label: "My First dataset",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+    {% comment %} <div class="container">
         <div class="row">
             <div class="col-sm" style="margin-bottom: 2%;"></div>
+                <div class="col-sm" style="margin-bottom: 2%;">
+                <h3>Add Resident</h3>
+                <div class='register-block'>
+                    <form style="display:grid;" enctype="multipart/form-data" action="" method="post">
+                    {% csrf_token %}
+                    {{ form_resident }}
+                    <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
+                    </form>
+                    <a href="{% url 'list_residents' %}">
+                        <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Residents</button>
+                    </a>
+                </div>
+            </div>
             <div class="col-sm" style="margin-bottom: 2%;">
-            <h3>Add Resident</h3>
-            <div class='register-block'>
-                <form style="display:grid;" enctype="multipart/form-data" action="" method="post">
-                {% csrf_token %}
-                {{ form_resident }}
-                <input style="width: 29%;margin-top: 1em;" type="submit" value="Add" class="btn btn-primary">                        
-                </form>
-                <a href="{% url 'list_residents' %}">
-                    <button style='margin-top:5%' class="btn btn-primary" type="submit" >List of Residents</button>
-                </a>
             </div>
         </div>
-        <div class="col-sm" style="margin-bottom: 2%;"></div>
-    </div>
-</div>
+    </div> {% endcomment %}
 </body>
 </html>
