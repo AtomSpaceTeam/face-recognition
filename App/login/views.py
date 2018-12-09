@@ -42,8 +42,13 @@ def create_user(request):
             user = User()
             user.name = request.POST['name']
             user.surname = request.POST['surname']
-            user.age = request.POST['age']
             user.status = request.POST['status']
+            user.age = request.POST['age']
+            birth = '{}/{}/{}'.format(request.POST['date_day'],
+                                      request.POST['date_month'],
+                                      request.POST['date_year'])
+            user.date = birth
+            user.email = request.POST['email']
             user.photo_1 = request.FILES['photo_1']
             user.photo_2 = request.FILES['photo_2']
             user.photo_3 = request.FILES['photo_3']
@@ -75,7 +80,9 @@ def edit_profile(request, pk):
                 name = request.POST['name'],
                 surname = request.POST['surname'],
                 age = request.POST['age'],
-                status = request.POST['status']
+                status = request.POST['status'],
+                birth = request.POST['birth'],
+                email =request.POST['email'],
             )
             return HttpResponseRedirect('/')
     
