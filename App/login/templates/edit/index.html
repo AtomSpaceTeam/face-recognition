@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3 style='text-align:center;'>Edit Profile</h3>
-    <div></div>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm'></div>
+            <div class='col-sm'>
+                <h3 style='text-align:center;'>Edit Profile</h3>
+                <form style="display:grid;" enctype="multipart/form-data" action="" method="post">
+                    {% csrf_token %}
+                    <label for='id_name'>Name:</label>
+                    {{ edit_form.name }}
+                    <label for='id_surname'>Surname:</label>
+                    {{ edit_form.surname }}
+                    <label for='id_age'>Age:</label>
+                    {{ edit_form.age }}
+                    <label for='id_status'>Status:</label>
+                    {{ edit_form.status }}
+                    <input style="width: 29%;margin-top: 1em;" type="submit" value="Edit" class="btn btn-primary">                        
+                </form>
+            </div>
+            <div class='col-sm'></div>
+        </div>
+    </div>
 {% endblock %}

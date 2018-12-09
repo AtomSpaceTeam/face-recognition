@@ -2,9 +2,9 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
-import os
+import os, shutil
 from .models import User
-from .forms import UserForm
+from .forms import UserForm, EditForm
 
 @login_required
 def index(request):
@@ -58,13 +58,8 @@ def create_user(request):
 @login_required
 def user_profile(request, pk):
     profile = User.objects.get(id=pk)
-    return render(request, 'profile/index.html', {'profile': profile})
-
-@login_required
-def edit_profile(request, pk):
-    if request.method == 'GET':
-        profile = User.objects.get(id=pk)
-        return render(request, 'edit_profile/index.html', {'profile': profile})
+    profile_photo = f'http://localhost:8000/media/{profile.status}s/{profile.name}%20{profile.surname}/{profile.profile_photo}'
+    return render(request, 'profile/index.html', {'profile': profile, 'photo': profile_photo})
 
 @login_required
 def logout(request):
@@ -73,10 +68,26 @@ def logout(request):
 
 @login_required
 def edit_profile(request, pk):
+    if request.method == 'POST':
+        f = EditForm(request.POST)
+        if f.is_valid():
+            User.objects.filter(id=pk).update(
+                name = request.POST['name'],
+                surname = request.POST['surname'],
+                age = request.POST['age'],
+                status = request.POST['status']
+            )
+            return HttpResponseRedirect('/')
+    
     if request.method == 'GET':
-        return render(request, 'edit/index.html')
+        context = {
+            'edit_form': UserForm()
+        }
+        return render(request, 'edit/index.html', context)
 
 @login_required
 def delete_profile(request, pk):
-    User.objects.get(id=pk).delete()
+    p = User.objects.get(id=pk)
+    shutil.rmtree(f'{settings.MEDIA_ROOT}/{p.status}s/{p.name} {p.surname}', ignore_errors=True)
+    p.delete()
     return HttpResponseRedirect('/')
