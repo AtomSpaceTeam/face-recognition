@@ -11,6 +11,8 @@ class User(models.Model):
     surname = models.CharField(max_length=30)
     age = models.IntegerField()
     status = models.CharField(max_length=15, choices=status, default=None)
+    date = models.CharField(max_length=20, default=None)
+    email = models.EmailField(max_length=30, default=None)
     last_seen = models.DateTimeField(auto_now=True)
     profile_photo = models.FileField(null=True, blank=True)
     photo_1 = models.FileField(null=True, blank=True)

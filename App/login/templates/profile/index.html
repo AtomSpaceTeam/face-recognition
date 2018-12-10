@@ -1,18 +1,89 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm"><img class='rounded-circle' width='100%' src={{ photo }} /></div>
-        <div class="col-sm">
-            <h3>{{profile.name}} {{profile.surname}}</h3>
-            <h4> Status: {{profile.status}} </h4>
-            <h4> Age: {{profile.age}} </h4>
-            <h4> Last seen: {{profile.last_seen}} </h4>
+<h3 style='text-align: center;margin: 2%;'>Profile user</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm"><img class='rounded-circle' style="padding: 1%;width: 50%;float: right;" src={{ photo }} /></div>
+            <div class="col-sm">
+                <p> Username: {{profile.name}} {{profile.surname}}</p>
+                <p> Age: {{profile.age}} </p>
+                <p> Status: {{profile.status}} </p>
+                <p> Birthday: {{profile.date}}</p>
+                <p> Email: {{profile.email}}</p>
+                <p> Last seen: {{profile.last_seen}} </p>
+                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
+                <p style="margin: 0;line-height: 2;width:50%;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: #EF5350; width:70%;" >Delete</button></a></p>          
+            </div>
         </div>
-        <div class="col-sm"></div>
     </div>
-</div>
+<h3 style='text-align: center;margin: 2%;'>Statistic user</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+<h3 style='text-align: center;margin: 2%;'>Checker user</h3>
+    <div class="container">
+        <div class="row" style="padding: 5%;padding-top: 0;padding-left:0;padding-right:0;">
+            <div class="col">
+            <div class="container list-group" style="border-bottom: black 1px outset;">
+                <div class="row">
+                    <div class="col-sm">
+                        <p style="text-align:center;margin: 0;line-height: 2;">Name Surname</p>
+                    </div>
+                    <div class="col-sm">
+                        <p style="text-align:center;margin: 0;line-height: 2;">Status</p>
+                    </div>
+                    <div class="col-sm">
+                        <p style="text-align:center;margin: 0;line-height: 2;">Time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="userjoin-block">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="container list-group">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <p style="text-align:center;margin: 0;line-height: 2;">Maxim Osadchiy</p>
+                                </div>
+                                <div class="col-sm">
+                                    <p style="text-align:center;margin: 0;line-height: 2;">Resident</p>
+                                </div>
+                                <div class="col-sm">
+                                    <p style="text-align:center;margin: 0;line-height: 2;">15:43 12.02.2018</p>
+                                </div> 
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+</script>
 
 {% endblock %}
