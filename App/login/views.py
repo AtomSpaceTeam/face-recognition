@@ -50,15 +50,15 @@ def create_user(request):
             user.photo_4 = request.FILES['photo_4']
             user.photo_5 = request.FILES['photo_5']
             user.profile_photo = request.FILES['profile_photo']
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, f'media/{user.status}s/{user.name} {user.surname}')
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media/{}s/{} {}'.format(user.status, user.name, user.surname))
             user.save()
             settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media')
-        return HttpResponseRedirect(f'/{user.status}s')
+        return HttpResponseRedirect('/{}s'.format(user.status))
 
 @login_required
 def user_profile(request, pk):
     profile = User.objects.get(id=pk)
-    profile_photo = f'http://localhost:8000/media/{profile.status}s/{profile.name}%20{profile.surname}/{profile.profile_photo}'
+    profile_photo = 'http://localhost:8000/media/{}s/{}%20{}/{}'.format(profile.status, profile.name, profile.surname, profile.profile_photo)
     return render(request, 'profile/index.html', {'profile': profile, 'photo': profile_photo})
 
 @login_required
@@ -71,7 +71,13 @@ def edit_profile(request, pk):
     if request.method == 'POST':
         f = EditForm(request.POST)
         if f.is_valid():
-            User.objects.filter(id=pk).update(
+            
+            p = User.objects.filter(id=pk)
+            os.rename(
+                '{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p[0].status, p[0].name, p[0].surname),
+                '{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p[0].status, request.POST['name'], request.POST['surname'])
+            )
+            p.update(
                 name = request.POST['name'],
                 surname = request.POST['surname'],
                 age = request.POST['age'],
@@ -88,6 +94,6 @@ def edit_profile(request, pk):
 @login_required
 def delete_profile(request, pk):
     p = User.objects.get(id=pk)
-    shutil.rmtree(f'{settings.MEDIA_ROOT}/{p.status}s/{p.name} {p.surname}', ignore_errors=True)
+    shutil.rmtree('{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p.status, p.name, p.surname), ignore_errors=True)
     p.delete()
     return HttpResponseRedirect('/')
