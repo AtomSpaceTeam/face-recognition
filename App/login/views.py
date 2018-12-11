@@ -29,8 +29,17 @@ def list_owners(request):
     return render(request, 'users/index.html', {'list_owners': owners_list})
 
 @login_required
-def online_camera(request):
-    return render(request, 'camera/index.html')
+def list_users(request):
+    users_list = User.objects.all()
+    return render(request, 'users/index.html', {'list_users': users_list})
+
+@login_required
+def list_events(request):
+    return render(request, 'events/index.html')
+
+@login_required
+def create_event(request):
+    return render(request, 'create_event/index.html')
 
 @login_required
 def create_user(request):
@@ -55,7 +64,7 @@ def create_user(request):
             user.photo_4 = request.FILES['photo_4']
             user.photo_5 = request.FILES['photo_5']
             user.profile_photo = request.FILES['profile_photo']
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media/{}s/{} {}'.format(user.status, user.name, user.surname))
+            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media\{}s\{} {}'.format(user.status, user.name, user.surname))
             user.save()
             settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media')
         return HttpResponseRedirect('/{}s'.format(user.status))
