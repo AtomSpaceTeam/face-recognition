@@ -5,27 +5,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                </div>
-                <div class="col-sm">
                     <h2 style="text-align:center">Face security system</h2>
-                </div>
-                <div class="col-sm">
                 </div>
             </div>
         </div>
         <div class="container" style="margin-top: 1%;">
             <div class="row">
-                <div class="col-sm">
-                    <div class="online-camera">
-                        <div style="display: flex;justify-content: center;">
-                            <div class="camera-block">
-                                {{camera}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div>
+                <div class="col-sm" style="text-align: center;">
                         {% if open_door %}
                             <p>Status: Open</p>
                         {% elif close_door %}
@@ -37,9 +23,10 @@
                         <p>Residents: {{ residents }} members</p>
                         <p>Mentors: {{ mentors }} members</p>
                         <p>Owners: {{ owners }} members</p>
-                        <a href="\"><button class="btn btn-primary" type="submit" >Open door</button></a>
-                        <a href="\"><button class="btn btn-primary" type="submit" >Close door</button></a>
-                    </div>
+                        <div class="door-dutton">
+                            <a href="\"><button class="btn btn-primary" type="submit" >Open door</button></a>
+                            <a href="\"><button class="btn btn-primary" type="submit" >Close door</button></a>
+                        </div>
                 </div>
         </div>
         <div class="container" style="padding: 2%;">

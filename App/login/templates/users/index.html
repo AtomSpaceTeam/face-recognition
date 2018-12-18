@@ -8,7 +8,20 @@
             <h3 class="list-text">Mentors List</h3>
         {% elif list_owners %}
             <h3 class="list-text">Owners List</h3>
-        {% endif %}  
+        {% elif list_users %}
+            <h3 class="list-text">All users</h3>
+        {% endif %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm" style="display: flex;justify-content: space-evenly;padding: 1%;line-height:2;">
+                    <p><a href="{% url 'list_users' %}" style="color:#007bff;"> All </a></p>
+                    <p><a href="{% url 'list_residents' %}" style="color:#007bff;"> Residents </a></p>
+                    <p><a href="{% url 'list_mentors' %}" style="color:#007bff;"> Mentors </a></p>
+                    <p><a href="{% url 'list_owners' %}" style="color:#007bff;"> Owners </a></p>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row" style="padding: 5%;padding-top: 0;padding-left:0;padding-right:0;">
               <div class="col">
@@ -33,6 +46,29 @@
                 </div>
                 <div class="userjoin-block">
                     <ul class="list-group">
+                        {% for item in list_users %}
+                            <li class="list-group-item">
+                                <div class="container list-group">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                                <a href="/user/{{ item.id }}"><p style="text-align:center;margin: 0;line-height: 2;">{{ item.name }} {{ item.surname }}</p></a>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">{{item.status}}</p>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;">no connection</p>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
                         {% for item in list_residents %}
                             <li class="list-group-item">
                                 <div class="container list-group">
