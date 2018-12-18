@@ -8,14 +8,7 @@
                 <h3 style='text-align:center;'>Edit Profile</h3>
                 <form style="display:grid;" enctype="multipart/form-data" action="" method="post">
                     {% csrf_token %}
-                    <label for='id_name'>Name:</label>
-                    {{ edit_form.name }}
-                    <label for='id_surname'>Surname:</label>
-                    {{ edit_form.surname }}
-                    <label for='id_age'>Age:</label>
-                    {{ edit_form.age }}
-                    <label for='id_status'>Status:</label>
-                    {{ edit_form.status }}
+                    {{ edit_form }}
                     <input style="width: 29%;margin-top: 1em;" type="submit" value="Edit" class="btn btn-primary">                        
                 </form>
             </div>

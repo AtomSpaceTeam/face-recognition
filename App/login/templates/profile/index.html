@@ -4,7 +4,7 @@
 <h3 style='text-align: center;margin: 2%;'>Profile user</h3>
     <div class="container">
         <div class="row">
-            <div class="col-sm"><img class='rounded-circle' style="padding: 1%;width: 50%;float: right;" src={{ photo }} /></div>
+            <div class="col-sm"><img class='rounded-circle' style="padding: 1%;width: 50%;float: right;" src={{ profile_photo }} /></div>
             <div class="col-sm">
                 <p> Username: {{profile.name}} {{profile.surname}}</p>
                 <p> Age: {{profile.age}} </p>
@@ -12,8 +12,8 @@
                 <p> Birthday: {{profile.date}}</p>
                 <p> Email: {{profile.email}}</p>
                 <p> Last seen: {{profile.last_seen}} </p>
-                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
-                <p style="margin: 0;line-height: 2;width:50%;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: #EF5350; width:70%;" >Delete</button></a></p>          
+                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ profile.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
+                <p style="margin: 0;line-height: 2;width:50%;"><a href="/user/{{ profile.id }}delete"><button class="btn btn-primary" type="submit" style="background: #EF5350; width:70%;" >Delete</button></a></p>          
             </div>
         </div>
     </div>

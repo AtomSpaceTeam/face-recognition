@@ -47,7 +47,7 @@ def create_user(request):
             birth = '{}/{}/{}'.format(request.POST['date_day'],
                                       request.POST['date_month'],
                                       request.POST['date_year'])
-            user.date = birth
+            user.birth_date = birth
             user.email = request.POST['email']
             user.photo_1 = request.FILES['photo_1']
             user.photo_2 = request.FILES['photo_2']
@@ -55,16 +55,18 @@ def create_user(request):
             user.photo_4 = request.FILES['photo_4']
             user.photo_5 = request.FILES['photo_5']
             user.profile_photo = request.FILES['profile_photo']
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media/{}s/{} {}'.format(user.status, user.name, user.surname))
             user.save()
-            settings.MEDIA_ROOT = os.path.join(settings.BASE_DIR, 'media')
         return HttpResponseRedirect('/{}s'.format(user.status))
 
 @login_required
 def user_profile(request, pk):
     profile = User.objects.get(id=pk)
-    profile_photo = 'http://localhost:8000/media/{}s/{}%20{}/{}'.format(profile.status, profile.name, profile.surname, profile.profile_photo)
-    return render(request, 'profile/index.html', {'profile': profile, 'photo': profile_photo})
+    context = {
+        'profile': profile,
+        'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo)
+    }
+    print(context['profile_photo'])
+    return render(request, 'profile/index.html', context)
 
 @login_required
 def logout(request):
@@ -76,31 +78,40 @@ def edit_profile(request, pk):
     if request.method == 'POST':
         f = EditForm(request.POST)
         if f.is_valid():
-            
             p = User.objects.filter(id=pk)
-            os.rename(
-                '{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p[0].status, p[0].name, p[0].surname),
-                '{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p[0].status, request.POST['name'], request.POST['surname'])
-            )
+            birth = '{}/{}/{}'.format(request.POST['date_day'],
+                                      request.POST['date_month'],
+                                      request.POST['date_year'])
             p.update(
                 name = request.POST['name'],
                 surname = request.POST['surname'],
                 age = request.POST['age'],
                 status = request.POST['status'],
-                birth = request.POST['birth'],
-                email =request.POST['email'],
+                birth_date = birth,
+                email = request.POST['email'],
             )
             return HttpResponseRedirect('/')
     
     if request.method == 'GET':
         context = {
-            'edit_form': UserForm()
+            'edit_form': EditForm()
         }
         return render(request, 'edit/index.html', context)
 
 @login_required
 def delete_profile(request, pk):
     p = User.objects.get(id=pk)
-    shutil.rmtree('{}/{}s/{} {}'.format(settings.MEDIA_ROOT, p.status, p.name, p.surname), ignore_errors=True)
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1))
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2))
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3))
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4))
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5))
+    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo)):
+        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo))
     p.delete()
     return HttpResponseRedirect('/')
