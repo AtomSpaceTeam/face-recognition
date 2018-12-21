@@ -16,6 +16,7 @@ urlpatterns = [
     path('events', views.list_events, name='list_events'),
     path('create_event', views.create_event, name='create_event'),
     path('login/', auth_views.LoginView.as_view(template_name='login/index.html')),
+    path('login-user/', views.login_user, name='login_user'),
     path('logout', views.logout, name='logout'),
     path('api', views.api, name='api'),
     path('register', views.register, name='register'),
