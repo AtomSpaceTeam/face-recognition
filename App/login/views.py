@@ -91,9 +91,9 @@ def user_profile(request, pk):
     return render(request, 'profile/index.html', context)
 
 
-def login(request):
+def login_user(request):
     if request.method == 'GET':
-        return render(request, 'login/index.html')
+        return render(request, 'login-user/index.html')
 
 @login_required
 def logout(request):

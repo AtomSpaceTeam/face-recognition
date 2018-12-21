@@ -28,6 +28,34 @@ input {
     outline: 0;
 }
 
+.form-auth > input {
+    margin: 3%;
+    width: 100%;
+    color: white;
+    height: 48px;
+    border-radius: 48px;
+    padding-left: 20px;
+    background-color: rgba(230, 230, 230, 0.5);
+    border: 1px solid transparent;
+    line-height: 32px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+input:focus  .form-auth {
+    margin: 3%;
+    width: 100%;
+    color: white;
+    height: 48px;
+    border-radius: 48px;
+    padding-left: 20px;
+    background-color: rgba(230, 230, 230, 0.5);
+    border: 1px solid transparent;
+    line-height: 32px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
 input.login-input {
     margin: 3%;
     width: 100%;
