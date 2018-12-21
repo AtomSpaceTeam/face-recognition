@@ -10,7 +10,6 @@ from django.shortcuts import HttpResponseRedirect, render
 from .forms import EditForm, UserForm
 from .models import User
 
-
 @login_required
 def index(request):
     residents = User.objects.filter(status='resident').count()
@@ -90,6 +89,11 @@ def user_profile(request, pk):
     }
     print(context['profile_photo'])
     return render(request, 'profile/index.html', context)
+
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'login/index.html')
 
 @login_required
 def logout(request):

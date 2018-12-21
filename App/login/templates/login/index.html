@@ -1,7 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/login.css' %}" type="text/css">
+
+<div class="background-image"></div>
+    <h1>Control system</h1>
     <div class="container">
+        <form action="" method="post">
+            <input class="login-input" type="text" placeholder="Login" required>
+            <input class="password-input" type="password" placeholder="Password" required>
+            <p class="request-text"><a class="request-href" href="/login">Request for success</a></p>
+            <input class="submit-input" type="submit" value="Log in">
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="container">
   <div class="row">
     <div class="col-sm">
     </div>
@@ -18,5 +55,5 @@
     <div class="col-sm">
     </div>
   </div>
-</div>
+</div> -->
 {% endblock %}
