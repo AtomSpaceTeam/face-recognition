@@ -15,14 +15,11 @@ from django.core import serializers
 from .forms import EditForm, UserForm
 from .models import User
 
-<<<<<<< HEAD
 
 def calculate_age(born):
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
-=======
->>>>>>> bf2d0e4850a2cda5055cef530b20f1c6f7a51227
 @login_required
 def index(request):
     residents = User.objects.filter(status='resident').count()
