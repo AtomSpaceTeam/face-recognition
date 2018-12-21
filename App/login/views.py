@@ -1,17 +1,22 @@
-from django.shortcuts import render, HttpResponseRedirect
+import os
+import shutil
+import datetime, calendar
+
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
-import os, shutil
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponseRedirect, render
+
+from .forms import EditForm, UserForm
 from .models import User
-from .forms import UserForm, EditForm
+
 
 @login_required
 def index(request):
-        residents = User.objects.filter(status='resident').count()
-        mentors = User.objects.filter(status='mentor').count()
-        owners = User.objects.filter(status='owner').count()
-        return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
+    return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_residents(request):
@@ -35,7 +40,16 @@ def list_users(request):
 
 @login_required
 def list_events(request):
-    return render(request, 'events/index.html')
+    month = datetime.date.today().month
+    year = datetime.date.today().year
+    days = calendar.monthcalendar(year, month)
+    month = calendar.month_name[month]
+    context = {
+        'month': month,
+        'year': year,
+        'days': days
+    }
+    return render(request, 'events/index.html', context)
 
 @login_required
 def create_event(request):
