@@ -95,6 +95,9 @@ def login_user(request):
     if request.method == 'GET':
         return render(request, 'login-user/index.html')
 
+def home_user(request):
+    return render(request, 'home-user/index.html')
+
 @login_required
 def logout(request):
     django_logout(request)
