@@ -25,7 +25,7 @@ def index(request):
     residents = User.objects.filter(status='resident').count()
     mentors = User.objects.filter(status='mentor').count()
     owners = User.objects.filter(status='owner').count()
-    return render(request, 'home/index-base.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    return render(request, 'home-admin/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def api(request):
@@ -35,23 +35,35 @@ def api(request):
 
 @login_required
 def list_residents(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     residents_list = User.objects.filter(status='resident')
-    return render(request, 'users/index.html', {'list_residents': residents_list})
+    return render(request, 'users/index.html', {'list_residents': residents_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_mentors(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     mentors_list = User.objects.filter(status='mentor')
-    return render(request, 'users/index.html', {'list_mentors': mentors_list})
+    return render(request, 'users/index.html', {'list_mentors': mentors_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_owners(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     owners_list = User.objects.filter(status='owner')
-    return render(request, 'users/index.html', {'list_owners': owners_list})
+    return render(request, 'users/index.html', {'list_owners': owners_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_users(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     users_list = User.objects.all()
-    return render(request, 'users/index.html', {'list_users': users_list})
+    return render(request, 'users/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_events(request):
@@ -68,12 +80,18 @@ def list_events(request):
 
 @login_required
 def create_event(request):
-    return render(request, 'create_event/index.html')
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
+    return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def register(request):
     if request.method == 'GET':
-        return render(request, 'create_user/index.html', {'user_form': UserForm()})
+        residents = User.objects.filter(status='resident').count()
+        mentors = User.objects.filter(status='mentor').count()
+        owners = User.objects.filter(status='owner').count()
+        return render(request, 'create_user/index.html', {'user_form': UserForm(),'residents': residents,'mentors': mentors,'owners': owners})
     if request.method == 'POST':
         f = UserForm(request.POST, request.FILES)
         if f.is_valid():
@@ -106,7 +124,6 @@ def user_profile(request, pk):
         'birthday': birthday
     }
     return render(request, 'profile/index.html', context)
-
 
 def login_user(request):
     if request.method == 'GET':

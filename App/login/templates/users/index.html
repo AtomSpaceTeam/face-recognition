@@ -1,7 +1,11 @@
-{% extends "base.html" %}
+{% extends '../home/index-base.html' %}
 
-{% block content %}
-    <div class="list-residents">
+{% block info %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+
+    <div>
         {% if list_residents %}
             <h3 class="list-text">Residents List</h3>
         {% elif list_mentors %}

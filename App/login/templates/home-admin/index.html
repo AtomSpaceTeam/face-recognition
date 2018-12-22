@@ -1,6 +1,10 @@
-{% extends "../home/index-base.html" %}
+{% extends '../home/index-base.html' %}
 
 {% block info %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+<link rel="stylesheet" media="all" href="{% static 'css/home.css' %}" type="text/css">
 
 <div>
     <h3 class="statistic-text">Statistic</h3>
@@ -10,7 +14,7 @@
     <div class="container" style="padding: 2%;">
             <div class="row">
                 <div class="col-sm">
-                    <h2 style="text-align:center; padding: 1%; margin: 0;">Online Checker</h2>
+                    <h3 style="text-align:center; padding: 1%; margin: 0;">Online Checker</h3>
                 </div>
             </div>
         </div>
