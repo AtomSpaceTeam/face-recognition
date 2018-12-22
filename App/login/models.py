@@ -29,4 +29,9 @@ class User(models.Model):
     profile_photo = models.ImageField(upload_to='profile_photos')
 
     def __str__(self):
-        return self.name 
+        return self.name
+
+class Seen(models.Model):
+    name = models.CharField(max_length=60)
+    status = models.CharField(max_length=20)
+    time = models.DateTimeField(auto_now=True)

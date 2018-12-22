@@ -2,7 +2,6 @@ App/App/__pycache__
 App/login/__pycache__
 App/login/migrations/__pycache__
 App/media
-App/db.sqlite3
 App/face/dlib_face_recognition_resnet_model_v1.dat
 App/face/shape_predictor_68_face_landmarks.dat
 

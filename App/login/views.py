@@ -8,12 +8,13 @@ import json
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 
 from .forms import EditForm, UserForm
-from .models import User
+from .models import User, Seen
 
 
 def calculate_age(born):
@@ -29,9 +30,8 @@ def index(request):
 
 @login_required
 def api(request):
-    database = serializers.serialize("json", User.objects.all(), fields=('attendance'))
-    data = json.dumps(database)
-    return JsonResponse(data, safe=False)
+    database = serializers.serialize("json", User.objects.all(), fields=('attendance', 'name', 'surname'))
+    return HttpResponse(database)
 
 @login_required
 def list_residents(request):
@@ -103,12 +103,16 @@ def user_profile(request, pk):
         'profile': profile,
         'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo),
         'age': age,
-        'birthday': birthday
+        'birthday': birthday,
+        'seen': Seen.objects.all()
     }
     return render(request, 'profile/index.html', context)
 
-
+@csrf_exempt
 def login_user(request):
+    if request.method == 'POST':
+        print(request.POST['form'])
+        return HttpResponseRedirect('#')
     if request.method == 'GET':
         return render(request, 'login-user/index.html')
 
