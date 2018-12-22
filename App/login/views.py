@@ -25,7 +25,7 @@ def index(request):
     residents = User.objects.filter(status='resident').count()
     mentors = User.objects.filter(status='mentor').count()
     owners = User.objects.filter(status='owner').count()
-    return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    return render(request, 'home/index-base.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def api(request):

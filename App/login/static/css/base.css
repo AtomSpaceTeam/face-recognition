@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 body {
     background: white;
+    font-family: 'Lato', cursive;
 }
 
 .login-block {

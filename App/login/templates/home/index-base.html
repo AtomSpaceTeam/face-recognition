@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+<link rel="stylesheet" media="all" href="{% static 'css/home.css' %}" type="text/css">
+
+<h1 class="profile-h1">Admin panel</h1>
+<div class="container">
+    <div class="row">
+        <div class="info-block">
+            <div class="photo-block">
+                <h4 class="name-text">Maxim Osadchiy</h4>
+            </div>
+            <div class="status-block">
+                {% if open_door %}
+                <p>Status: Open</p>
+                {% elif close_door %}
+                    <p>Status: Close</p>
+                {% else %}
+                    <p>Status: no connection</p>
+                {% endif %}  
+                <p>Last seen: 19.12.18 13:23</p>
+                <p>Residents: {{ residents }} members</p>
+                <p>Mentors: {{ mentors }} members</p>
+                <p>Owners: {{ owners }} members</p>
+                <div class="door-dutton">
+                    <a href="\"><button class="btn btn-primary" type="submit" >Open door</button></a>
+                    <a href="\"><button class="btn btn-primary" type="submit" >Close door</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="statistic-block">
+            <div class="navbar-block">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
+                        <div class="navbar-brand"> <a class="navbar-link" href="{% url 'index' %}" style="color:black;">Home</a> </div>                
+                        <a href="{% url 'list_users' %}" style="color:black;"> Members </a>
+                        <!-- <a href="{% url 'list_events' %}" style="color:black;"> Events </a> -->
+                        <!-- <a href="{% url 'create_event' %}" style="color:black;"> Create event </a> -->
+                        <a href="{% url 'register' %}" style="color:black;"> Create user </a>
+                        <a href="{% url 'logout' %}"><button class="btn btn-primary" type="submit" >Log out</button></a>
+                    </div>
+                </nav>
+            </div>
+            <div class="information-block">
+                {% block info %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

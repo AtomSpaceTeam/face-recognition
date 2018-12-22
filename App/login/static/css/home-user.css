@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Satisfy');
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 body {
     background: #222629;
+    font-family: 'Lato', cursive;
 }
 
 .profile-h1 {
-    font-family: 'Satisfy', cursive;
+    font-family: 'Lato', cursive;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;

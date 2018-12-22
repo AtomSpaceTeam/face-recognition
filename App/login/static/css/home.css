@@ -1,0 +1,9 @@
+.status-block {
+    text-align: center;
+    margin: 5%;
+}
+
+.information-block {
+    overflow-y: scroll;
+    height: 92%;
+}
