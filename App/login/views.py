@@ -1,14 +1,24 @@
 import os
 import shutil
-import datetime, calendar
+import calendar
+import datetime
+from datetime import date
+import json
 
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect, render
+from django.http import JsonResponse
+from django.core import serializers
 
 from .forms import EditForm, UserForm
 from .models import User
+
+
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 @login_required
 def index(request):
@@ -16,6 +26,12 @@ def index(request):
     mentors = User.objects.filter(status='mentor').count()
     owners = User.objects.filter(status='owner').count()
     return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+
+@login_required
+def api(request):
+    database = serializers.serialize("json", User.objects.all(), fields=('attendance'))
+    data = json.dumps(database)
+    return JsonResponse(data, safe=False)
 
 @login_required
 def list_residents(request):
@@ -39,8 +55,8 @@ def list_users(request):
 
 @login_required
 def list_events(request):
-    month = datetime.date.today().month
-    year = datetime.date.today().year
+    month = date.today().month
+    year = date.today().year
     days = calendar.monthcalendar(year, month)
     month = calendar.month_name[month]
     context = {
@@ -55,27 +71,25 @@ def create_event(request):
     return render(request, 'create_event/index.html')
 
 @login_required
-def create_user(request):
+def register(request):
     if request.method == 'GET':
         return render(request, 'create_user/index.html', {'user_form': UserForm()})
     if request.method == 'POST':
         f = UserForm(request.POST, request.FILES)
         if f.is_valid():
             user = User()
+            user.attendance = 0
             user.name = request.POST['name']
             user.surname = request.POST['surname']
+            user.username = request.POST['username']
             user.status = request.POST['status']
-            user.age = request.POST['age']
-            birth = '{}/{}/{}'.format(request.POST['date_day'],
-                                      request.POST['date_month'],
-                                      request.POST['date_year'])
-            user.birth_date = birth
+            date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
+            datetime_object = datetime.datetime.strptime(date, '%b %d %Y')
+            user.birth_date = datetime_object
             user.email = request.POST['email']
-            user.photo_1 = request.FILES['photo_1']
-            user.photo_2 = request.FILES['photo_2']
-            user.photo_3 = request.FILES['photo_3']
-            user.photo_4 = request.FILES['photo_4']
-            user.photo_5 = request.FILES['photo_5']
+            user.specialization = request.POST['specialization']
+            user.team = request.POST['team']
+            user.project = request.POST['project']
             user.profile_photo = request.FILES['profile_photo']
             user.save()
         return HttpResponseRedirect('/{}s'.format(user.status))
@@ -83,11 +97,14 @@ def create_user(request):
 @login_required
 def user_profile(request, pk):
     profile = User.objects.get(id=pk)
+    age = calculate_age(profile.birth_date)
+    birthday = datetime.datetime.strftime(profile.birth_date, '%d %b %Y')
     context = {
         'profile': profile,
-        'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo)
+        'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo),
+        'age': age,
+        'birthday': birthday
     }
-    print(context['profile_photo'])
     return render(request, 'profile/index.html', context)
 
 
