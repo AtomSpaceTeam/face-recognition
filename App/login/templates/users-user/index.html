@@ -1,6 +1,6 @@
-{% extends 'index-admin-base.html' %}
+{% extends 'index-user-base.html' %}
 
-{% block info_admin %}
+{% block info_user %}
 
 {% load staticfiles %}
 <link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
@@ -29,25 +29,6 @@
         <div class="container">
             <div class="row" style="padding: 5%;padding-top: 0;padding-left:0;padding-right:0;">
               <div class="col">
-                <div class="container list-group" style="border-bottom: black 1px outset;">
-                    <div class="row">
-                        <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Name Surname</p>
-                        </div>
-                        <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Status</p>
-                        </div>
-                        <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Change</p>
-                        </div>
-                        <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Delete</p>
-                        </div>
-                        <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Time</p>
-                        </div>
-                    </div>
-                </div>
                 <div class="userjoin-block">
                     <ul class="list-group">
                         {% for item in list_users %}
@@ -60,15 +41,6 @@
                                         <div class="col-sm">
                                             <p class="list-text" style="text-align:center;margin: 0;line-height: 2;">{{item.status}}</p>
                                         </div>
-                                        <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
-                                        </div>
-                                        <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;"><a href="/user/{{ item.id }}/delete"><button class="btn btn-primary" type="submit" style="background: red; width:70%;" >Delete</button></a></p>
-                                        </div>
-                                        <div class="col-sm">
-                                            <p style="text-align:center;margin: 0;line-height: 2;">{{item.last_seen}}</p>
-                                        </div> 
                                     </div>
                                 </div>
                             </li>

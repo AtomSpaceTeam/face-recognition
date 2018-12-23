@@ -77,6 +77,16 @@ def list_users(request):
     users_list = User.objects.all()
     return render(request, 'users/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
+def list_users_user(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
+    users_list = User.objects.all()
+    return render(request, 'users-user/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
+
+def statistic_user(request):
+    return render(request, 'statistic-user/index.html')
+
 @login_required
 def list_events(request):
     month = date.today().month

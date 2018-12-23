@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+
+<h1 class="profile-h1">Frofile user</h1>
+<div class="container">
+    <div class="row">
+        <div class="info-block">
+            <div class="photo-block">
+                <p class="position-photo">
+                    <img class="photo-img" src="../../static/img/Maxim.png" alt="Your photo">
+                </p>
+                <h4 class="name-text">Maxim Osadchiy</h4>
+            </div>
+        </div>
+        <div class="statistic-block">
+            <div class="navbar-block">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
+                        <div class="navbar-brand"> <a class="navbar-link" href="{% url 'index' %}" style="color:black;">Posts</a> </div>                
+                        <a href="{% url 'statistic_user' %}" style="color:black;"> Statistic </a>
+                        <a href="{% url 'users_user' %}" style="color:black;"> Users </a>
+                        <a href="{% url 'logout' %}"><button class="btn btn-primary" type="submit" >Log out</button></a>
+                    </div>
+                </nav>
+            </div>
+            {% block info_user %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
