@@ -7,30 +7,49 @@
 
 <div class="background-image"></div>
 <h1>Control system</h1>
+{% for i in messages %}
+    <h4 style="text-align:center;">{{ i }}</h4>
+{% endfor %}
 <div class="container">
     <form action="" name="form" method="post">
-        {% csrf_token %}
-        <input class="login-input" id="username" type="text" placeholder="Login" required>
-        <input class="password-input" id="password" type="password" placeholder="Password" required>
+        <!-- <input class="login-input" id="username" type="text" placeholder="Login" required>
+        <input class="password-input" id="password" type="password" placeholder="Password" required> -->
+        {{ form }}
         <p class="request-text"><a class="request-href" href="/login">Request for success</a></p>
-        <input class="submit-input" type="submit" onclick="login()" value="Log in">
+        <input class="submit-input" type="submit" onclick="" value="Log in">
     </form>
 </div>
 <script>
     var login = () => {
-        username = document.getElementById('username');
-        password = document.getElementById('password');
-        var form = new FormData(document.forms.form);
-        form.append(username, password);
-        // var object = {
-        //     'username': username.value,
-        //     'password': username.value
-        // }
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:8000/login-user/');
-        xhr.send(form);
-        
+        // var data = new FormData(document.getElementsByName('form'));
+        // data.append('username', document.getElementById('username').value)
+        // data.append('password', document.getElementById('password').value)
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', 'http://localhost:8000/login-user/')
+        // xhr.send(data)
+        setTimeout(() => { 
+            var data = new FormData(document.getElementsByName('form'));
+            data.append('username', document.getElementById('username').value);
+            data.append('password', document.getElementById('password').value);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8000/login-user/');
+            xhr.send(data);
+            $('form').submit();
+            return 0;
+        }, 1000)
     }
+    // async () => {
+    // var response = await fetch('http://localhost:8000/login-user/', {
+    //     method: 'POST',
+    //     headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({username: document.getElementById('username').value, password: document.getElementById('password').value})
+    // });
+    // var content = await response.json();
+    // return content;
+// });
 </script>
 
 

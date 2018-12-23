@@ -4,6 +4,8 @@ import calendar
 import datetime
 from datetime import date
 import json
+import bcrypt
+import requests
 
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
@@ -12,8 +14,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.contrib import messages
 
-from .forms import EditForm, UserForm
+from .forms import EditForm, UserForm, UserLogin
 from .models import User, Seen
 
 
@@ -21,37 +24,58 @@ def calculate_age(born):
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
+
 @login_required
 def index(request):
     residents = User.objects.filter(status='resident').count()
     mentors = User.objects.filter(status='mentor').count()
     owners = User.objects.filter(status='owner').count()
-    return render(request, 'home/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    return render(request, 'home-admin/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
-def api(request):
+def api_attendance(request):
     database = serializers.serialize("json", User.objects.all(), fields=('attendance', 'name', 'surname'))
     return HttpResponse(database)
 
 @login_required
+def api_face(request):
+    res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
+    person = res.json()
+    print(person['lastSeenInfo']['data'][0]['last_seen'])
+
+    return HttpResponse(person['lastSeenInfo'])
+
+@login_required
 def list_residents(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     residents_list = User.objects.filter(status='resident')
-    return render(request, 'users/index.html', {'list_residents': residents_list})
+    return render(request, 'users/index.html', {'list_residents': residents_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_mentors(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     mentors_list = User.objects.filter(status='mentor')
-    return render(request, 'users/index.html', {'list_mentors': mentors_list})
+    return render(request, 'users/index.html', {'list_mentors': mentors_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_owners(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     owners_list = User.objects.filter(status='owner')
-    return render(request, 'users/index.html', {'list_owners': owners_list})
+    return render(request, 'users/index.html', {'list_owners': owners_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_users(request):
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
     users_list = User.objects.all()
-    return render(request, 'users/index.html', {'list_users': users_list})
+    return render(request, 'users/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def list_events(request):
@@ -68,20 +92,32 @@ def list_events(request):
 
 @login_required
 def create_event(request):
-    return render(request, 'create_event/index.html')
+    residents = User.objects.filter(status='resident').count()
+    mentors = User.objects.filter(status='mentor').count()
+    owners = User.objects.filter(status='owner').count()
+    return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
 def register(request):
     if request.method == 'GET':
-        return render(request, 'create_user/index.html', {'user_form': UserForm()})
+        residents = User.objects.filter(status='resident').count()
+        mentors = User.objects.filter(status='mentor').count()
+        owners = User.objects.filter(status='owner').count()
+        return render(request, 'create_user/index.html', {'user_form': UserForm(),'residents': residents,'mentors': mentors,'owners': owners})
     if request.method == 'POST':
         f = UserForm(request.POST, request.FILES)
+        if request.POST['password'] != request.POST['password_1']:
+            messages.error(request, 'Passwords are not the same')
+            return HttpResponseRedirect('#')
         if f.is_valid():
             user = User()
             user.attendance = 0
             user.name = request.POST['name']
             user.surname = request.POST['surname']
             user.username = request.POST['username']
+            password = bytes(request.POST['password'], 'utf-8')
+            hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+            user.password = hashed
             user.status = request.POST['status']
             date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
             datetime_object = datetime.datetime.strptime(date, '%b %d %Y')
@@ -111,10 +147,29 @@ def user_profile(request, pk):
 @csrf_exempt
 def login_user(request):
     if request.method == 'POST':
-        print(request.POST['form'])
-        return HttpResponseRedirect('#')
+        form = UserLogin(request.POST)
+        if form.is_valid():
+            if User.objects.filter(username=request.POST['username']).exists():
+                user = User.objects.get(username=request.POST['username'])
+                # encoded = request.POST['password'].encode('utf-8', 'ignore')
+                # print(bcrypt.checkpw(encoded, user.password))
+                if request.POST['password'] == user.password.encode('utf-8'):
+                    request.session['user'] = user.username
+                    request.session.modified = True
+                    print(request.session['user'])
+                    return HttpResponseRedirect('/user/{}'.format(user.id))
+                else:
+                    messages.error(request, 'Incorrect password')
+                    return HttpResponseRedirect('#')
+            else:
+                messages.error(request, 'User not found')
+                return HttpResponseRedirect('#')
+            return HttpResponseRedirect('#')
     if request.method == 'GET':
-        return render(request, 'login-user/index.html')
+        return render(request, 'login-user/index.html', {'form': UserLogin()})
+
+def home_user(request):
+    return render(request, 'home-user/index.html')
 
 @login_required
 def logout(request):

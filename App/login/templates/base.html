@@ -11,19 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container" style="border-bottom: black 1px outset; padding-bottom: 0.5%;">
-                <div class="navbar-brand"> <a class="navbar-link" href="{% url 'index' %}" style="color:black;">Home</a> </div>                
-                <a href="{% url 'list_users' %}" style="color:black;"> Members </a>
-                <a href="{% url 'list_events' %}" style="color:black;"> Events </a>
-                <a href="{% url 'create_event' %}" style="color:black;"> Create event </a>
-                <a href="{% url 'register' %}" style="color:black;"> Register </a>
-                <a href="{% url 'logout' %}"><button class="btn btn-primary" type="submit" >Log out</button></a>
-            </div>
-        </nav>
-    {% endif %}
     {% block content %}
     {% endblock %}
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
 </body>
 </html>

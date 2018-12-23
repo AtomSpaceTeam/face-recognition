@@ -24,7 +24,7 @@ form {
     width: 80%;
 }
 
-input {
+input, .inputs {
     outline: 0;
 }
 

@@ -1,0 +1,16 @@
+.status-block {
+    text-align: center;
+    margin: 5%;
+}
+
+.information-block {
+    overflow-y: scroll;
+    height: 92%;
+}
+
+
+.statistic-text {
+    color: #36393b;
+    text-align: center;
+    margin: 2%;
+}

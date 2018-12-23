@@ -1,0 +1,96 @@
+{% extends '../home/index-base.html' %}
+
+{% block info %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+<link rel="stylesheet" media="all" href="{% static 'css/home.css' %}" type="text/css">
+
+<div>
+    <h3 class="statistic-text">Statistic</h3>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="container" style="padding: 2%;">
+            <div class="row">
+                <div class="col-sm">
+                    <h3 style="text-align:center; padding: 1%; margin: 0;">Online Checker</h3>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row" style="padding: 5%;padding-top: 0;padding-left:0;padding-right:0;">
+              <div class="col">
+                <div class="container list-group" style="border-bottom: black 1px outset;">
+                    <div class="row">
+                        <div class="col-sm">
+                            <p style="text-align:center;margin: 0;line-height: 2;">Name Surname</p>
+                        </div>
+                        <div class="col-sm">
+                            <p style="text-align:center;margin: 0;line-height: 2;">Status</p>
+                        </div>
+                        <div class="col-sm">
+                            <p style="text-align:center;margin: 0;line-height: 2;">Time</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="userjoin-block">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="container list-group">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">Maxim Osadchiy</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">Resident</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">15:43 12.02.2018</p>
+                                    </div> 
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+</div>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var users = [];
+    var names = [];
+    var data = [];
+    // var req = new XMLHttpRequest();
+    // req.open('GET', 'http://localhost:8000/api', s)
+    fetch('http://localhost:8000/api-attendance', {"Content-Type": "application/json"})
+    .then((res) => {
+        return res.json()
+    })
+    .then((att) => {
+        for(var i in att){
+            names.push(att[i].fields.name)
+            data.push(att[i].fields.attendance)
+        }
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: names,
+                datasets: [{
+                    label: "Attendance in this month",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: data,
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    })
+    .catch((err) => {console.error(err)});
+</script>
+
+{% endblock %}

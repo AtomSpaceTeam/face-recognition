@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 body {
-    background: white;
+    font-family: 'Lato', cursive;
 }
 
 .login-block {
-    background: white;
     position: relative;
     top: 75px;
     margin: 0;
@@ -23,13 +24,6 @@ body {
     overflow-y: scroll;
     max-height: 50vh;
 }
-
-.list-residents {
-    background: white;
-    position: relative;
-    height: 100vh;
-}
-
 
 .form-group {
     width: 100%;

@@ -19,6 +19,7 @@ class User(models.Model):
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
+    password = models.CharField(max_length=150)
     status = models.CharField(max_length=15, choices=status)
     birth_date = models.DateTimeField()
     email = models.EmailField(max_length=30, null=True)
