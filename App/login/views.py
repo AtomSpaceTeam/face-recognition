@@ -244,6 +244,7 @@ def delete_profile(request, pk):
     return HttpResponseRedirect('/')
 
 @csrf_exempt
+<<<<<<< HEAD
 def recognised(request):
     if request.method == 'POST':
         name = json.dumps(request.POST['name'])
@@ -259,3 +260,15 @@ def recognised(request):
             seen.save()
             return HttpResponse(0)
     return HttpResponse(0)
+=======
+def telegram_login(request):
+    print(request.POST)
+    if User.objects.filter(username = request.POST['username']).exists():
+        request.session['user'] = request.POST['username']
+        request.session.modified = True
+        print(request.session['user'])
+        return HttpResponseRedirect('/users')
+    else: 
+        messages.error(request, 'User not found')
+        return HttpResponseRedirect('/login-user')
+>>>>>>> 97251f3a7e4f5c3f0d8bc54c661dc02365c0580f

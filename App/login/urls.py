@@ -17,6 +17,7 @@ urlpatterns = [
     path('create_event', views.create_event, name='create_event'),
     path('login/', auth_views.LoginView.as_view(template_name='login/index.html')),
     path('login-user/', views.login_user, name='login_user'),
+    path('telegram-login/', views.telegram_login, name='telegram_login'),
     path('home-user', views.home_user, name='home_user'),
     path('users-user', views.list_users_user, name='users_user'),
     path('profile-user', views.profile_user, name='profile_user'),
