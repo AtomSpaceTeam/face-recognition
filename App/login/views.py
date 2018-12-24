@@ -228,3 +228,15 @@ def delete_profile(request, pk):
         os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo))
     p.delete()
     return HttpResponseRedirect('/')
+
+@csrf_exempt
+def telegram_login(request):
+    print(request.POST)
+    if User.objects.filter(username = request.POST['username']).exists():
+        request.session['user'] = request.POST['username']
+        request.session.modified = True
+        print(request.session['user'])
+        return HttpResponseRedirect('/users')
+    else: 
+        messages.error(request, 'User not found')
+        return HttpResponseRedirect('/login-user')

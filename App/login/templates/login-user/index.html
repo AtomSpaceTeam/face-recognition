@@ -11,10 +11,29 @@
     <h4 style="text-align:center;">{{ i }}</h4>
 {% endfor %}
 <div class="container">
+    
     <form action="" name="form" method="post">
         <!-- <input class="login-input" id="username" type="text" placeholder="Login" required>
         <input class="password-input" id="password" type="password" placeholder="Password" required> -->
+        
         {{ form }}
+        <script async src="https://telegram.org/js/telegram-widget.js?3" 
+        data-telegram-login="AtomRegisterBot" 
+        data-size="large" 
+        data-radius="10" 
+        data-auth-url="http://4766d83a.ngrok.io/login/?next=/" 
+        data-onauth="onTelegramAuth(user)" 
+        data-request-access="write">
+</script>
+
+<script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="AtomRegisterBot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+<script type="text/javascript">
+function onTelegramAuth(user) {
+    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+}
+</script>
+
+
         <p class="request-text"><a class="request-href" href="/login">Request for success</a></p>
         <input class="submit-input" type="submit" onclick="" value="Log in">
     </form>
@@ -50,6 +69,22 @@
     // var content = await response.json();
     // return content;
 // });
+</script>
+<script type="text/javascript"> 
+    function onTelegramAuth(user) { 
+        alert('Logged in as ' + user.first_name + ' ' + user.last_name + '!'); 
+        console.log(user.first_name, user.last_name, user.username, user.auth_date,)
+        $.post ({
+            url : 'http://28d17670.ngrok.io/telegram-login/',
+            data : {
+            'first_name' : user.first_name,
+            'last_name' : user.last_name,
+            'username' : user.username,
+            'date' : user.auth_date 
+        },
+        })
+        window.location.replace("/users")
+    } 
 </script>
 
 
