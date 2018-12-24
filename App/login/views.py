@@ -15,6 +15,7 @@ from django.shortcuts import HttpResponseRedirect, render
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 from django.contrib import messages
+from django.contrib.auth.hashers import BCryptSHA256PasswordHasher 
 
 from .forms import EditForm, UserForm, UserLogin
 from .models import User, Seen
@@ -125,7 +126,7 @@ def register(request):
         residents = User.objects.filter(status='resident').count()
         mentors = User.objects.filter(status='mentor').count()
         owners = User.objects.filter(status='owner').count()
-        return render(request, 'create_user/index.html', {'user_form': UserForm(),'residents': residents,'mentors': mentors,'owners': owners})
+        return render(request, 'register_user/index.html', {'user_form': UserForm(),'residents': residents,'mentors': mentors,'owners': owners})
     if request.method == 'POST':
         f = UserForm(request.POST, request.FILES)
         if request.POST['password'] != request.POST['password_1']:
@@ -137,8 +138,8 @@ def register(request):
             user.name = request.POST['name']
             user.surname = request.POST['surname']
             user.username = request.POST['username']
-            password = bytes(request.POST['password'], 'utf-8')
-            hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+            bcr = BCryptSHA256PasswordHasher()
+            hashed = bcr.encode(request.POST['password'], bcr.salt())
             user.password = hashed
             user.status = request.POST['status']
             date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
@@ -173,9 +174,10 @@ def login_user(request):
         if form.is_valid():
             if User.objects.filter(username=request.POST['username']).exists():
                 user = User.objects.get(username=request.POST['username'])
-                # encoded = u'{}'.format(request.POST['password'])
-                # print(bcrypt.checkpw(encoded, user.password))
-                if request.POST['password'] == user.password.encode('utf-8'):
+                # print(user.password.encode('ascii').decode())
+                # # print(bcrypt.checkpw(request.POST['password'].encode('utf-8').decode(), user.password))
+                bcr = BCryptSHA256PasswordHasher()
+                if bcr.verify(request.POST['password'], user.password) == True:
                     request.session['user'] = user.username
                     request.session.modified = True
                     print(request.session['user'])
@@ -240,3 +242,20 @@ def delete_profile(request, pk):
         os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo))
     p.delete()
     return HttpResponseRedirect('/')
+
+@csrf_exempt
+def recognised(request):
+    if request.method == 'POST':
+        name = json.dumps(request.POST['name'])
+        time = json.dumps(request.POST['time'])
+        print(request.POST)
+        if User.objects.filter(surname=name).exists():
+            user = User.objects.get(surname=name)
+            seen = Seen()
+            seen.name = '{} {}'.format(user.name, user.surname)
+            seen.status = user.status
+            seen.time = time
+            print('{} {} has entered recently'.format(seen.name, seen.surname))
+            seen.save()
+            return HttpResponse(0)
+    return HttpResponse(0)

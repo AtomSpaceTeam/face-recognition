@@ -24,6 +24,7 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('api-attendance', views.api_attendance, name='api_attendance'),
     path('api-face', views.api_face, name='api_face'),
+    path('recognised', views.recognised, name='recognised'),
     path('register', views.register, name='register'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user-users/(?P<pk>\d+)/$', views.profile_user, name='profile_user'),
