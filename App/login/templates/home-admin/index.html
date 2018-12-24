@@ -58,24 +58,39 @@
 
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
+    var users = [];
+    var names = [];
+    var data = [];
+    // var req = new XMLHttpRequest();
+    // req.open('GET', 'http://localhost:8000/api', s)
+    fetch('http://localhost:8000/api-attendance', {"Content-Type": "application/json"})
+    .then((res) => {
+        return res.json()
+    })
+    .then((att) => {
+        for(var i in att){
+            names.push(att[i].fields.name)
+            data.push(att[i].fields.attendance)
+        }
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
 
-        // The data for our dataset
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
-            }]
-        },
+            // The data for our dataset
+            data: {
+                labels: names,
+                datasets: [{
+                    label: "Attendance in this month",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: data,
+                }]
+            },
 
-        // Configuration options go here
-        options: {}
-    });
+            // Configuration options go here
+            options: {}
+        });
+    })
+    .catch((err) => {console.error(err)});
 </script>
 
 {% endblock %}

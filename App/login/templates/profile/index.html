@@ -46,17 +46,19 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <div class="container list-group">
-                            <div class="row">
-                                <div class="col-sm">
-                                    <p style="text-align:center;margin: 0;line-height: 2;">Maxim Osadchiy</p>
+                            {% for i in seen %}
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.name }}</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.status }}</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.time }}</p>
+                                    </div> 
                                 </div>
-                                <div class="col-sm">
-                                    <p style="text-align:center;margin: 0;line-height: 2;">Resident</p>
-                                </div>
-                                <div class="col-sm">
-                                    <p style="text-align:center;margin: 0;line-height: 2;">15:43 12.02.2018</p>
-                                </div> 
-                            </div>
+                            {% endfor %}
                         </div>
                     </li>
                 </ul>
@@ -67,31 +69,38 @@
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var users = [];
+    var names = [];
+    var data = [];
+    // var req = new XMLHttpRequest();
+    // req.open('GET', 'http://localhost:8000/api', s)
     fetch('http://localhost:8000/api', {"Content-Type": "application/json"})
     .then((res) => {
         return res.json()
     })
     .then((att) => {
-        console.log(JSON.parse(att))
+        for(var i in att){
+            names.push(att[i].fields.name)
+            data.push(att[i].fields.attendance)
+        }
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: names,
+                datasets: [{
+                    label: "Attendance in this month",
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: data,
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
     })
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-            labels: [],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
-            }]
-        },
-
-        // Configuration options go here
-        options: {}
-    });
+    .catch((err) => {console.error(err)});
 </script>
 
 {% endblock %}

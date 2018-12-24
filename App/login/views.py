@@ -4,21 +4,26 @@ import calendar
 import datetime
 from datetime import date
 import json
+import bcrypt
+import requests
 
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.contrib import messages
 
-from .forms import EditForm, UserForm
-from .models import User
+from .forms import EditForm, UserForm, UserLogin
+from .models import User, Seen
 
 
 def calculate_age(born):
     today = date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
 
 @login_required
 def index(request):
@@ -28,10 +33,17 @@ def index(request):
     return render(request, 'home-admin/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
 
 @login_required
-def api(request):
-    database = serializers.serialize("json", User.objects.all(), fields=('attendance'))
-    data = json.dumps(database)
-    return JsonResponse(data, safe=False)
+def api_attendance(request):
+    database = serializers.serialize("json", User.objects.all(), fields=('attendance', 'name', 'surname'))
+    return HttpResponse(database)
+
+@login_required
+def api_face(request):
+    res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
+    person = res.json()
+    print(person['lastSeenInfo']['data'][0]['last_seen'])
+
+    return HttpResponse(person['lastSeenInfo'])
 
 @login_required
 def list_residents(request):
@@ -116,12 +128,18 @@ def register(request):
         return render(request, 'create_user/index.html', {'user_form': UserForm(),'residents': residents,'mentors': mentors,'owners': owners})
     if request.method == 'POST':
         f = UserForm(request.POST, request.FILES)
+        if request.POST['password'] != request.POST['password_1']:
+            messages.error(request, 'Passwords are not the same')
+            return HttpResponseRedirect('#')
         if f.is_valid():
             user = User()
             user.attendance = 0
             user.name = request.POST['name']
             user.surname = request.POST['surname']
             user.username = request.POST['username']
+            password = bytes(request.POST['password'], 'utf-8')
+            hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+            user.password = hashed
             user.status = request.POST['status']
             date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
             datetime_object = datetime.datetime.strptime(date, '%b %d %Y')
@@ -143,13 +161,34 @@ def user_profile(request, pk):
         'profile': profile,
         'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo),
         'age': age,
-        'birthday': birthday
+        'birthday': birthday,
+        'seen': Seen.objects.all()
     }
     return render(request, 'profile/index.html', context)
 
+@csrf_exempt
 def login_user(request):
+    if request.method == 'POST':
+        form = UserLogin(request.POST)
+        if form.is_valid():
+            if User.objects.filter(username=request.POST['username']).exists():
+                user = User.objects.get(username=request.POST['username'])
+                # encoded = request.POST['password'].encode('utf-8', 'ignore')
+                # print(bcrypt.checkpw(encoded, user.password))
+                if request.POST['password'] == user.password.encode('utf-8'):
+                    request.session['user'] = user.username
+                    request.session.modified = True
+                    print(request.session['user'])
+                    return HttpResponseRedirect('/user/{}'.format(user.id))
+                else:
+                    messages.error(request, 'Incorrect password')
+                    return HttpResponseRedirect('#')
+            else:
+                messages.error(request, 'User not found')
+                return HttpResponseRedirect('#')
+            return HttpResponseRedirect('#')
     if request.method == 'GET':
-        return render(request, 'login-user/index.html')
+        return render(request, 'login-user/index.html', {'form': UserLogin()})
 
 def home_user(request):
     return render(request, 'home-user/index.html')
