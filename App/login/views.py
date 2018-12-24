@@ -161,7 +161,7 @@ def login_user(request):
         if form.is_valid():
             if User.objects.filter(username=request.POST['username']).exists():
                 user = User.objects.get(username=request.POST['username'])
-                # encoded = request.POST['password'].encode('utf-8', 'ignore')
+                # encoded = u'{}'.format(request.POST['password'])
                 # print(bcrypt.checkpw(encoded, user.password))
                 if request.POST['password'] == user.password.encode('utf-8'):
                     request.session['user'] = user.username
