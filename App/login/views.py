@@ -84,8 +84,20 @@ def list_users_user(request):
     users_list = User.objects.all()
     return render(request, 'users-user/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
-def statistic_user(request):
-    return render(request, 'statistic-user/index.html')
+def profile_user(request, pk):
+    profile = User.objects.get(id=pk)
+    age = calculate_age(profile.birth_date)
+    birthday = datetime.datetime.strftime(profile.birth_date, '%d %b %Y')
+    context = {
+        'profile': profile,
+        'profile_photo': 'http://localhost:8000/media/{}'.format(profile.profile_photo),
+        'age': age,
+        'birthday': birthday
+    }
+    return render(request, 'profile-user/index.html', context)
+
+def technical_support(request):
+    return(render, 'support-user/index.html')
 
 @login_required
 def list_events(request):
