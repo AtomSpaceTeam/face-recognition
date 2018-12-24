@@ -35,7 +35,7 @@ def index(request):
 
 @login_required
 def api_attendance(request):
-    database = serializers.serialize("json", User.objects.all(), fields=('attendance', 'name', 'surname'))
+    database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
     return HttpResponse(database)
 
 @login_required
@@ -244,23 +244,25 @@ def delete_profile(request, pk):
     return HttpResponseRedirect('/')
 
 @csrf_exempt
-<<<<<<< HEAD
 def recognised(request):
     if request.method == 'POST':
-        name = json.dumps(request.POST['name'])
-        time = json.dumps(request.POST['time'])
-        print(request.POST)
-        if User.objects.filter(surname=name).exists():
-            user = User.objects.get(surname=name)
-            seen = Seen()
-            seen.name = '{} {}'.format(user.name, user.surname)
-            seen.status = user.status
-            seen.time = time
-            print('{} {} has entered recently'.format(seen.name, seen.surname))
-            seen.save()
-            return HttpResponse(0)
-    return HttpResponse(0)
-=======
+        name = request.POST['name']
+        time = request.POST['time']
+        print(request.POST['name'])
+        try:
+            if User.objects.filter(surname=name).exists():
+                user = User.objects.get(surname=name)
+                seen = Seen()
+                seen.name = '{} {}'.format(user.name, user.surname)
+                seen.status = user.status
+                seen.time = time
+                print('{} {} has entered recently'.format(user.name, user.surname))
+                seen.save()
+                return HttpResponse('I feel good')
+        except:
+            return HttpResponse('All is not so good')
+    return HttpResponse('All is not so good')
+
 def telegram_login(request):
     print(request.POST)
     if User.objects.filter(username = request.POST['username']).exists():
@@ -271,4 +273,3 @@ def telegram_login(request):
     else: 
         messages.error(request, 'User not found')
         return HttpResponseRedirect('/login-user')
->>>>>>> 97251f3a7e4f5c3f0d8bc54c661dc02365c0580f

@@ -70,8 +70,14 @@
     .then((att) => {
         for(var i in att){
             names.push(att[i].fields.name)
-            data.push(att[i].fields.attendance)
         }
+        for (var i in names){
+            if (names[i-1] == att[i].fields.name){
+                names.splice(i)
+                data.push(i)
+            }
+        }
+        console.log(data)
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
