@@ -4,8 +4,10 @@
 
 {% load staticfiles %}
 <link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+<link rel="stylesheet" media="all" href="{% static 'css/home.css' %}" type="text/css">
 
-<h1 class="profile-h1">Frofile user</h1>
+
+<h1 class="profile-h1">Profile user</h1>
 <div class="container">
     <div class="row">
         <div class="info-block">
@@ -14,21 +16,32 @@
                     <img class="photo-img" src="../../static/img/Maxim.png" alt="Your photo">
                 </p>
                 <h4 class="name-text">Maxim Osadchiy</h4>
+                <p class="name-text">@maxim</p>
+            </div>
+            <div class="status-block">
+                <p>Status: Owner</p>
+                <p>Birthday: 17.08.2002</p>
+                <p>Email: osadchyimax17@gmail.com</p>
+                <p>Specialization: Back-end</p>
+                <p>Team: Atom Team</p>
+                <p>Project: Face Recognition</p>
+                <a href="{% url 'technical_support' %}"><button class="btn btn-primary" type="submit" >Technical support</button></a>
             </div>
         </div>
         <div class="statistic-block">
             <div class="navbar-block">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container">
-                        <div class="navbar-brand"> <a class="navbar-link" href="{% url 'index' %}" style="color:black;">Posts</a> </div>                
-                        <a href="{% url 'statistic_user' %}" style="color:black;"> Statistic </a>
+                        <div class="navbar-brand"> <a class="navbar-link" href="{% url 'home_user' %}" style="color:black;">Home</a> </div>                
                         <a href="{% url 'users_user' %}" style="color:black;"> Users </a>
                         <a href="{% url 'logout' %}"><button class="btn btn-primary" type="submit" >Log out</button></a>
                     </div>
                 </nav>
             </div>
-            {% block info_user %}
-            {% endblock %}
+            <div class="information-block">
+                {% block info_user %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 </div>
