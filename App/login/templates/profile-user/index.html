@@ -1,0 +1,61 @@
+{% extends 'index-user-base.html' %}
+
+{% block info_user %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/home-user.css' %}" type="text/css">
+
+<h3 style='text-align: center;margin: 2%;'>Profile user</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm"><img class='rounded-circle' style="padding: 1%;width: 50%;float: right;" src={{ profile_photo }} /></div>
+            <div class="col-sm">
+                <p> Username: {{profile.name}} {{profile.surname}}</p>
+                <p> Age: {{age}} </p>
+                <p> Status: {{profile.status}} </p>
+                <p> Birthday: {{birthday}}</p>
+                <p> Email: {{profile.email}}</p>
+                <p> Last seen: {{profile.last_seen}} </p>         
+            </div>
+        </div>
+    </div>
+<h3 style='text-align: center;margin: 2%;'>Statistic user</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var users = [];
+    fetch('http://localhost:8000/api', {"Content-Type": "application/json"})
+    .then((res) => {
+        return res.json()
+    })
+    .then((att) => {
+        console.log(JSON.parse(att))
+    })
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: [],
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+</script>
+
+{% endblock %}
