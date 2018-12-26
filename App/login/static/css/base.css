@@ -31,6 +31,10 @@ body {
     margin-bottom: 5%;
 }
 
+textarea {
+    resize: none;
+}
+
 .list-join {
     display: flex !important;
     justify-content: center;
