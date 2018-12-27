@@ -102,14 +102,9 @@ def technical_support(request):
 
 @login_required
 def list_events(request):
-    month = date.today().month
-    year = date.today().year
-    days = calendar.monthcalendar(year, month)
-    month = calendar.month_name[month]
+    events = Event.objects.all()
     context = {
-        'month': month,
-        'year': year,
-        'days': days
+        'events': events
     }
     return render(request, 'events/index.html', context)
 
