@@ -29,6 +29,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user-users/(?P<pk>\d+)/$', views.profile_user, name='profile_user'),
+    url(r'^event/(?P<pk>\d+)/$', views.profile_event, name='profile_event'),
     url(r'^user/(?P<pk>\d+)/edit$', views.edit_profile, name='edit_profile'),
     url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
 ]

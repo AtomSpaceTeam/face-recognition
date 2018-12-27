@@ -1,23 +1,26 @@
-{% extends 'index-admin-base.html' %}
+{% extends '../index-admin-base.html' %}
 
 {% block info_admin %}
-<h3 style='text-align: center;margin: 2%;'>Profile user</h3>
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/profile-event.css' %}" type="text/css">
+
+<h3 style='text-align: center;margin: 2%;'>Profile event</h3>
     <div class="container">
         <div class="row">
-            <div class="col-sm"><img class='rounded-circle' style="padding: 1%;width: 50%;float: right;" src={{ profile_photo }} /></div>
             <div class="col-sm">
-                <p> Username: {{profile.name}} {{profile.surname}}</p>
-                <p> Age: {{age}} </p>
-                <p> Status: {{profile.status}} </p>
-                <p> Birthday: {{birthday}}</p>
-                <p> Email: {{profile.email}}</p>
-                <p> Last seen: {{profile.last_seen}} </p>
-                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ profile.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
-                <p style="margin: 0;line-height: 2;home-userwidth:50%;"><a href="/user/{{ profile.id }}delete"><button class="btn btn-primary" type="submit" style="background: #EF5350; width:70%;" >Delete</button></a></p>
+                <p> Name Event: {{profile_events.name}}</p>
+                <p> Description {{profile_events.description}} </p>
+                <p> Organizer: {{profile_events.organizer}} </p>
+                <p> Start Event: {{profile_events.start_time}}</p>
+                <p> End Event: {{profile_events.end_time}}</p>
+                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ profile_events.id }}/add_guest"><button class="btn btn-primary" type="submit" style="width:70%;">Add Guest</button></a></p>
+                <p style="margin-bottom: 1%;line-height: 2;width:50%;"><a href="/user/{{ profile_events.id }}/edit"><button class="btn btn-primary" type="submit" style="width:70%;">Edit</button></a></p>
+                <p style="margin: 0;line-height: 2;width:50%;"><a href="/user/{{ profile_events.id }}delete"><button class="btn btn-primary" type="submit" style="background: #EF5350; width:70%;" >Delete</button></a></p>
             </div>
         </div>
     </div>
-<h3 style='text-align: center;margin: 2%;'>Statistic user</h3>
+<h3 style='text-align: center;margin: 2%;'>Statistic event</h3>
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -25,23 +28,8 @@
             </div>
         </div>
     </div>
-<h3 style='text-align: center;margin: 2%;'>Checker user</h3>
+<h3 style='text-align: center;margin: 2%;'>Guests</h3>
     <div class="container">
-        <div class="row" style="padding: 5%;padding-top: 0;padding-left:0;padding-right:0;">
-            <div class="col">
-            <div class="container list-group" style="border-bottom: black 1px outset;">
-                <div class="row">
-                    <div class="col-sm">
-                        <p style="text-align:center;margin: 0;line-height: 2;">Name Surname</p>
-                    </div>
-                    <div class="col-sm">
-                        <p style="text-align:center;margin: 0;line-height: 2;">Status</p>
-                    </div>
-                    <div class="col-sm">
-                        <p style="text-align:center;margin: 0;line-height: 2;">Time</p>
-                    </div>
-                </div>
-            </div>
             <div class="userjoin-block">
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -53,9 +41,6 @@
                                     </div>
                                     <div class="col-sm">
                                         <p style="text-align:center;margin: 0;line-height: 2;">{{ i.status }}</p>
-                                    </div>
-                                    <div class="col-sm">
-                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.time }}</p>
                                     </div>
                                 </div>
                             {% endfor %}

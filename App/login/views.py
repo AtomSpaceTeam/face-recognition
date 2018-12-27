@@ -15,7 +15,7 @@ from django.shortcuts import HttpResponseRedirect, render
 from django.http import  HttpResponse
 from django.core import serializers
 from django.contrib import messages
-from django.contrib.auth.hashers import BCryptSHA256PasswordHasher 
+from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
 
 from .forms import EditForm, UserForm, UserLogin, EventForm
 from .models import User, Seen, Event
@@ -97,19 +97,25 @@ def profile_user(request, pk):
     }
     return render(request, 'profile-user/index.html', context)
 
+def profile_event(requests, pk):
+    profile_events = Event.objects.get(id=pk)
+    start_time = datetime.datetime.strptime('{} {}'.format(profile_events.start1, profile_events.start2), '%Y-%m-%d %H:%M')
+    end_time = datetime.datetime.strptime('{} {}'.format(profile_events.end1, profile_events.end2), '%Y-%m-%d %H:%M')
+    context_events = {
+        'profile_events': profile_events,
+        'start_time': start_time,
+        'end_time': end_time,
+    }
+    return render(request, 'profile-event/index.html', context_events)
+
 def technical_support(request):
     return(render, 'support-user/index.html')
 
 @login_required
 def list_events(request):
-    month = date.today().month
-    year = date.today().year
-    days = calendar.monthcalendar(year, month)
-    month = calendar.month_name[month]
+    events = Event.objects.all()
     context = {
-        'month': month,
-        'year': year,
-        'days': days
+        'events': events
     }
     return render(request, 'events/index.html', context)
 
@@ -237,7 +243,7 @@ def edit_profile(request, pk):
                 email = request.POST['email'],
             )
             return HttpResponseRedirect('/')
-    
+
     if request.method == 'GET':
         context = {
             'edit_form': EditForm()
@@ -289,6 +295,6 @@ def telegram_login(request):
         request.session.modified = True
         print(request.session['user'])
         return HttpResponseRedirect('/users')
-    else: 
+    else:
         messages.error(request, 'User not found')
         return HttpResponseRedirect('/login-user')

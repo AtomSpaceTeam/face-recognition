@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+  font-family: 'Lato', cursive;
+}
+
+h3 {
+  color: #36393b;
+  text-align: center;
+  margin: 2%;
+}
+
+.card-text {
+  height: 75px;
+}
+
 .event{
-  margin: 2%
+  margin: 1%;
+  width: 100%;
+}
+
+.event-list {
+  margin-top: 2%;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
