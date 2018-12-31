@@ -1,130 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'index-admin-base.html' %}
 
-{% block content %}
-
+{% block info_admin %}
 {% load staticfiles %}
 <link rel="stylesheet" media="all" href="{% static 'css/events.css' %}" type="text/css">
 
-{% comment %} <div class="wrapper"> {% endcomment %}
-  <main>
-    <div class="toolbar">
-      <div class="toggle">
-        <div class="toggle__option toggle__option">month</div>
-      </div>
-      <div class="current-month"><h3>{{ month }} {{ year }}</h3></div>
-      <div class="search-input">
-        <input type="text" value="What are you looking for?">
-        <i class="fa fa-search"></i>
-      </div>
-    </div>
-    <div class="calendar">
-      <div class="calendar__header">
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
-      </div>
-      {% for week in days %}
-        <div class="calendar__week">
-            {% for i in week %}
-                {% if i == 0 %}
-                    <div class="calendar__day day">&nbsp;</div>            
-                {% else %}
-                    <div class="calendar__day day">{{i}}</div>
-                {% endif %}
-            {% endfor %}
+<h3 class="event-text">Events</h3>
+<div class="container event-list">
+    {% for item in events %}
+      <div class="event card text-center col-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <a href="/event/{{ item.id }}" class="btn btn-primary">Info</a>
         </div>
-      {% endfor %}
-      {% comment %} <div class="calendar__week">
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
       </div>
-      <div class="calendar__week">
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>        
-      </div>
-      <div class="calendar__week">
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>    
-      </div>
-      <div class="calendar__week">
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div> 
-        <div class="calendar__day day">&nbsp;</div> 
-        <div class="calendar__day day">&nbsp;</div> 
-      </div>
-      <div class="calendar__week">
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-        <div class="calendar__day day">&nbsp;</div>
-      </div> {% endcomment %}
-    </div>
-  </main>
-  {% comment %} <sidebar>
-    <div class="logo">logo</div>
-    <div class="avatar">
-      <div class="avatar__img">
-        <img src="https://picsum.photos/70" alt="avatar">
-      </div>
-      <div class="avatar__name">John Smith</div>
-    </div>
-    <nav class="menu">
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-home"></i>
-        <span class="menu__text">overview</span>
-      </a>
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-envelope"></i>
-        <span class="menu__text">messages</span>
-      </a>
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-list"></i>
-        <span class="menu__text">workout</span>
-      </a>
-      <a class="menu__item menu__item--active" href="#">
-        <i class="menu__icon fa fa-calendar"></i>
-        <span class="menu__text">calendar</span>
-      </a>
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-bar-chart"></i>
-        <span class="menu__text">goals</span>
-      </a>
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-trophy"></i>
-        <span class="menu__text">achivements</span>
-      </a>
-      <a class="menu__item" href="#">
-        <i class="menu__icon fa fa-sliders"></i>
-        <span class="menu__text">measurements</span>
-      </a>
-    </nav>
-    <div class="copyright">copyright &copy; 2018</div>
-  </sidebar> {% endcomment %}
-{% comment %} </div> {% endcomment %}
+    {% endfor %}
+</div>
 
-{% endblock  %}
+{% endblock %}

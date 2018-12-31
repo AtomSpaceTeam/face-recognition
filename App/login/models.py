@@ -36,3 +36,11 @@ class Seen(models.Model):
     name = models.CharField(max_length=60)
     status = models.CharField(max_length=20)
     time = models.DateTimeField(auto_now=True)
+
+class Event(models.Model):
+    name = models.CharField(max_length=80)
+    description = models.TextField()
+    organizer = models.CharField(max_length=40)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    created_time = models.DateTimeField(auto_now=True)

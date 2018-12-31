@@ -14,7 +14,7 @@ urlpatterns = [
     path('owners', views.list_owners, name='list_owners'),
     path('users', views.list_users, name='list_users'),
     path('events', views.list_events, name='list_events'),
-    path('create_event', views.create_event, name='create_event'),
+    path('create-event', views.create_event, name='create_event'),
     path('login/', auth_views.LoginView.as_view(template_name='login/index.html')),
     path('login-user/', views.login_user, name='login_user'),
     path('telegram-login/', views.telegram_login, name='telegram_login'),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user-users/(?P<pk>\d+)/$', views.profile_user, name='profile_user'),
+    url(r'^event/(?P<pk>\d+)/$', views.event, name='event'),
     url(r'^user/(?P<pk>\d+)/edit$', views.edit_profile, name='edit_profile'),
     url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
 ]

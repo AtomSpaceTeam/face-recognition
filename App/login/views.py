@@ -2,8 +2,6 @@ import os
 import shutil
 import calendar
 import datetime
-from datetime import date
-import json
 import bcrypt
 import requests
 
@@ -12,17 +10,18 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
-from django.http import JsonResponse, HttpResponse
+from django.http import  HttpResponse
 from django.core import serializers
 from django.contrib import messages
-from django.contrib.auth.hashers import BCryptSHA256PasswordHasher 
+from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
 
-from .forms import EditForm, UserForm, UserLogin
-from .models import User, Seen
+from .forms import EditForm, UserForm, UserLogin, EventForm
+from .models import User, Seen, Event
+from .loginUserDecorator import decorator
 
 
 def calculate_age(born):
-    today = date.today()
+    today = datetime.date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 
@@ -101,28 +100,49 @@ def profile_user(request, pk):
     }
     return render(request, 'profile-user/index.html', context)
 
+
+def event(request, pk):
+    profile_events = Event.objects.get(id=pk)
+    context_events = {
+        'profile_events': profile_events,
+    }
+    return render(request, 'event/index.html', context_events)
+
 def technical_support(request):
     return(render, 'support-user/index.html')
 
-@login_required
 def list_events(request):
-    month = date.today().month
-    year = date.today().year
-    days = calendar.monthcalendar(year, month)
-    month = calendar.month_name[month]
+    events = Event.objects.all()
     context = {
-        'month': month,
-        'year': year,
-        'days': days
+        'events': events
     }
     return render(request, 'events/index.html', context)
 
 @login_required
 def create_event(request):
-    residents = User.objects.filter(status='resident').count()
-    mentors = User.objects.filter(status='mentor').count()
-    owners = User.objects.filter(status='owner').count()
-    return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            start1 = request.POST['start_date']
+            start2 = request.POST['start_time']
+            end1 = request.POST['end_date']
+            end2 = request.POST['end_time']
+            event = Event()
+            event.name = request.POST['name']
+            arr = request.POST['description'].split("\r\n")
+            event.description = ' '.join(arr)
+            event.organizer = request.POST['organizer']
+            event.start_time = datetime.datetime.strptime('{} {}'.format(start1, start2), '%Y-%m-%d %H:%M')
+            event.end_time = datetime.datetime.strptime('{} {}'.format(end1, end2), '%Y-%m-%d %H:%M')
+            event.save()
+            return HttpResponseRedirect('/events')
+
+    if request.method == 'GET':
+        residents = User.objects.filter(status='resident').count()
+        mentors = User.objects.filter(status='mentor').count()
+        owners = User.objects.filter(status='owner').count()
+        form = EventForm()
+        return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners, 'form': form})
 
 @login_required
 def register(request):
@@ -222,7 +242,7 @@ def edit_profile(request, pk):
                 email = request.POST['email'],
             )
             return HttpResponseRedirect('/')
-    
+
     if request.method == 'GET':
         context = {
             'edit_form': EditForm()
@@ -274,6 +294,6 @@ def telegram_login(request):
         request.session.modified = True
         print(request.session['user'])
         return HttpResponseRedirect('/users')
-    else: 
+    else:
         messages.error(request, 'User not found')
         return HttpResponseRedirect('/login-user')
