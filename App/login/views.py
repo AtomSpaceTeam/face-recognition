@@ -28,10 +28,14 @@ def calculate_age(born):
 
 @login_required
 def index(request):
-    residents = User.objects.filter(status='resident').count()
-    mentors = User.objects.filter(status='mentor').count()
-    owners = User.objects.filter(status='owner').count()
-    return render(request, 'home-admin/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    context = {
+        'residents': User.objects.filter(status='resident').count(),
+        'mentors': User.objects.filter(status='mentor').count(),
+        'owners': User.objects.filter(status='owner').count(),
+        'checker': Seen.objects.all(),
+        'last_seen': Seen.objects.latest('id')
+    }
+    return render(request, 'home-admin/index.html', context)
 
 @login_required
 def api_attendance(request):
