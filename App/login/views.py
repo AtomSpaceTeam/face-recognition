@@ -88,6 +88,7 @@ def list_users_user(request):
     users_list = User.objects.all()
     return render(request, 'users-user/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
+
 def profile_user(request, pk):
     profile = User.objects.get(id=pk)
     age = calculate_age(profile.birth_date)
