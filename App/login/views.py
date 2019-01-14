@@ -41,13 +41,13 @@ def api_attendance(request):
     database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
     return HttpResponse(database)
 
-@login_required
-def api_face(request):
-    res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
-    person = res.json()
-    print(person['lastSeenInfo']['data'][0]['last_seen'])
+# @login_required
+# def api_face(request):
+#     res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
+#     person = res.json()
+#     print(person['lastSeenInfo']['data'][0]['last_seen'])
 
-    return HttpResponse(person['lastSeenInfo'])
+    # return HttpResponse(person['lastSeenInfo'])
 
 @login_required
 def list_residents(request):
