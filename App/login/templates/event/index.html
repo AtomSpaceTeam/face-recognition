@@ -1,0 +1,45 @@
+{% extends '../index-admin-base.html' %}
+
+{% block info_admin %}
+
+{% load staticfiles %}
+<link rel="stylesheet" media="all" href="{% static 'css/event.css' %}" type="text/css">
+
+<h3 style='text-align: center;margin: 2%;'>Profile event</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm event-info">
+                <p> Name: {{event.name}}</p>
+                <p> Description: {{event.description}} </p>
+                <p> Organizer: {{event.organizer}} </p>
+                <p> Start Event: {{event.start_time}}</p>
+                <p> End Event: {{event.end_time}}</p>
+                <p style="margin-bottom: 1%;line-height: 2;"><a href="/create-guest"><button class="btn btn-primary event-btn" type="submit">Add Guest</button></a></p>
+                <p style="margin-bottom: 1%;line-height: 2;"><a href="/event/{{ event.id }}/edit"><button class="btn btn-primary event-btn" type="submit">Edit</button></a></p>
+                <p style="margin: 0;line-height: 2;"><a href="/event/{{ event.id }}/delete"><button class="btn btn-primary event-btn" type="submit" style="background: #EF5350;">Delete</button></a></p>
+            </div>
+        </div>
+    </div>
+<h3 style='text-align: center;margin: 2%;'>Guests</h3>
+    <div class="container">
+            <div class="userjoin-block">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="container list-group">
+                            {% for i in seen %}
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.name }}</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="text-align:center;margin: 0;line-height: 2;">{{ i.status }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

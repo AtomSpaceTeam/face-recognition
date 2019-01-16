@@ -4,14 +4,17 @@
 {% load staticfiles %}
 <link rel="stylesheet" media="all" href="{% static 'css/events.css' %}" type="text/css">
 
-<div class="container">
-    <div class="event card text-center col-md-4">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+<h3 class="event-text">Events</h3>
+<div class="container event-list">
+    {% for item in events %}
+      <div class="event card text-center col-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <a href="/event/{{ item.id }}" class="btn btn-primary">Info</a>
+        </div>
       </div>
-    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

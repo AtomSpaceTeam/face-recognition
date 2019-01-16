@@ -24,7 +24,7 @@
                 <div class="container list-group" style="border-bottom: black 1px outset;">
                     <div class="row">
                         <div class="col-sm">
-                            <p style="text-align:center;margin: 0;line-height: 2;">Name Surname</p>
+                            <p style="text-align:center;margin: 0;line-height: 2;">Full Name</p>
                         </div>
                         <div class="col-sm">
                             <p style="text-align:center;margin: 0;line-height: 2;">Status</p>
@@ -36,21 +36,23 @@
                 </div>
                 <div class="userjoin-block">
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="container list-group">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <p style="text-align:center;margin: 0;line-height: 2;">Maxim Osadchiy</p>
+                        {% for item in checker %}
+                            <li class="list-group-item">
+                                <div class="container list-group">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;">{{ item.name }}</p>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;">{{ item.status }}</p>
+                                        </div>
+                                        <div class="col-sm">
+                                            <p style="text-align:center;margin: 0;line-height: 2;">{{ item.time }}</p>
+                                        </div> 
                                     </div>
-                                    <div class="col-sm">
-                                        <p style="text-align:center;margin: 0;line-height: 2;">Resident</p>
-                                    </div>
-                                    <div class="col-sm">
-                                        <p style="text-align:center;margin: 0;line-height: 2;">15:43 12.02.2018</p>
-                                    </div> 
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -71,13 +73,22 @@
         for(var i in att){
             names.push(att[i].fields.name)
         }
-        for (var i in names){
-            if (names[i-1] == att[i].fields.name){
-                names.splice(i)
-                data.push(i)
-            }
+
+        for(var i in names){
+            if (names[i] == names[i-1]) names.splice(i)
         }
-        console.log(data)
+
+        var object = names.reduce((num, name) => {
+            num[name] = (num[name] || 0) + 1 ;
+            return num;
+          } , {});
+
+        for(var key in object){
+            data.push(object[key])
+        }
+
+        console.log(object)
+
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',

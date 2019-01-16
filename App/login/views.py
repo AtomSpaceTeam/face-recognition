@@ -2,8 +2,6 @@ import os
 import shutil
 import calendar
 import datetime
-from datetime import date
-import json
 import bcrypt
 import requests
 
@@ -15,36 +13,41 @@ from django.shortcuts import HttpResponseRedirect, render
 from django.http import  HttpResponse
 from django.core import serializers
 from django.contrib import messages
-from django.contrib.auth.hashers import BCryptSHA256PasswordHasher 
+from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
 
-from .forms import EditForm, UserForm, UserLogin, EventForm
+from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm, GuestForm
 from .models import User, Seen, Event
+from .loginUserDecorator import decorator
 
 
 def calculate_age(born):
-    today = date.today()
+    today = datetime.date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
 
 @login_required
 def index(request):
-    residents = User.objects.filter(status='resident').count()
-    mentors = User.objects.filter(status='mentor').count()
-    owners = User.objects.filter(status='owner').count()
-    return render(request, 'home-admin/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    context = {
+        'residents': User.objects.filter(status='resident').count(),
+        'mentors': User.objects.filter(status='mentor').count(),
+        'owners': User.objects.filter(status='owner').count(),
+        'checker': Seen.objects.all(),
+        'last_seen': Seen.objects.latest('id')
+    }
+    return render(request, 'home-admin/index.html', context)
 
 @login_required
 def api_attendance(request):
     database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
     return HttpResponse(database)
 
-@login_required
-def api_face(request):
-    res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
-    person = res.json()
-    print(person['lastSeenInfo']['data'][0]['last_seen'])
+# @login_required
+# def api_face(request):
+#     res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
+#     person = res.json()
+#     print(person['lastSeenInfo']['data'][0]['last_seen'])
 
-    return HttpResponse(person['lastSeenInfo'])
+    # return HttpResponse(person['lastSeenInfo'])
 
 @login_required
 def list_residents(request):
@@ -85,6 +88,7 @@ def list_users_user(request):
     users_list = User.objects.all()
     return render(request, 'users-user/index.html', {'list_users': users_list,'residents': residents,'mentors': mentors,'owners': owners})
 
+
 def profile_user(request, pk):
     profile = User.objects.get(id=pk)
     age = calculate_age(profile.birth_date)
@@ -97,19 +101,50 @@ def profile_user(request, pk):
     }
     return render(request, 'profile-user/index.html', context)
 
-def technical_support(request):
-    return(render, 'support-user/index.html')
+
+def event(request, pk):
+    event = Event.objects.get(id=pk)
+    context = {
+        'event': event,
+    }
+    return render(request, 'event/index.html', context)
+
+def edit_event(request, pk):
+    if request.method == 'GET':
+        context = {
+            'form': EditEventForm()
+        }
+        return render(request, 'edit-event/index.html', context)
+    if request.method == 'POST':
+        f = EditEventForm(request.POST)
+        if f.is_valid():
+            event = Event.objects.filter(id=pk)
+            arr = request.POST['description'].split("\r\n")
+            event.update(
+                name = request.POST['name'],
+                description = ' '.join(arr),
+                organizer = request.POST['organizer'],
+                start_time = datetime.datetime.strptime('{} {}'.format(request.POST['start_date'], request.POST['start_time']), '%Y-%m-%d %H:%M'),
+                end_time = datetime.datetime.strptime('{} {}'.format(request.POST['end_date'], request.POST['end_time']), '%Y-%m-%d %H:%M')
+            )
+            return HttpResponseRedirect('/events')
+
+def delete_event(request, pk):
+    event = Event.objects.get(id=pk)
+    event.delete()
+    return HttpResponseRedirect('/events')
+
+@login_required
+def create_guest(request):
+    obj = serializers.serialize('json', Event.objects.all(), fields = 'name')
+    print(obj)
+    return render(request, 'create_guest/index.html')
 
 @login_required
 def list_events(request):
-    month = date.today().month
-    year = date.today().year
-    days = calendar.monthcalendar(year, month)
-    month = calendar.month_name[month]
+    events = Event.objects.all()
     context = {
-        'month': month,
-        'year': year,
-        'days': days
+        'events': events
     }
     return render(request, 'events/index.html', context)
 
@@ -161,9 +196,8 @@ def register(request):
             hashed = bcr.encode(request.POST['password'], bcr.salt())
             user.password = hashed
             user.status = request.POST['status']
-            date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
-            datetime_object = datetime.datetime.strptime(date, '%b %d %Y')
-            user.birth_date = datetime_object
+            date = datetime.datetime.strptime(request.POST['date'], '%Y-%m-%d')
+            user.birth_date = date
             user.email = request.POST['email']
             user.specialization = request.POST['specialization']
             user.team = request.POST['team']
@@ -193,17 +227,16 @@ def login_user(request):
         if form.is_valid():
             if User.objects.filter(username=request.POST['username']).exists():
                 user = User.objects.get(username=request.POST['username'])
-                # print(user.password.encode('ascii').decode())
-                # # print(bcrypt.checkpw(request.POST['password'].encode('utf-8').decode(), user.password))
                 bcr = BCryptSHA256PasswordHasher()
                 if bcr.verify(request.POST['password'], user.password) == True:
                     request.session['user'] = user.username
                     request.session.modified = True
                     print(request.session['user'])
+
                     return HttpResponseRedirect('/user/{}'.format(user.id))
                 else:
                     messages.error(request, 'Incorrect password')
-                    return HttpResponseRedirect('#')
+                return HttpResponseRedirect('#')
             else:
                 messages.error(request, 'User not found')
                 return HttpResponseRedirect('#')
@@ -225,19 +258,17 @@ def edit_profile(request, pk):
         f = EditForm(request.POST)
         if f.is_valid():
             p = User.objects.filter(id=pk)
-            birth = '{}/{}/{}'.format(request.POST['date_day'],
-                                      request.POST['date_month'],
-                                      request.POST['date_year'])
+            date = datetime.datetime.strptime(request.POST['date'], '%Y-%m-%d')
             p.update(
                 name = request.POST['name'],
                 surname = request.POST['surname'],
                 age = request.POST['age'],
                 status = request.POST['status'],
-                birth_date = birth,
+                birth_date = date,
                 email = request.POST['email'],
             )
             return HttpResponseRedirect('/')
-    
+
     if request.method == 'GET':
         context = {
             'edit_form': EditForm()
@@ -247,16 +278,6 @@ def edit_profile(request, pk):
 @login_required
 def delete_profile(request, pk):
     p = User.objects.get(id=pk)
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5))
     if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo)):
         os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo))
     p.delete()
@@ -289,6 +310,6 @@ def telegram_login(request):
         request.session.modified = True
         print(request.session['user'])
         return HttpResponseRedirect('/users')
-    else: 
+    else:
         messages.error(request, 'User not found')
         return HttpResponseRedirect('/login-user')

@@ -13,9 +13,6 @@
 <div class="container">
     
     <form action="" name="form" method="post">
-        <!-- <input class="login-input" id="username" type="text" placeholder="Login" required>
-        <input class="password-input" id="password" type="password" placeholder="Password" required> -->
-        
         {{ form }}
         <script async src="https://telegram.org/js/telegram-widget.js?3" 
         data-telegram-login="AtomRegisterBot" 
@@ -40,12 +37,6 @@ function onTelegramAuth(user) {
 </div>
 <script>
     var login = () => {
-        // var data = new FormData(document.getElementsByName('form'));
-        // data.append('username', document.getElementById('username').value)
-        // data.append('password', document.getElementById('password').value)
-        // var xhr = new XMLHttpRequest();
-        // xhr.open('POST', 'http://localhost:8000/login-user/')
-        // xhr.send(data)
         setTimeout(() => { 
             var data = new FormData(document.getElementsByName('form'));
             data.append('username', document.getElementById('username').value);
@@ -57,18 +48,6 @@ function onTelegramAuth(user) {
             return 0;
         }, 1000)
     }
-    // async () => {
-    // var response = await fetch('http://localhost:8000/login-user/', {
-    //     method: 'POST',
-    //     headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({username: document.getElementById('username').value, password: document.getElementById('password').value})
-    // });
-    // var content = await response.json();
-    // return content;
-// });
 </script>
 <script type="text/javascript"> 
     function onTelegramAuth(user) { 

@@ -1,0 +1,8 @@
+.event-info{
+    display: flex;
+    flex-direction: column
+}
+
+.event-btn{
+    width: 50%;
+}

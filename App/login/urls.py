@@ -21,16 +21,19 @@ urlpatterns = [
     path('home-user', views.home_user, name='home_user'),
     path('users-user', views.list_users_user, name='users_user'),
     path('profile-user', views.profile_user, name='profile_user'),
-    path('technical-support', views.technical_support, name='technical_support'),
     path('logout', views.logout, name='logout'),
     path('api-attendance', views.api_attendance, name='api_attendance'),
-    path('api-face', views.api_face, name='api_face'),
     path('recognised', views.recognised, name='recognised'),
     path('register', views.register, name='register'),
+    path('create-guest', views.create_guest, name='create_guest'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user-users/(?P<pk>\d+)/$', views.profile_user, name='profile_user'),
+    url(r'^event/(?P<pk>\d+)/$', views.event, name='event'),
     url(r'^user/(?P<pk>\d+)/edit$', views.edit_profile, name='edit_profile'),
     url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
+    url(r'^event/(?P<pk>\d+)/edit$', views.edit_event, name='edit_event'),
+    url(r'^event/(?P<pk>\d+)/delete$', views.delete_event, name='delete_event'),
+
 ]
 
 if settings.DEBUG:
