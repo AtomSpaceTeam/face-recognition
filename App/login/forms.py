@@ -1,4 +1,12 @@
 from django import forms
+from .models import Event
+
+obj = Event.objects.all()
+arr = [i.name for i in obj]
+arr1 = []
+for i in arr:
+    arr1.append((i, i))
+tup = tuple(arr1)
 
 spec = (
     ('Software Developer', 'Software Developer'),
@@ -57,5 +65,5 @@ class GuestForm(forms.Form):
     name = forms.CharField(label='Your name', max_length=100, widget=forms.TextInput(attrs={'class': 'input-group-text'}))
     surname = forms.CharField(label='Your surname', max_length=100, widget=forms.TextInput(attrs={'class': 'input-group-text'}))
     email = forms.CharField(label='Your Email', max_length=50, widget=forms.EmailInput(attrs={'class': 'input-group-text'}))
-    event = forms.ChoiceField(label='Event', choices=(), widget=forms.Select(attrs={'class': 'input-group-text'}))
-    profile_photo = forms.ImageField()
+    event = forms.ChoiceField(label='Event', choices=tup, widget=forms.Select(attrs={'class': 'input-group-text'}))
+    photo = forms.ImageField()

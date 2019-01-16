@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 import calendar
 import datetime
@@ -14,9 +15,10 @@ from django.http import  HttpResponse
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
+from django import forms
 
 from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm, GuestForm
-from .models import User, Seen, Event
+from .models import User, Seen, Event, Guest
 from .loginUserDecorator import decorator
 
 
@@ -40,14 +42,6 @@ def index(request):
 def api_attendance(request):
     database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
     return HttpResponse(database)
-
-# @login_required
-# def api_face(request):
-#     res = requests.get('http://dry-dragon-9.localtunnel.me/last_seen/')
-#     person = res.json()
-#     print(person['lastSeenInfo']['data'][0]['last_seen'])
-
-    # return HttpResponse(person['lastSeenInfo'])
 
 @login_required
 def list_residents(request):
@@ -104,8 +98,10 @@ def profile_user(request, pk):
 
 def event(request, pk):
     event = Event.objects.get(id=pk)
+    guests = Guest.objects.filter(event_id=event.id)
     context = {
         'event': event,
+        'guests': guests
     }
     return render(request, 'event/index.html', context)
 
@@ -136,9 +132,23 @@ def delete_event(request, pk):
 
 @login_required
 def create_guest(request):
-    obj = serializers.serialize('json', Event.objects.all(), fields = 'name')
-    print(obj)
-    return render(request, 'create_guest/index.html')
+    if request.method == 'GET':
+        context = {
+            'form': GuestForm()
+        }
+        return render(request, 'create_guest/index.html', context)
+    if request.method == 'POST':
+        f = GuestForm(request.POST, request.FILES)
+        if f.is_valid():
+            guest = Guest()
+            guest.name = request.POST['name']
+            guest.surname = request.POST['surname']
+            guest.email = request.POST['email']
+            event_id = Event.objects.get(name=request.POST['event']).id
+            guest.event_id = event_id
+            guest.photo = request.FILES['photo']
+            guest.save()
+            return HttpResponseRedirect('/event/{}'.format(guest.event_id))
 
 @login_required
 def list_events(request):
