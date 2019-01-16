@@ -12,13 +12,13 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
-from django.http import JsonResponse, HttpResponse
+from django.http import  HttpResponse
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.hashers import BCryptSHA256PasswordHasher 
 
-from .forms import EditForm, UserForm, UserLogin
-from .models import User, Seen
+from .forms import EditForm, UserForm, UserLogin, EventForm
+from .models import User, Seen, Event
 
 
 def calculate_age(born):
@@ -115,10 +115,29 @@ def list_events(request):
 
 @login_required
 def create_event(request):
-    residents = User.objects.filter(status='resident').count()
-    mentors = User.objects.filter(status='mentor').count()
-    owners = User.objects.filter(status='owner').count()
-    return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners})
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            start1 = request.POST['start_date']
+            start2 = request.POST['start_time']
+            end1 = request.POST['end_date']
+            end2 = request.POST['end_time']
+            event = Event()
+            event.name = request.POST['name']
+            arr = request.POST['description'].split("\r\n")
+            event.description = ' '.join(arr)
+            event.organizer = request.POST['organizer']
+            event.start_time = datetime.datetime.strptime('{} {}'.format(start1, start2), '%Y-%m-%d %H:%M')
+            event.end_time = datetime.datetime.strptime('{} {}'.format(end1, end2), '%Y-%m-%d %H:%M')
+            event.save()
+            return HttpResponseRedirect('/events')
+
+    if request.method == 'GET':
+        residents = User.objects.filter(status='resident').count()
+        mentors = User.objects.filter(status='mentor').count()
+        owners = User.objects.filter(status='owner').count()
+        form = EventForm()
+        return render(request, 'create_event/index.html', {'residents': residents,'mentors': mentors,'owners': owners, 'form': form})
 
 @login_required
 def register(request):

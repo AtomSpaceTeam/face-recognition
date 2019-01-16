@@ -1,0 +1,20 @@
+{% extends 'index-admin-base.html' %}
+
+{% block info_admin %}
+
+<div class='container'>
+    <div class="row">
+        <div class="col-sm" style="margin-bottom: 2%;"></div>
+        <div class="col-sm" style="margin-bottom: 2%; margin-top: 2%;">
+            <h3>Create an event</h3>
+            <form style="display:grid;" action="" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input style="margin-top:4%;" class="btn btn-primary" type="submit" value="Create">
+            </form>
+        </div>
+        <div class="col-sm" style="margin-bottom: 2%;"></div>
+    </div>
+</div>
+
+{% endblock %}
