@@ -9,14 +9,14 @@
     <div class="container">
         <div class="row">
             <div class="col-sm event-info">
-                <p> Name: {{profile_events.name}}</p>
-                <p> Description: {{profile_events.description}} </p>
-                <p> Organizer: {{profile_events.organizer}} </p>
-                <p> Start Event: {{profile_events.start_time}}</p>
-                <p> End Event: {{profile_events.end_time}}</p>
-                <p style="margin-bottom: 1%;line-height: 2;"><a href="/user/{{ profile_events.id }}/add_guest"><button class="btn btn-primary event-btn" type="submit">Add Guest</button></a></p>
-                <p style="margin-bottom: 1%;line-height: 2;"><a href="/user/{{ profile_events.id }}/edit"><button class="btn btn-primary event-btn" type="submit">Edit</button></a></p>
-                <p style="margin: 0;line-height: 2;"><a href="/user/{{ profile_events.id }}delete"><button class="btn btn-primary event-btn" type="submit" style="background: #EF5350;" >Delete</button></a></p>
+                <p> Name: {{event.name}}</p>
+                <p> Description: {{event.description}} </p>
+                <p> Organizer: {{event.organizer}} </p>
+                <p> Start Event: {{event.start_time}}</p>
+                <p> End Event: {{event.end_time}}</p>
+                <p style="margin-bottom: 1%;line-height: 2;"><a href="/event/{{ event.id }}/add_guest"><button class="btn btn-primary event-btn" type="submit">Add Guest</button></a></p>
+                <p style="margin-bottom: 1%;line-height: 2;"><a href="/event/{{ event.id }}/edit"><button class="btn btn-primary event-btn" type="submit">Edit</button></a></p>
+                <p style="margin: 0;line-height: 2;"><a href="/event/{{ event.id }}/delete"><button class="btn btn-primary event-btn" type="submit" style="background: #EF5350;">Delete</button></a></p>
             </div>
         </div>
     </div>

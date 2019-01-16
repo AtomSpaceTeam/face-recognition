@@ -15,7 +15,7 @@ from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
 
-from .forms import EditForm, UserForm, UserLogin, EventForm
+from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm
 from .models import User, Seen, Event
 from .loginUserDecorator import decorator
 
@@ -103,14 +103,39 @@ def profile_user(request, pk):
 
 
 def event(request, pk):
-    profile_events = Event.objects.get(id=pk)
-    context_events = {
-        'profile_events': profile_events,
+    event = Event.objects.get(id=pk)
+    context = {
+        'event': event,
     }
-    return render(request, 'event/index.html', context_events)
+    return render(request, 'event/index.html', context)
+
+def edit_event(request, pk):
+    if request.method == 'GET':
+        context = {
+            'form': EditEventForm()
+        }
+        return render(request, 'edit-event/index.html', context)
+    if request.method == 'POST':
+        f = EditEventForm(request.POST)
+        if f.is_valid():
+            event = Event.objects.filter(id=pk)
+            arr = request.POST['description'].split("\r\n")
+            event.update(
+                name = request.POST['name'],
+                description = ' '.join(arr),
+                organizer = request.POST['organizer'],
+                start_time = datetime.datetime.strptime('{} {}'.format(request.POST['start_date'], request.POST['start_time']), '%Y-%m-%d %H:%M'),
+                end_time = datetime.datetime.strptime('{} {}'.format(request.POST['end_date'], request.POST['end_time']), '%Y-%m-%d %H:%M')
+            )
+            return HttpResponseRedirect('/events')
+
+def delete_event(request, pk):
+    event = Event.objects.get(id=pk)
+    event.delete()
+    return HttpResponseRedirect('/events')
 
 def technical_support(request):
-    return(render, 'support-user/index.html')
+    return render(request, 'support-user/index.html')
 
 def list_events(request):
     events = Event.objects.all()
@@ -167,9 +192,8 @@ def register(request):
             hashed = bcr.encode(request.POST['password'], bcr.salt())
             user.password = hashed
             user.status = request.POST['status']
-            date = calendar.month_abbr[int(request.POST['date_month'])]+' '+request.POST['date_day']+' '+request.POST['date_year']
-            datetime_object = datetime.datetime.strptime(date, '%b %d %Y')
-            user.birth_date = datetime_object
+            date = datetime.datetime.strptime(request.POST['date'], '%Y-%m-%d')
+            user.birth_date = date
             user.email = request.POST['email']
             user.specialization = request.POST['specialization']
             user.team = request.POST['team']
@@ -199,17 +223,16 @@ def login_user(request):
         if form.is_valid():
             if User.objects.filter(username=request.POST['username']).exists():
                 user = User.objects.get(username=request.POST['username'])
-                # print(user.password.encode('ascii').decode())
-                # # print(bcrypt.checkpw(request.POST['password'].encode('utf-8').decode(), user.password))
                 bcr = BCryptSHA256PasswordHasher()
                 if bcr.verify(request.POST['password'], user.password) == True:
                     request.session['user'] = user.username
                     request.session.modified = True
                     print(request.session['user'])
+
                     return HttpResponseRedirect('/user/{}'.format(user.id))
                 else:
                     messages.error(request, 'Incorrect password')
-                    return HttpResponseRedirect('#')
+                return HttpResponseRedirect('#')
             else:
                 messages.error(request, 'User not found')
                 return HttpResponseRedirect('#')
@@ -231,15 +254,13 @@ def edit_profile(request, pk):
         f = EditForm(request.POST)
         if f.is_valid():
             p = User.objects.filter(id=pk)
-            birth = '{}/{}/{}'.format(request.POST['date_day'],
-                                      request.POST['date_month'],
-                                      request.POST['date_year'])
+            date = datetime.datetime.strptime(request.POST['date'], '%Y-%m-%d')
             p.update(
                 name = request.POST['name'],
                 surname = request.POST['surname'],
                 age = request.POST['age'],
                 status = request.POST['status'],
-                birth_date = birth,
+                birth_date = date,
                 email = request.POST['email'],
             )
             return HttpResponseRedirect('/')
@@ -253,16 +274,6 @@ def edit_profile(request, pk):
 @login_required
 def delete_profile(request, pk):
     p = User.objects.get(id=pk)
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_1))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_2))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_3))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_4))
-    if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5)):
-        os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.photo_5))
     if os.path.isfile('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo)):
         os.remove('{}/{}'.format(settings.MEDIA_ROOT, p.profile_photo))
     p.delete()

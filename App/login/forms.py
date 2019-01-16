@@ -44,3 +44,12 @@ class EventForm(forms.Form):
     start_time = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'time', 'class': 'input-group-text'}), label='')
     end_date = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'date', 'class': 'input-group-text'}), label='End time')
     end_time = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'time', 'class': 'input-group-text'}), label='')
+
+class EditEventForm(forms.Form):
+    name = forms.CharField(label='Name of event', max_length=80, widget=forms.TextInput(attrs={'class': 'input-group-text'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'input-group-text', 'wrap': 'hard', 'rows': '4'}), label='Description')
+    organizer = forms.CharField(label='Organizer', max_length=80, widget=forms.TextInput(attrs={'class': 'input-group-text'}))
+    start_date = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'date', 'class': 'input-group-text'}), label='Start time')
+    start_time = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'time', 'class': 'input-group-text'}), label='')
+    end_date = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'date', 'class': 'input-group-text'}), label='End time')
+    end_time = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'time', 'class': 'input-group-text'}), label='')
