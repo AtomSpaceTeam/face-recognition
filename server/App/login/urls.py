@@ -26,6 +26,7 @@ urlpatterns = [
     path('recognised', views.recognised, name='recognised'),
     path('register', views.register, name='register'),
     path('create-guest', views.create_guest, name='create_guest'),
+    path('api', views.login_user_api, name='api'),
     url(r'^user/(?P<pk>\d+)/$', views.user_profile, name='user_profile'),
     url(r'^user-users/(?P<pk>\d+)/$', views.profile_user, name='profile_user'),
     url(r'^event/(?P<pk>\d+)/$', views.event, name='event'),

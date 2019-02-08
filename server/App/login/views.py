@@ -11,7 +11,7 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import HttpResponseRedirect, render
-from django.http import  HttpResponse
+from django.http import  HttpResponse, JsonResponse
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
@@ -21,6 +21,10 @@ from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm, Gues
 from .models import User, Seen, Event, Guest
 from .loginUserDecorator import decorator
 
+@csrf_exempt
+def login_user_api(request):
+    print(request.body)
+    return JsonResponse({'name': 'Misha'})
 
 def calculate_age(born):
     today = datetime.date.today()

@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  createMentor = async () => {
+    let headers = new Headers({
+      // 'Access-Control-Allow-Origin':'*',
+      // "Access-Control-Allow-Credentials" : true,
+      'Content-Type': 'application/json'
+    });
+    fetch("http://localhost:8000/api",{
+      method: 'POST',
+      headers: headers,
+      // mode: 'cors',
+      body: JSON.stringify({name: 'Misha'})
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((ex) => console.log(ex))
+  }
+
+  
   render() {
     return (
       <div className="App">
         <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -17,6 +38,7 @@ class App extends Component {
           >
             Learn React
           </a>
+          <button onClick={this.createMentor}>Hello</button>
         </header>
       </div>
     );
