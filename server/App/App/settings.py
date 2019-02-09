@@ -161,3 +161,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'localhost'
 )
+SECURE_SSL_REDIRECT = False
+SECURE_REDIRECT_EXEMPT = [
+    'localhost'
+]

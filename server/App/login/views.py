@@ -23,8 +23,10 @@ from .loginUserDecorator import decorator
 
 @csrf_exempt
 def login_user_api(request):
-    print(request.body)
-    return JsonResponse({'name': 'Misha'})
+    if request.method == 'POST':
+        body = json.loads(request.body.decode('utf-8'))
+        print(body['name'])
+        return JsonResponse({'name': body['name']})
 
 def calculate_age(born):
     today = datetime.date.today()
