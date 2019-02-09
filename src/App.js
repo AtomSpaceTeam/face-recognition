@@ -5,15 +5,12 @@ import './App.css';
 class App extends Component {
   createMentor = async () => {
     let headers = new Headers({
-      // 'Access-Control-Allow-Origin':'*',
-      // "Access-Control-Allow-Credentials" : true,
       'Content-Type': 'application/json'
     });
     fetch("http://localhost:8000/api",{
       method: 'POST',
       headers: headers,
-      // mode: 'cors',
-      body: JSON.stringify({name: 'Misha'})
+      body: JSON.stringify({name: 'Alex'})
     })
     .then((res) => {
       return res.json();
