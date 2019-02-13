@@ -1,7 +1,7 @@
 from django.db import models
 
 class User(models.Model):
-    attendance = models.IntegerField(default=None)
+    superuser = models.IntegerField(default=None)
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     username = models.CharField(max_length=30)

@@ -24,9 +24,36 @@ from .loginUserDecorator import decorator
 @csrf_exempt
 def login_user_api(request):
     if request.method == 'POST':
-        body = json.loads(request.body.decode('utf-8'))
-        print(body['name'])
-        return JsonResponse({'name': body['name']})
+        data = json.loads(request.body.decode('utf-8'))
+        if User.objects.filter(username=data['username']).exists():
+            user = User.objects.get(username=data['username'])
+            bcr = BCryptSHA256PasswordHasher()
+            if bcr.verify(data['password'], user.password) == True:
+                hashed = bcr.encode(data['password'], bcr.salt())
+                if user.superuser == 1:
+                    return JsonResponse({
+                        'status': 200,
+                        'user_id': f'admin-{hashed}'
+                    })
+                else:
+                    return JsonResponse({
+                        'status': 200,
+                        'user_id': f'user-{hashed}'
+                    })
+            else:
+                return JsonResponse({
+                    'status': 412,
+                    'message': 'Password not match'
+                })
+        else:
+            return JsonResponse({
+                'status': 412,
+                'message': 'User not found'
+            })
+        # return JsonResponse({
+        #     'status': 200,
+        #     'user': user
+        # })
 
 def calculate_age(born):
     today = datetime.date.today()

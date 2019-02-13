@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
+import './Main.css';
 
-class App extends Component {
+class Main extends Component {
   createMentor = async () => {
     let headers = new Headers({
       'Content-Type': 'application/json'
@@ -15,13 +16,19 @@ class App extends Component {
     .then((res) => {
       return res.json();
     })
-    .then((ex) => console.log(ex))
+    .then((ex) => console.log(ex[0].fields))
   }
 
+  check(){
+    if (localStorage.getItem('id') == null){
+      return <Redirect to='/login'/>
+    }
+  }
   
   render() {
     return (
       <div className="App">
+        {this.check()}
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
@@ -42,4 +49,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Main;
