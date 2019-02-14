@@ -1,0 +1,112 @@
+/* .good-password{
+    border-color: green;
+}
+
+.not-good-password{
+    border: 2px solid red;
+} */
+
+
+@import url("https://fonts.googleapis.com/css?family=Dosis:300");
+body {
+  background-image: url('./background-main.png');
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.messages{
+  color: white;
+}
+
+.App {
+  background: #27282d;
+  height: 340px;
+  width: 520px;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 4px 30px -5px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 30px;
+  width: 340px;
+}
+
+input, button {
+  font-family: "Dosis", sans-serif;
+  letter-spacing: 1.3px;
+}
+
+input {
+  box-sizing: border-box;
+  background: transparent;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #626571;
+  color: #ccced3;
+  padding: 12px 6px 12px 36px;
+  font-size: 19px;
+  outline: none;
+  caret-color: #e55b8d;
+}
+
+input:focus {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(140deg, #db6241 0%, #e55b8d 100%);
+  border-image-slice: 1;
+}
+
+input:focus + i {
+  color: #ccced3;
+}
+
+::placeholder {
+  color: #ccced3;
+  opacity: 0.4;
+}
+
+.login-button {
+  background: #33343b;
+  border: none;
+  border-radius: 30px;
+  color: #ccced3;
+  font-size: 16px;
+  padding: 16px 36px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+  margin-bottom: -30px;
+  box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.65);
+  transition: all 0.3s;
+}
+
+.login-button:hover {
+  background: #3f4048;
+  box-shadow: 0px 5px 20px -3px rgba(0, 0, 0, 0.65);
+}
+
+@media screen and (max-width: 620px) {
+  .App {
+    min-height: 300px;
+    max-height: 420px;
+    width: 90vw;
+  }
+
+  .input-container {
+    width: 80%;
+    margin-bottom: 40px;
+  }
+
+  .login-button {
+    margin-top: 10px;
+    margin-bottom: -20px;
+  }
+}

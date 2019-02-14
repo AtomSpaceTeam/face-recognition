@@ -1,7 +1,7 @@
 from django.db import models
 
 class User(models.Model):
-    attendance = models.IntegerField(default=None)
+    superuser = models.IntegerField(default=None)
     name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
@@ -37,3 +37,10 @@ class Guest(models.Model):
     email = models.EmailField(max_length=60)
     event_id = models.IntegerField()
     photo = models.ImageField(upload_to='guest_photos')
+
+class Todo(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
