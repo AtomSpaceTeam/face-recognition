@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Dosis:300");
+body {
+  background-image: url('../../public/background-main.png');
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

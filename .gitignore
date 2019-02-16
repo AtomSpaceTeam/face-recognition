@@ -1,5 +1,6 @@
 #   Django
 server/App/App/__pycache__
+server/App/db.sqlite3
 server/App/login/__pycache__
 server/App/login/migrations/__pycache__
 server/App/media

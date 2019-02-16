@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
-import './Form.css'
+import Loader from '../Loader/Loader';
+import './Form.css';
 
 class Form extends Component{
     constructor(){
@@ -9,7 +10,8 @@ class Form extends Component{
             username: '',
             password: '',
             messages: '',
-            redirect: false
+            redirect: false,
+            loading: false
             // password2: '',
             // firstName: '',
             // lastName: '',
@@ -28,6 +30,7 @@ class Form extends Component{
 
     onSubmit(){
         if (this.state.username.length >= 4 && this.state.password.length >= 8){
+            this.setState({loading: true});
             var obj = {
                 username: this.state.username,
                 password: this.state.password
@@ -56,14 +59,14 @@ class Form extends Component{
                     localStorage.setItem('status', 'admin');
                     localStorage.setItem('id', user.user_id);
                     localStorage.setItem('user.name', userObject.birth_date);
-                    this.setState({redirect: true});
+                    this.setState({redirect: true, loading: false});
                 }
                 else{
                     console.log('You are common user');
                     localStorage.setItem('status', 'user');
                     localStorage.setItem('id', user.user_id);
                     localStorage.setItem('user', userObject);
-                    this.setState({redirect: true});
+                    this.setState({redirect: true, loading: false});
                 }
             })
             .catch((err) => err);
@@ -89,6 +92,13 @@ class Form extends Component{
     }
 
     render(){
+        let button;
+        if (this.state.loading){
+            button = <button onClick={this.onSubmit} className='login-button' type="submit"><Loader /></button> 
+        } else{
+            button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
+        }
+
         return (
             <div className={'login-form ' + this.props.class}>
                 {this.redirect()}
@@ -99,8 +109,7 @@ class Form extends Component{
                     <div className="input-container">
                         <input onChange={this.PasswordChange} type="password" placeholder="Password"/>
                     </div>
-                    <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
-                {/* </form> */}
+                    {button}
             </div>
         );
     }
