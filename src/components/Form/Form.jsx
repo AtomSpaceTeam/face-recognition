@@ -44,18 +44,26 @@ class Form extends Component{
                 return res.json();
             })
             .then((user) =>{
+                if (user.status !== 200){
+                    this.setState({messages: user.message})
+                    return 0;
+                }
                 let reg = new RegExp('admin');
+                let userObject = JSON.parse(user.user)[0].fields
+                console.log(userObject);
                 if (reg.test(user.user_id)){
                     console.log('You are amdin');
-                    localStorage.setItem('status', 'admin')
-                    localStorage.setItem('id', user.user_id)
-                    this.setState({redirect: true})
+                    localStorage.setItem('status', 'admin');
+                    localStorage.setItem('id', user.user_id);
+                    localStorage.setItem('user.name', userObject.birth_date);
+                    this.setState({redirect: true});
                 }
                 else{
-                    console.log('You are common user')
-                    localStorage.setItem('status', 'user')
-                    localStorage.setItem('id', user.user_id)
-                    this.setState({redirect: true})
+                    console.log('You are common user');
+                    localStorage.setItem('status', 'user');
+                    localStorage.setItem('id', user.user_id);
+                    localStorage.setItem('user', userObject);
+                    this.setState({redirect: true});
                 }
             })
             .catch((err) => err);
@@ -82,16 +90,14 @@ class Form extends Component{
 
     render(){
         return (
-            <div className={'App ' + this.props.class}>
+            <div className={'login-form ' + this.props.class}>
                 {this.redirect()}
                     <h3 className="messages">{this.state.messages}</h3>
                     <div className="input-container">
                         <input onChange={this.UsernameChange} type="text" placeholder="Username"/>
-                        <i className="zmdi zmdi-account zmdi-hc-lg"></i>
                     </div>
                     <div className="input-container">
                         <input onChange={this.PasswordChange} type="password" placeholder="Password"/>
-                        <i className="zmdi zmdi-lock zmdi-hc-lg"></i>
                     </div>
                     <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
                 {/* </form> */}

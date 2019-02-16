@@ -30,15 +30,18 @@ def login_user_api(request):
             bcr = BCryptSHA256PasswordHasher()
             if bcr.verify(data['password'], user.password) == True:
                 hashed = bcr.encode(data['password'], bcr.salt())
+                user_object = serializers.serialize('json', User.objects.filter(username=data['username']))
                 if user.superuser == 1:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'admin-{hashed}'
+                        'user_id': f'admin-{hashed}',
+                        'user': user_object
                     })
                 else:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'user-{hashed}'
+                        'user_id': f'user-{hashed}',
+                        'user': user_object
                     })
             else:
                 return JsonResponse({

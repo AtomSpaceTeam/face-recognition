@@ -1,4 +1,4 @@
-import Main from './Main/Main.jsx';
+import Home from './admin/Home/Home';
 import Form from './Form/Form.jsx';
 
-export {Main, Form};
+export {Home, Form};
