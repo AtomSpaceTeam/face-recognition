@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import MainBlock from '../MainBlock/MainBlock';
+import SideBar from '../SideBar/SideBar';
+
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './Home.css';
+import '../../../static/css/bootstrap.min.css';
+import '../../../static/css/bootstrap.css';
+
 
 class Home extends Component {
-  
+
   render() {
     return (
-      <div className="Main">
-        <h3 className='h3'>You are user!</h3>
+      <div className='container-fluid user-container-block'>
+        <div className="row">
+          <SideBar/>
+          <MainBlock/>
+        </div>
       </div>
     );
   }

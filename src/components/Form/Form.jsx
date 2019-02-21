@@ -94,22 +94,24 @@ class Form extends Component{
     render(){
         let button;
         if (this.state.loading){
-            button = <button onClick={this.onSubmit} className='login-button' type="submit"><Loader /></button> 
+            button = <button onClick={this.onSubmit} className='login-button' type="submit"><Loader /></button>
         } else{
             button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
         }
 
         return (
-            <div className={'login-form ' + this.props.class}>
-                {this.redirect()}
-                    <h3 className="messages">{this.state.messages}</h3>
-                    <div className="input-container">
-                        <input onChange={this.UsernameChange} type="text" placeholder="Username"/>
-                    </div>
-                    <div className="input-container">
-                        <input onChange={this.PasswordChange} type="password" placeholder="Password"/>
-                    </div>
-                    {button}
+            <div className="login-block">
+                <div className={'login-form ' + this.props.class}>
+                    {this.redirect()}
+                        <h3 className="messages">{this.state.messages}</h3>
+                        <div className="input-container">
+                            <input onChange={this.UsernameChange} type="text" placeholder="Username"/>
+                        </div>
+                        <div className="input-container">
+                            <input onChange={this.PasswordChange} type="password" placeholder="Password"/>
+                        </div>
+                        {button}
+                </div>
             </div>
         );
     }
