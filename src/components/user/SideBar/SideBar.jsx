@@ -17,9 +17,9 @@ class SideBar extends Component {
   render() {
     return(
     <SideNav
-    onSelect={(selected) => {
-          // Add your code here
-    }}
+        onSelect={(selected) => {
+            // Add your code here
+        }}
     >
       <SideNav.Toggle />
         <SideNav.Nav defaultSelected="home">

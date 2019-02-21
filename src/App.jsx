@@ -1,25 +1,29 @@
-import React, {Component} from 'react';
-import {BrowserRouter, Route, Redirect} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
 import Home from './routes/Home';
 import Login from './routes/Login';
 
-class App extends Component{
-    check(){
-        if (localStorage.getItem('id') == null){
-          return <Redirect to='/login'/>
+class App extends Component {
+    componentDidMount() {
+        this.checkAuthorization();
+    }
+
+    checkAuthorization() {
+        const { history } = this.props;
+        if (localStorage.getItem('id') == null) {
+            history.push('/');
         }
     }
 
     render() {
         return (
-            <BrowserRouter>
-                <div>
-                    {this.check()}
-                    <Route path='/' component={Home} exact/>
-                    <Route path='/login' component={Login}/>
-                </div>
-            </BrowserRouter>
-        )
+            <Switch>
+                <Route path='/' component={Home} exact />
+                <Route path='/login' component={Login} exact />
+                <Redirect to="/" />
+            </Switch>
+        );
     }
 }
 
