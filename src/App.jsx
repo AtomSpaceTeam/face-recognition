@@ -10,8 +10,7 @@ class App extends Component {
   render() {
     return this.isAuthenticated() ? (
       <Switch>
-        <Route path="/" component={Home} exact />
-        <Redirect to="/" />
+        <Route path="/" component={Home} />
       </Switch>
     ) : (
       <Switch>
