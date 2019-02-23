@@ -5,23 +5,18 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 
 class App extends Component {
-  componentDidMount() {
-    // this.checkAuthorization();
-  }
-
-  checkAuthorization() {
-    const { history } = this.props;
-    if (localStorage.getItem('id') == null) {
-      history.push('/');
-    }
-  }
+  isAuthenticated = () => !!localStorage.getItem('id');
 
   render() {
-    return (
+    return this.isAuthenticated() ? (
       <Switch>
-        <Route path='/' component={Home} exact />
-        <Route path='/login' component={Login} exact />
+        <Route path="/" component={Home} exact />
         <Redirect to="/" />
+      </Switch>
+    ) : (
+      <Switch>
+        <Route path="/login" component={Login} exact />
+        <Redirect to="/login" />
       </Switch>
     );
   }
