@@ -6,7 +6,7 @@ import Login from './routes/Login';
 
 class App extends Component {
     componentDidMount() {
-        this.checkAuthorization();
+        // this.checkAuthorization();
     }
 
     checkAuthorization() {
