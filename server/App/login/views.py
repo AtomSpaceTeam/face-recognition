@@ -78,17 +78,16 @@ def index(request):
 @csrf_exempt
 def api_attendance(request):
     users = json.loads(serializers.serialize("json", Seen.objects.all()))
-    #ame = [x for x in users[0]]
-    names = [x['fields']['name'] for x in users]
-    # att = [len(list(group)) for key, group in groupby(names)]
-    # for i in range(len(names)):
-    #     if names[i] == names[i-1]:
-    #         del(names[i])
-    # print(names)
-    # print(att)
-    # print(names)
+    all_users_db = User.objects.values('surname')
+    allUsers = [surname['surname'] for surname in all_users_db]
+    names = [x['fields']['name'].split(' ')[1] for x in users]
+    att = {}
+    for name in allUsers:
+        count = names.count(name)
+        att.update({str(name):int(count)})
 
-    return HttpResponse(users)
+    att = json.dumps(att)
+    return HttpResponse(att)
 
 @login_required
 def list_residents(request):
