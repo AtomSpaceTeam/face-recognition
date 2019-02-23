@@ -5,6 +5,7 @@ import calendar
 import datetime
 import bcrypt
 import requests
+from itertools import groupby
 
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
@@ -74,10 +75,20 @@ def index(request):
     }
     return render(request, 'home-admin/index.html', context)
 
-@login_required
+@csrf_exempt
 def api_attendance(request):
-    database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
-    return HttpResponse(database)
+    users = json.loads(serializers.serialize("json", Seen.objects.all()))
+    #ame = [x for x in users[0]]
+    names = [x['fields']['name'] for x in users]
+    # att = [len(list(group)) for key, group in groupby(names)]
+    # for i in range(len(names)):
+    #     if names[i] == names[i-1]:
+    #         del(names[i])
+    # print(names)
+    # print(att)
+    # print(names)
+
+    return HttpResponse(users)
 
 @login_required
 def list_residents(request):
@@ -332,22 +343,18 @@ def delete_profile(request, pk):
 @csrf_exempt
 def recognised(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        time = request.POST['time']
-        print(request.POST['name'])
-        try:
-            if User.objects.filter(surname=name).exists():
-                user = User.objects.get(surname=name)
+        data = json.loads(request.body.decode('utf-8'))
+        users = User.objects.all()
+        for user in users:
+            if BCryptSHA256PasswordHasher().verify(user.surname, data['name']):
                 seen = Seen()
-                seen.name = '{} {}'.format(user.name, user.surname)
+                seen.name = f'{user.name} {user.surname}'
                 seen.status = user.status
-                seen.time = time
-                print('{} {} has entered recently'.format(user.name, user.surname))
+                seen.time = data['time']
                 seen.save()
-                return HttpResponse('I feel good')
-        except:
-            return HttpResponse('All is not so good')
-    return HttpResponse('All is not so good')
+            else:
+                continue
+        return HttpResponse('hello')
 
 def telegram_login(request):
     print(request.POST)

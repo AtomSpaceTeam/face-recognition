@@ -21,7 +21,7 @@ class User(models.Model):
 class Seen(models.Model):
     name = models.CharField(max_length=60)
     status = models.CharField(max_length=20)
-    time = models.DateTimeField(auto_now=True)
+    time = models.CharField(max_length=30)
 
 class Event(models.Model):
     name = models.CharField(max_length=80)
