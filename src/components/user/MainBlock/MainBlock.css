@@ -1,4 +1,6 @@
 .main-block {
-  margin-left: 65px;
+  margin-left: 85px;
+  margin-right: 20px;
   height: 100vh;
+  width: 100%;
 }
