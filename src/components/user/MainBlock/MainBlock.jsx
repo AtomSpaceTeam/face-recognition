@@ -7,7 +7,6 @@ import EventUser from './EventUser/EventUser';
 
 import './MainBlock.css';
 import '../../../static/css/bootstrap.min.css';
-import '../../../static/css/bootstrap.css';
 
 class MainBlock extends Component {
   render() {

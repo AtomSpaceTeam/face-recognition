@@ -5,7 +5,6 @@ import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/rea
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './SideBar.css';
 import '../../../static/css/bootstrap.min.css';
-import '../../../static/css/bootstrap.css';
 
 import home_i from '../../../static/img/home-user.svg';
 import profile_i from '../../../static/img/profile-user.svg';

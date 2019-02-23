@@ -7,7 +7,6 @@ import SideBar from '../SideBar/SideBar';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './Home.css';
 import '../../../static/css/bootstrap.min.css';
-import '../../../static/css/bootstrap.css';
 
 
 class Home extends Component {
