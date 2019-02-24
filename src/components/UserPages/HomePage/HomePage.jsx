@@ -1,11 +1,12 @@
 import React from 'react';
+import Card from './Card';
 
 import './HomePage.css';
 import team_i from '../../../static/img/teams.svg';
 
 const HomePage = () => (
   <div className="home-page">
-    Home Page
+    <Card />
   </div>
 );
 

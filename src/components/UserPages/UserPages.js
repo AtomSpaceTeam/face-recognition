@@ -12,7 +12,6 @@ import EventPage from './EventPage';
 
 const UserPages = (props) => {
   const { match } = props;
-  debugger
   return (
   <Layout>
     <div className="user-pages-container">

@@ -5,3 +5,26 @@
   color: white;
   box-shadow: 0 0 30px 3px #212121;
 }
+
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  color: white;
+  font-size: 1.5em;
+  text-decoration: none;
+  transition: 1s linear;
+  display: flex;
+}
+
+.btn-block {
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+
+.btn:hover {
+  background: #424242;
+}
