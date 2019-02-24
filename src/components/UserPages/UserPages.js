@@ -10,9 +10,7 @@ import ProfilePage from './ProfilePage';
 import PeoplePage from './PeoplePage';
 import EventPage from './EventPage';
 
-const UserPages = (props) => {
-  const { match } = props;
-  return (
+const UserPages = ({ match }) => (
   <Layout>
     <div className="user-pages-container">
       <Switch>
@@ -24,7 +22,6 @@ const UserPages = (props) => {
       </Switch>
     </div>
   </Layout>
-)
-  };
+);
 
 export default withRouter(UserPages);
