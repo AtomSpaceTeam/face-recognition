@@ -4,10 +4,22 @@ import Card from './Card';
 import './HomePage.css';
 import team_i from '../../../static/img/teams.svg';
 
+
+const cards = [
+  { id: 1, title: 'Hello World', content: 'Welcome to learning React!' },
+  { id: 2, title: 'Installation', content: 'You can install React from npm.' }
+];
+
+const CardsList = () => (
+  cards.map(card => (
+    <Card title={card.title} content={card.content} />
+  ))
+);
+
 const HomePage = () => (
   <div className="home-page">
     <h3>Home Page</h3>
-    <Card />
+    <CardsList />
   </div>
 );
 
