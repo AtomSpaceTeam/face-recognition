@@ -19,12 +19,18 @@
   display: flex;
 }
 
+.btn:hover {
+  background: #424242;
+}
+
 .btn-block {
   text-align: left;
   display: flex;
   flex-direction: row;
 }
 
-.btn:hover {
-  background: #424242;
+.side-bar .btn-block img {
+  width: 20%;
+  padding: 10px;
+  height: 50px;
 }

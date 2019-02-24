@@ -7,40 +7,21 @@ import people_i from '../../static/img/people-user.svg';
 import event_i from '../../static/img/events.svg';
 import logout_i from '../../static/img/logout.svg';
 
+import NavigationItems from './NavigationItems';
+
+const items = [
+  { icon: home_i, title: 'Home', path: '/' },
+  { icon: profile_i, title: 'Profile', path: '/profile' },
+  { icon: people_i, title: 'Other people', path: '/people' },
+  { icon: event_i, title: 'Events', path: '/events' },
+  { icon: logout_i, title: 'Logout', path: '/logout' },
+]
+
 const SideBar = () => (
   <div className="side-bar">
-    <div className="menu">
-      <div className="btn-block">
-        <a href="/" className="btn">
-          <img src={home_i} style={{ width:"20%", padding: "10px", height: "50px" }}/>
-          <p>Home</p>
-        </a>
-      </div>
-      <div className="btn-block">
-        <a href="/" className="btn">
-          <img src={profile_i} style={{ width:"20%", padding: "10px", height: "50px" }}/>
-          <p>Profile</p>
-        </a>
-      </div>
-      <div className="btn-block">
-        <a href="/" className="btn">
-          <img src={people_i} style={{ width:"20%", padding: "10px", height: "50px" }}/>
-          <p>Other people</p>
-        </a>
-      </div>
-      <div className="btn-block">
-        <a href="/" className="btn">
-          <img src={event_i} style={{ width:"20%", padding: "10px", height: "50px" }}/>
-          <p>Events</p>
-        </a>
-      </div>
-      <div className="btn-block">
-        <a href="/" className="btn">
-          <img src={logout_i} style={{ width:"20%", padding: "10px", height: "50px" }}/>
-          <p>Logout</p>
-        </a>
-      </div>
-    </div>
+    <nav className="menu">
+      <NavigationItems items={items} />
+    </nav>
   </div>
 );
 
