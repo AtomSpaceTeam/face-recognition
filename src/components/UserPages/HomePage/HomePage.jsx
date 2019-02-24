@@ -6,20 +6,26 @@ import team_i from '../../../static/img/teams.svg';
 
 
 const cards = [
-  { id: 1, title: 'Hello World', content: 'Welcome to learning React!' },
-  { id: 2, title: 'Installation', content: 'You can install React from npm.' }
+  { id: 1, number: '0', title: 'Teams' },
+  { id: 2, number: '0', title: 'Projects' },
+  { id: 3, number: '0', title: 'Residents' },
+  { id: 4, number: '0', title: 'Mentors' }
 ];
 
 const CardsList = () => (
   cards.map(card => (
-    <Card key={card.id} title={card.title} content={card.content} />
+    <Card key={card.id} number={card.number} title={card.title} />
   ))
 );
 
 const HomePage = () => (
   <div className="home-page">
-    <h3>Home Page</h3>
-    <CardsList />
+    <div className="card">
+      <CardsList />
+    </div>
+    <div className="chart">
+      1
+    </div>
   </div>
 );
 

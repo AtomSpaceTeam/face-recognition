@@ -3,9 +3,21 @@
 }
 
 .card {
-  padding: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 30px;
 }
 
 .card-text {
   text-align: left;
+}
+
+.chart {
+  margin-top: 30px;
+  background-color: #212121;
+  box-shadow: 0 0 30px 3px #212121;
+  height: 78vh;
+  width: 98.5%;
+  margin-left: 10px;
 }
