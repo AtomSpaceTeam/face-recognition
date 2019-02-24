@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './EventPage.css';
+import './EventsPage.css';
 
 const EventPage = () => (
   <div>Event page!</div>
