@@ -6,6 +6,7 @@ import team_i from '../../../static/img/teams.svg';
 
 const HomePage = () => (
   <div className="home-page">
+    <h3>Home Page</h3>
     <Card />
   </div>
 );
