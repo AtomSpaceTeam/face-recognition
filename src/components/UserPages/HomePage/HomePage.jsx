@@ -12,7 +12,7 @@ const cards = [
 
 const CardsList = () => (
   cards.map(card => (
-    <Card title={card.title} content={card.content} />
+    <Card key={card.id} title={card.title} content={card.content} />
   ))
 );
 
