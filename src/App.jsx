@@ -6,11 +6,17 @@ import Login from './routes/Login';
 
 class App extends Component {
   isAuthenticated = () => !!localStorage.getItem('id');
+  logout = () => {
+    // if (window.location === '/logout'){
+    //   localStorage.clear()
+    //   return (<Redirect to='/login'/>)
+  }
 
   render() {
     return this.isAuthenticated() ? (
       <Switch>
         <Route path="/" component={Home} />
+        {this.logout()}
       </Switch>
     ) : (
       <Switch>

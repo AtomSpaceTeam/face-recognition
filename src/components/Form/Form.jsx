@@ -69,7 +69,9 @@ class Form extends Component{
                     this.setState({redirect: true, loading: false});
                 }
             })
-            .catch((err) => err);
+            .catch((err) => {
+                this.setState({messages: 'Some troubles with server, please try again later', loading: false});
+            });
         }
         else{
             this.setState({messages: 'Invalid login or password'});
