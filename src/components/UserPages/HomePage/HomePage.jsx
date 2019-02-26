@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import Chart from './Chart/Chart';
 
 import './HomePage.css';
 
@@ -23,7 +24,7 @@ const HomePage = () => (
       <CardsList />
     </div>
     <div className="chart">
-      1
+      <Chart />
     </div>
   </div>
 );
