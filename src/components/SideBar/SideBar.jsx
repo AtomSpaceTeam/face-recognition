@@ -12,12 +12,12 @@ import courses_i from '../../static/img/courses.svg';
 import NavigationItems from './NavigationItems';
 
 const items = [
-  { icon: home_i, title: 'Home', path: '/' },
-  { icon: profile_i, title: 'Profile', path: '/profile' },
-  { icon: people_i, title: 'Other people', path: '/people' },
-  { icon: event_i, title: 'Events', path: '/events' },
-  { icon: courses_i, title: 'Courses', path: '/courses' },
-  { icon: logout_i, title: 'Logout', path: '/logout' },
+  { key: 1, icon: home_i, title: 'Home', path: '/home' },
+  { key: 2, icon: profile_i, title: 'Profile', path: '/profile' },
+  { key: 3, icon: people_i, title: 'Other people', path: '/people' },
+  { key: 4, icon: event_i, title: 'Events', path: '/events' },
+  { key: 5, icon: courses_i, title: 'Courses', path: '/courses' },
+  { key: 6, icon: logout_i, title: 'Logout', path: '/logout' },
 
 ]
 

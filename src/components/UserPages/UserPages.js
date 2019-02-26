@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import './UserPages.css';
 
@@ -11,16 +11,27 @@ import PeoplePage from './PeoplePage';
 import EventsPage from './EventsPage';
 import CoursesPage from './CoursesPage';
 
+const routes = [
+  { path: '/home', component: HomePage, exact: true },
+  { path: '/profile', component: ProfilePage },
+  { path: '/people', component: PeoplePage },
+  { path: '/events', component: EventsPage },
+  { path: '/courses', component: CoursesPage },
+];
+
 const UserPages = ({ match }) => (
   <Layout>
     <div className="user-pages-container">
       <Switch>
-        <Route path={`${match.path}/`} component={HomePage} exact />
-        <Route path={`${match.path}profile`} component={ProfilePage} />
-        <Route path={`${match.path}people`} component={PeoplePage} />
-        <Route path={`${match.path}events`} component={EventsPage} />
-        <Route path={`${match.path}courses`} component={CoursesPage} />
-        {/* <Route path={`${match.path}/logout`} component={} /> */}
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            component={route.component}
+            exact={route.exact}
+          />
+        ))}
+        <Redirect to="/home" />
       </Switch>
     </div>
   </Layout>

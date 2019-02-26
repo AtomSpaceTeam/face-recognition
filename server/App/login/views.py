@@ -76,8 +76,17 @@ def index(request):
 
 @login_required
 def api_attendance(request):
-    database = serializers.serialize("json", Seen.objects.all(), fields=('name'))
-    return HttpResponse(database)
+    users = json.loads(serializers.serialize("json", Seen.objects.all()))
+    all_users_db = User.objects.values('surname')
+    allUsers = [surname['surname'] for surname in all_users_db]
+    names = [x['fields']['name'].split(' ')[1] for x in users]
+    att = {}
+    for name in allUsers:
+        count = names.count(name)
+        att.update({str(name):int(count)})
+
+    att = json.dumps(att)
+    return HttpResponse(att)
 
 @login_required
 def list_residents(request):

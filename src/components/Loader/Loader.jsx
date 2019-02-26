@@ -5,8 +5,8 @@ class Loader extends Component {
   render() {
     return (
       <div>
-        <span class="loader">
-          <span class="loader-inner" />
+        <span className="loader">
+          <span className="loader-inner" />
         </span>
       </div>
     );
