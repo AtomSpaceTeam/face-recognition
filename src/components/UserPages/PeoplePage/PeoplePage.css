@@ -1,0 +1,17 @@
+.people-block {
+  margin-right: 30px;
+  margin-top: 30px;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2vw;
+}
+
+.card-people {
+  background-color: #212121;
+  box-shadow: 0 0 30px 3px #212121;
+  padding: 20px;
+  width: 100;
+}

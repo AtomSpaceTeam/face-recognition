@@ -14,8 +14,8 @@ const ProfilePage = () => (
         <div className="profile-right">
           <p>Name: Maxim</p>
           <p>Surname: Osadchiy</p>
-          <p>Age: 16</p>
-          <p>Status: resident</p>
+          <p>Email: osadchyimax17@gmail.com</p>
+          <p>Status: Resident</p>
           <p>Teams: Atom Team</p>
           <p>Projects: Face Recognition</p>
         </div>
