@@ -5,7 +5,8 @@
 .card {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 100%;
   margin-top: 30px;
 }
 
@@ -18,6 +19,12 @@
   background-color: #212121;
   box-shadow: 0 0 30px 3px #212121;
   height: 78vh;
-  width: 98.5%;
-  margin-left: 10px;
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .card {
+    flex-direction: column;
+    margin-top: 0;
+  }
 }

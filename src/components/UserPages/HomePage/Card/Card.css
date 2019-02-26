@@ -21,3 +21,12 @@
 .card-text {
   font-size: 1em;
 }
+
+
+@media screen and (max-width: 900px) {
+  .card-block {
+    width: 98%;
+    margin-right: 30px;
+    margin-top: 30px;
+  }
+}

@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import ProfilePage from './ProfilePage';
 import PeoplePage from './PeoplePage';
 import EventsPage from './EventsPage';
+import CoursesPage from './CoursesPage';
 
 const UserPages = ({ match }) => (
   <Layout>
@@ -18,6 +19,7 @@ const UserPages = ({ match }) => (
         <Route path={`${match.path}profile`} component={ProfilePage} />
         <Route path={`${match.path}people`} component={PeoplePage} />
         <Route path={`${match.path}events`} component={EventsPage} />
+        <Route path={`${match.path}courses`} component={CoursesPage} />
         {/* <Route path={`${match.path}/logout`} component={} /> */}
       </Switch>
     </div>
