@@ -33,7 +33,7 @@ class Chart extends React.Component {
     fetch('http://localhost:8000/api-attendance')
     .then((res) => res)
     .then((data) => {
-      console.log(data.toString())
+      console.log(data.json())
       let labels = [];
       let datasets = [{label: 'Attendance in this month', data:[]}];
       // for (let i in data){
