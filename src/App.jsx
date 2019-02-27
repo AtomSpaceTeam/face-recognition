@@ -6,20 +6,20 @@ import Login from './routes/Login';
 
 class App extends Component {
   isAuthenticated = () => !!localStorage.getItem('id');
-  logout = () => {
-    // if (window.location === '/logout'){
-    //   localStorage.clear()
-    //   return (<Redirect to='/login'/>)
-  }
 
   onLogout = () => {
     localStorage.removeItem('id');
     return <Redirect to="/login" />
   }
 
+  onHome = () => {
+    return <Redirect to='/home' />
+  }
+
   render() {
     return this.isAuthenticated() ? (
       <Switch>
+        <Route path='/' render={this.onHome} exact />
         <Route path="/logout" render={this.onLogout} exact />
         <Route path="/:pageName" component={Home} />
       </Switch>

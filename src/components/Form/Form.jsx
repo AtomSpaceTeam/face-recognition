@@ -58,14 +58,14 @@ class Form extends Component{
                     console.log('You are amdin');
                     localStorage.setItem('status', 'admin');
                     localStorage.setItem('id', user.user_id);
-                    localStorage.setItem('user.name', userObject.birth_date);
+                    localStorage.setItem('user.name', userObject.name);
                     this.setState({redirect: true, loading: false});
                 }
                 else{
                     console.log('You are common user');
                     localStorage.setItem('status', 'user');
                     localStorage.setItem('id', user.user_id);
-                    localStorage.setItem('user', userObject);
+                    localStorage.setItem('user.name', userObject.name);
                     this.setState({redirect: true, loading: false});
                 }
             })
@@ -79,7 +79,7 @@ class Form extends Component{
     }
     redirect(){
         if (this.state.redirect){
-            return <Redirect to='/'/>
+            return <Redirect to='/home'/>
         }
     }
 

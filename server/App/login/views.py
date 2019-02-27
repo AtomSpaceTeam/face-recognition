@@ -74,19 +74,39 @@ def index(request):
     }
     return render(request, 'home-admin/index.html', context)
 
-@login_required
+@csrf_exempt
 def api_attendance(request):
     users = json.loads(serializers.serialize("json", Seen.objects.all()))
-    all_users_db = User.objects.values('surname')
-    allUsers = [surname['surname'] for surname in all_users_db]
-    names = [x['fields']['name'].split(' ')[1] for x in users]
-    att = {}
-    for name in allUsers:
-        count = names.count(name)
-        att.update({str(name):int(count)})
+    all_users = [x['fields']['name'].split(' ')[1] for x in users]
+    once_users = list(dict.fromkeys(all_users))
+    obj = {}
+    for i in once_users:
+        obj.update({f'{i}': all_users.count(i)})
+    return JsonResponse(obj)
 
-    att = json.dumps(att)
-    return HttpResponse(att)
+@csrf_exempt
+def count(request):
+    teams = json.loads(serializers.serialize("json", User.objects.all(), fields='team'))
+    arr = [x['fields']['team'] for x in teams]
+    count_teams = len(list(dict.fromkeys(arr)))
+    projects = json.loads(serializers.serialize('json', User.objects.all(), fields='project'))
+    arr_1 = [x['fields']['project'] for x in projects]
+    count_projects = len(list(dict.fromkeys(arr_1)))
+    count_residents = User.objects.filter(status='resident').count()
+    count_mentors = User.objects.filter(status='mentor').count()
+    return JsonResponse({
+        'teams': count_teams,
+        'projects': count_projects,
+        'residents': count_residents,
+        'mentors': count_mentors
+    })
+
+@csrf_exempt
+def user_info(request):
+    req = request.body.decode('utf-8')
+    print(req)
+    user = serializers.serialize('json', User.objects.filter(name='Maxim'))
+    return HttpResponse(user)
 
 @login_required
 def list_residents(request):

@@ -1,6 +1,8 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 
+import './Chart.css';
+
 class Chart extends React.Component {
   constructor(){
     super();
@@ -31,26 +33,24 @@ class Chart extends React.Component {
 
   componentDidMount(){
     fetch('http://localhost:8000/api-attendance')
-    .then((res) => res)
+    .then((res) => res.json())
     .then((data) => {
-      console.log(data.json())
       let labels = [];
       let datasets = [{label: 'Attendance in this month', data:[]}];
-      // for (let i in data){
-      //   labels.push(i);
-      //   datasets[0].data.push(data[i])
-      // }
-      // let chartData = {
-      //   labels,
-      //   datasets
-      // };
-      // chartData.datasets[0].backgroundColor = 'rgba(255,99,132,0.2)';
-      // chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
-      // chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
-      // chartData.datasets[0].hoverBackgroundColor = 'rgba(255,99,132,0.4)';
-      // chartData.datasets[0].hoverBorderColor = 'rgba(255,99,132,1)';
-      // this.setState({chartData});
-      // console.log(this.state.chartData);
+      for (let i in data){
+        labels.push(i);
+        datasets[0].data.push(data[i])
+      }
+      let chartData = {
+        labels,
+        datasets
+      };
+      chartData.datasets[0].backgroundColor = 'rgba(255,99,132,0.2)';
+      chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
+      chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
+      chartData.datasets[0].hoverBackgroundColor = 'rgba(255,99,132,0.4)';
+      chartData.datasets[0].hoverBorderColor = 'rgba(255,99,132,1)';
+      this.setState({chartData});
     })
     .catch((err) => console.log(err))
   }
