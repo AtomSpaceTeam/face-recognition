@@ -360,21 +360,34 @@ def delete_profile(request, pk):
 @csrf_exempt
 def recognised(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        time = request.POST['time']
-        print(request.POST['name'])
-        try:
-            if User.objects.filter(surname=name).exists():
-                user = User.objects.get(surname=name)
+        obj = json.loads(request.body.decode('utf-8'))
+        name = obj['name']
+        time = obj['time']
+        users = User.objects.values('surname')
+        for user in users:
+            if BCryptSHA256PasswordHasher().verify(user['surname'], name):
+                user = User.objects.get(surname=user['surname'])
                 seen = Seen()
-                seen.name = '{} {}'.format(user.name, user.surname)
+                seen.name = f'{user.name} {user.surname}'
                 seen.status = user.status
                 seen.time = time
-                print('{} {} has entered recently'.format(user.name, user.surname))
                 seen.save()
-                return HttpResponse('I feel good')
-        except:
-            return HttpResponse('All is not so good')
+                print('saved!')
+                return HttpResponse('Saved!')
+            else: 
+                print(False) 
+        # try:
+        #     if User.objects.filter(surname=name).exists():
+        #         user = User.objects.get(surname=name)
+        #         seen = Seen()
+        #         seen.name = '{} {}'.format(user.name, user.surname)
+        #         seen.status = user.status
+        #         seen.time = time
+        #         print('{} {} has entered recently'.format(user.name, user.surname))
+        #         seen.save()
+        #         return HttpResponse('I feel good')
+        # except:
+        #     return HttpResponse('All is not so good')
     return HttpResponse('All is not so good')
 
 def telegram_login(request):
