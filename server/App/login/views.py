@@ -104,7 +104,6 @@ def count(request):
 @csrf_exempt
 def user_info(request):
     req = request.body.decode('utf-8')
-    print(req)
     user = serializers.serialize('json', User.objects.filter(name='Maxim'))
     return HttpResponse(user)
 
