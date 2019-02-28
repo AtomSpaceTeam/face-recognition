@@ -103,9 +103,19 @@ def count(request):
 
 @csrf_exempt
 def user_info(request):
-    req = request.body.decode('utf-8')
-    user = serializers.serialize('json', User.objects.filter(name='Maxim'))
+    req = json.loads(request.body.decode('utf-8'))
+    user = serializers.serialize('json', User.objects.filter(name=req['name']))
     return HttpResponse(user)
+
+@csrf_exempt
+def users(request):
+    users = serializers.serialize('json', User.objects.all(), fields=('name', 'surname', 'status', 'team', 'project'))
+    return HttpResponse(users)
+
+@csrf_exempt
+def events(request):
+    events = serializers.serialize('json', Event.objects.all())
+    return HttpResponse(events)
 
 @login_required
 def list_residents(request):

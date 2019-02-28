@@ -71,6 +71,7 @@ class Form extends Component{
             })
             .catch((err) => {
                 this.setState({messages: 'Some troubles with server, please try again later', loading: false});
+                console.error(err);
             });
         }
         else{
