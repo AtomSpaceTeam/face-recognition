@@ -1,42 +1,47 @@
 import React from 'react';
 
 import './EventsPage.css';
+import { SequenceSpinner } from 'react-spinners-kit';
 
-const EventPage = () => (
-  <div className="event-block">
-    <div className="card-event">
-      <h2>Atom Team</h2>
-      <p>Data: 17.09.2019</p>
-      <p>Start time: 17:00</p>
-      <p>End time: 21:00</p>
-      <p>Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo eligendi error illo unde ex aliquam sequi sit inventore earum veritatis.</p>
-      <button className="btn-event">Take part</button>
-    </div>
-    <div className="card-event">
-      <h2>Atom Team</h2>
-      <p>Data: 17.09.2019</p>
-      <p>Start time: 17:00</p>
-      <p>End time: 21:00</p>
-      <p>Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo eligendi error illo unde ex aliquam sequi sit inventore earum veritatis.</p>
-      <button className="btn-event">Take part</button>
-    </div>
-    <div className="card-event">
-      <h2>Atom Team</h2>
-      <p>Data: 17.09.2019</p>
-      <p>Start time: 17:00</p>
-      <p>End time: 21:00</p>
-      <p>Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo eligendi error illo unde ex aliquam sequi sit inventore earum veritatis.</p>
-      <button className="btn-event">Take part</button>
-    </div>
-    <div className="card-event">
-      <h2>Atom Team</h2>
-      <p>Data: 17.09.2019</p>
-      <p>Start time: 17:00</p>
-      <p>End time: 21:00</p>
-      <p>Description: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo eligendi error illo unde ex aliquam sequi sit inventore earum veritatis.</p>
-      <button className="btn-event">Take part</button>
-    </div>
-</div>
-);
+class EventPage extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      events: []
+    }
+  }
+  
+  componentDidMount(){
+    fetch('http://localhost:8000/events')
+    .then(res => res.json())
+    .then(data => {
+      let events = [];
+      data.map(event => {
+        event.fields.id = event.pk
+        events.push(event.fields)
+      });
+      this.setState({ events });
+    })
+    .catch(err => console.error(err))
+  }
+
+  render() {
+    return (
+      <div className="event-block">
+        {this.state.events.map(event => (
+          <div key={event.id} className="card-event">
+            <h2>{event.name}</h2>
+            <p>Date: {new Date(event.start_time).toLocaleDateString('en-GB')}</p>
+            <p>Start time: {new Date(event.start_time).toLocaleTimeString('en-GB')}</p>
+            <p>End time: {new Date(event.end_time).toLocaleTimeString('en-GB')}</p>
+            <p>Description: {event.description}</p>
+            <button className="btn-event">Take part</button>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+  
 
 export default EventPage;
