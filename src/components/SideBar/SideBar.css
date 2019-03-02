@@ -17,6 +17,7 @@
   text-decoration: none;
   transition: 1s linear;
   display: flex;
+  width: 100%;
 }
 
 .btn:hover {
@@ -33,4 +34,36 @@
   width: 20%;
   padding: 10px;
   height: 50px;
+}
+
+.menu-h {
+  display: none;
+}
+
+.menu-mobile {
+  position: absolute;
+  background: #424242;
+  box-shadow: 0 0 30px 3px #212121;
+  width: 100%;
+  filter: blur;
+  filter: alpha(Opacity=70);
+  opacity: 0.95;
+  transition: 1s;
+}
+
+@media screen and (max-width: 900px) {
+  .side-bar {
+    width: auto;
+    margin-right: 0;
+    height: auto;
+  }
+  .menu {
+    display: none;
+  }
+  .menu-h {
+    display: block;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: right;
+  }
 }

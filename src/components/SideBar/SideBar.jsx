@@ -7,6 +7,7 @@ import people_i from '../../static/img/people-user.svg';
 import event_i from '../../static/img/events.svg';
 import logout_i from '../../static/img/logout.svg';
 import courses_i from '../../static/img/courses.svg';
+import menu_h from '../../static/img/menu.svg';
 
 
 import NavigationItems from './NavigationItems';
@@ -21,12 +22,39 @@ const items = [
 
 ]
 
-const SideBar = () => (
-  <div className="side-bar">
-    <nav className="menu">
-      <NavigationItems items={items} />
-    </nav>
-  </div>
-);
+let onHam = false;
+
+const change = () => {
+  return (onHam = !onHam)
+}
+
+class SideBar extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      onHam: false
+    }
+  }
+
+  change = () => {
+    return (this.setState({onHam: !this.state.onHam}))
+  }
+
+  render () {
+    return (
+      <div className="side-bar">
+        <nav className="menu-h">
+          <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
+        </nav>
+        <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block'} : {'display': 'none'}}>
+          <NavigationItems style={{ opacity:"10" }} items={items} />
+        </nav>
+        <nav className="menu">
+          <NavigationItems items={items} />
+        </nav>
+      </div>
+    );
+  }
+}
 
 export default SideBar;
