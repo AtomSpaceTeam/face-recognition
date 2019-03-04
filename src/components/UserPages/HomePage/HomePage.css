@@ -20,6 +20,7 @@
   box-shadow: 0 0 30px 3px #212121;
   height: 71vh;
   width: 100%;
+  margin-bottom: 30px;
 }
 
 @media screen and (max-width: 900px) {

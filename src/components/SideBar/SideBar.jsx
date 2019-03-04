@@ -46,7 +46,7 @@ class SideBar extends React.Component {
         <nav className="menu-h">
           <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
         </nav>
-        <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block'} : {'display': 'none'}}>
+        <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>
           <NavigationItems style={{ opacity:"10" }} items={items} />
         </nav>
         <nav className="menu">
