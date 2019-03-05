@@ -59,6 +59,7 @@ class Form extends Component{
                     localStorage.setItem('status', 'admin');
                     localStorage.setItem('id', user.user_id);
                     localStorage.setItem('user.name', userObject.name);
+                    localStorage.setItem('user.surname', userObject.surname);
                     this.setState({redirect: true, loading: false});
                 }
                 else{
@@ -66,6 +67,8 @@ class Form extends Component{
                     localStorage.setItem('status', 'user');
                     localStorage.setItem('id', user.user_id);
                     localStorage.setItem('user.name', userObject.name);
+                    localStorage.setItem('user.surname', userObject.surname);
+                    localStorage.setItem('user.team', userObject.team);
                     this.setState({redirect: true, loading: false});
                 }
             })
@@ -97,7 +100,7 @@ class Form extends Component{
     render(){
         let button;
         if (this.state.loading){
-            button = <button onClick={this.onSubmit} className='login-button' type="submit"><Loader /></button>
+            button = <button className='login-button' type="submit"><Loader /></button>
         } else{
             button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
         }

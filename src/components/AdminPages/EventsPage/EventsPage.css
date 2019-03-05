@@ -1,0 +1,31 @@
+.event-block {
+  margin-right: 30px;
+  margin-top: 30px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2vw;
+}
+
+.card-event {
+  background-color: #212121;
+  box-shadow: 0 0 30px 3px #212121;
+  padding: 20px;
+  width: 100;
+  text-align: left;
+}
+
+.btn-event {
+  background: #BDBDBD;
+  border: 0;
+  padding: 3%;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: 1s linear;
+}
+
+.btn-event:hover {
+  background: #616161;
+  color: white;
+}

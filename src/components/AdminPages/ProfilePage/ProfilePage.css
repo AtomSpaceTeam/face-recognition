@@ -1,0 +1,43 @@
+.profile-block {
+  margin-top: 30px;
+  background-color: #212121;
+  box-shadow: 0 0 30px 3px #212121;
+  height: 95vh;
+  width: 100%;
+}
+
+.profile-top {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.profile-right {
+  text-align: left;
+}
+
+.profile-left {
+  padding-right: 20px;
+}
+
+.profile-text-title {
+  margin: 0;
+  font-size: 2em;
+  padding: 3%;
+}
+
+@media screen and (max-width: 650px) {
+  .profile-top {
+    flex-direction: column;
+  }
+
+  .profile-right {
+    text-align: center;
+  }
+
+  .profile-left {
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+}

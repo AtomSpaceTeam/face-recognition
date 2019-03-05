@@ -76,13 +76,31 @@ def index(request):
 
 @csrf_exempt
 def api_attendance(request):
-    users = json.loads(serializers.serialize("json", Seen.objects.all()))
-    all_users = [x['fields']['name'].split(' ')[1] for x in users]
-    once_users = list(dict.fromkeys(all_users))
-    obj = {}
-    for i in once_users:
-        obj.update({f'{i}': all_users.count(i)})
-    return JsonResponse(obj)
+    data = json.loads(request.body.decode('utf-8'))
+    if data['team']:
+        team_users = json.loads(serializers.serialize('json', User.objects.filter(team=data['team'])))
+        team_names = []
+        for i in team_users:
+            team_names.append(f"{i['fields']['name']} {i['fields']['surname']}")
+        users = json.loads(serializers.serialize("json", Seen.objects.all()))
+        all_users = [x['fields']['name'] for x in users]
+        once_users = list(dict.fromkeys(all_users))
+        new_arr = []
+        for i in team_names:
+            if i in once_users:
+                new_arr.append(i)
+        obj = {}
+        for i in new_arr:
+            obj.update({f'{i}': all_users.count(i)})
+        return JsonResponse(obj)
+    else:
+        users = json.loads(serializers.serialize("json", Seen.objects.all()))
+        all_users = [x['fields']['name'].split(' ')[1] for x in users]
+        once_users = list(dict.fromkeys(all_users))
+        obj = {}
+        for i in once_users:
+            obj.update({f'{i}': all_users.count(i)})
+        return JsonResponse(obj)
 
 @csrf_exempt
 def count(request):
@@ -273,6 +291,7 @@ def register(request):
         if f.is_valid():
             user = User()
             user.attendance = 0
+            user.superuser = 0
             user.name = request.POST['name']
             user.surname = request.POST['surname']
             user.username = request.POST['username']

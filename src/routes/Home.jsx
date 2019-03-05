@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HomeAdmin from '../components/admin/Home/Home';
+import HomeAdmin from '../components/AdminPages';
 import UserPages from '../components/UserPages';
 
 class Home extends React.Component {
