@@ -44,6 +44,7 @@ class SideBar extends React.Component {
     return (
       <div className="side-bar">
         <nav className="menu-h">
+          <h3>Face recognition</h3>
           <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
         </nav>
         <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>

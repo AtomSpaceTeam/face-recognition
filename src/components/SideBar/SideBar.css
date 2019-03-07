@@ -4,6 +4,8 @@
   background-color: #212121;
   color: white;
   box-shadow: 0 0 30px 3px #212121;
+  height: 100vh;
+  position: fixed;
 }
 
 .menu {
@@ -58,16 +60,20 @@
     width: auto;
     margin-right: 0;
     height: auto;
-  }
+    position: inherit;
+    }
 
   .menu {
     display: none;
   }
   .menu-h {
-    display: block;
-    margin-right: 10px;
-    margin-left: 10px;
-    text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60px;
+    margin-right: 25px;
+    margin-left: 25px;
+
   }
 }
 
