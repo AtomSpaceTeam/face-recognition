@@ -34,13 +34,13 @@ def login_user_api(request):
                 if user.superuser == 1:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'admin-{hashed}',
+                        'user_id': 'admin-{}'.format(hashed),
                         'user': user_object
                     })
                 else:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'user-{hashed}',
+                        'user_id': 'user-{}'.format(hashed),
                         'user': user_object
                     })
             else:
@@ -76,6 +76,7 @@ def index(request):
 
 @csrf_exempt
 def api_attendance(request):
+<<<<<<< HEAD
     data = json.loads(request.body.decode('utf-8'))
     if data['team']:
         team_users = json.loads(serializers.serialize('json', User.objects.filter(team=data['team'])))
@@ -101,6 +102,15 @@ def api_attendance(request):
         for i in once_users:
             obj.update({f'{i}': all_users.count(i)})
         return JsonResponse(obj)
+=======
+    users = json.loads(serializers.serialize("json", Seen.objects.all()))
+    all_users = [x['fields']['name'].split(' ')[1] for x in users]
+    once_users = list(dict.fromkeys(all_users))
+    obj = {}
+    for i in once_users:
+        obj.update({'{}'.format(i): all_users.count(i)})
+    return JsonResponse(obj)
+>>>>>>> f6d19d2e282e1a932415d76d1c487c7c7d3d88ee
 
 @csrf_exempt
 def count(request):
@@ -395,14 +405,17 @@ def recognised(request):
         users = User.objects.values('surname')
         for user in users:
             if BCryptSHA256PasswordHasher().verify(user['surname'], name):
-                user = User.objects.get(surname=user['surname'])
-                seen = Seen()
-                seen.name = f'{user.name} {user.surname}'
-                seen.status = user.status
-                seen.time = time
-                seen.save()
-                print('saved!')
-                return HttpResponse('Saved!')
+                if name == Seen.name:
+                    pass
+                else:
+                    user = User.objects.get(surname=user['surname'])
+                    seen = SeenToday()
+                    seen.name = '{} {}'.format(user.name,user.surname)
+                    seen.status = user.status
+                    seen.time = time
+                    seen.save()
+                    print('saved!')
+                    return HttpResponse('Saved!')
             else: 
                 print(False) 
         # try:
@@ -429,3 +442,16 @@ def telegram_login(request):
     else:
         messages.error(request, 'User not found')
         return HttpResponseRedirect('/login-user')
+
+def UpdateBase(request):
+    delay = 86400
+    seenall = Seen()
+    while True:
+        time.sleep(delay)
+        thread = threading.Thread(target=UpdateBase)
+        for name in SeenToday():
+            seenall.name = Seen.name
+            seenall.status = Seen.status
+            seenall.time = Seen.time
+            seenall.save()  
+        thread.start()
