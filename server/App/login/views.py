@@ -76,7 +76,6 @@ def index(request):
 
 @csrf_exempt
 def api_attendance(request):
-<<<<<<< HEAD
     data = json.loads(request.body.decode('utf-8'))
     if data['team']:
         team_users = json.loads(serializers.serialize('json', User.objects.filter(team=data['team'])))
@@ -102,15 +101,6 @@ def api_attendance(request):
         for i in once_users:
             obj.update({f'{i}': all_users.count(i)})
         return JsonResponse(obj)
-=======
-    users = json.loads(serializers.serialize("json", Seen.objects.all()))
-    all_users = [x['fields']['name'].split(' ')[1] for x in users]
-    once_users = list(dict.fromkeys(all_users))
-    obj = {}
-    for i in once_users:
-        obj.update({'{}'.format(i): all_users.count(i)})
-    return JsonResponse(obj)
->>>>>>> f6d19d2e282e1a932415d76d1c487c7c7d3d88ee
 
 @csrf_exempt
 def count(request):
@@ -416,8 +406,8 @@ def recognised(request):
                     seen.save()
                     print('saved!')
                     return HttpResponse('Saved!')
-            else: 
-                print(False) 
+            else:
+                print(False)
         # try:
         #     if User.objects.filter(surname=name).exists():
         #         user = User.objects.get(surname=name)
@@ -453,5 +443,5 @@ def UpdateBase(request):
             seenall.name = Seen.name
             seenall.status = Seen.status
             seenall.time = Seen.time
-            seenall.save()  
+            seenall.save()
         thread.start()
