@@ -19,7 +19,6 @@ const items = [
   { key: 4, icon: event_i, title: 'Events', path: '/events' },
   { key: 5, icon: courses_i, title: 'Courses', path: '/courses' },
   { key: 6, icon: logout_i, title: 'Logout', path: '/logout' },
-
 ]
 
 let onHam = false;
@@ -40,6 +39,8 @@ class SideBar extends React.Component {
     return (this.setState({onHam: !this.state.onHam}))
   }
 
+
+
   render () {
     return (
       <div className="side-bar">
@@ -51,7 +52,7 @@ class SideBar extends React.Component {
           <NavigationItems style={{ opacity:"10" }} items={items} />
         </nav>
         <nav className="menu">
-          <NavigationItems items={items} />
+          <NavigationItems className='sidebar-menu' items={items} />
         </nav>
       </div>
     );
