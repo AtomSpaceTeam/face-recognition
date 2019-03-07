@@ -18,6 +18,11 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+class SeenToday(models.Model):
+    name = models.CharField(max_length=60)
+    status = models.CharField(max_length=20)
+    time = models.DateTimeField(auto_now=True)
+
 class Seen(models.Model):
     name = models.CharField(max_length=60)
     status = models.CharField(max_length=20)
