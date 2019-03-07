@@ -11,6 +11,8 @@
 .menu {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .btn {
@@ -28,10 +30,15 @@
   background: #424242;
 }
 
-.menu li:last-child{
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.menu-logout li:last-child{
   margin-top: 51%;
-  border-bottom: 0;
   border-top: 1px solid;
+  border-bottom: 0;
 }
 
 .btn-block {

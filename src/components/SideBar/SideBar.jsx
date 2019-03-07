@@ -12,13 +12,16 @@ import menu_h from '../../static/img/menu.svg';
 
 import NavigationItems from './NavigationItems';
 
-const items = [
+const items_all = [
   { key: 1, icon: home_i, title: 'Home', path: '/home' },
   { key: 2, icon: profile_i, title: 'Profile', path: '/profile' },
   { key: 3, icon: people_i, title: 'Other people', path: '/people' },
   { key: 4, icon: event_i, title: 'Events', path: '/events' },
   { key: 5, icon: courses_i, title: 'Courses', path: '/courses' },
-  { key: 6, icon: logout_i, title: 'Logout', path: '/logout' },
+]
+
+const items_logout = [
+  { key: 1, icon: logout_i, title: 'Logout', path: '/logout' },
 ]
 
 let onHam = false;
@@ -49,10 +52,17 @@ class SideBar extends React.Component {
           <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
         </nav>
         <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>
-          <NavigationItems style={{ opacity:"10" }} items={items} />
+          <ul>
+            <NavigationItems style={{ opacity:"10" }} items={items_all} />
+          </ul>
         </nav>
         <nav className="menu">
-          <NavigationItems className='sidebar-menu' items={items} />
+          <ul className="menu-all">
+            <NavigationItems items={items_all} />
+          </ul>
+          <ul className="menu-logout">
+            <NavigationItems items={items_logout} />
+          </ul>
         </nav>
       </div>
     );
