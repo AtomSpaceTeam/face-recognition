@@ -36,7 +36,6 @@ ul {
 }
 
 .menu-logout li:last-child{
-  margin-top: 51%;
   border-top: 1px solid;
   border-bottom: 0;
 }
@@ -46,6 +45,10 @@ ul {
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid;
+}
+
+a.btn.active {
+  color: #9E9E9E;
 }
 
 .side-bar .btn-block img {

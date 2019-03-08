@@ -8,9 +8,19 @@ import event_i from '../../static/img/events.svg';
 import logout_i from '../../static/img/logout.svg';
 import courses_i from '../../static/img/courses.svg';
 import menu_h from '../../static/img/menu.svg';
+import create_i from '../../static/img/create.svg';
 
 
 import NavigationItems from './NavigationItems';
+
+const items_all_admin = [
+  { key: 1, icon: home_i, title: 'Home', path: '/home' },
+  { key: 2, icon: profile_i, title: 'Profile', path: '/profile' },
+  { key: 3, icon: people_i, title: 'Other people', path: '/people' },
+  { key: 4, icon: event_i, title: 'Events', path: '/events' },
+  { key: 5, icon: courses_i, title: 'Courses', path: '/courses' },
+  { key: 6, icon: create_i, title: 'Create', path: '/create' },
+]
 
 const items_all = [
   { key: 1, icon: home_i, title: 'Home', path: '/home' },
@@ -23,6 +33,12 @@ const items_all = [
 const items_logout = [
   { key: 1, icon: logout_i, title: 'Logout', path: '/logout' },
 ]
+
+const items = (
+  localStorage.getItem('status') === 'admin'
+    ? items_all_admin
+    : items_all
+);
 
 let onHam = false;
 
@@ -58,7 +74,7 @@ class SideBar extends React.Component {
         </nav>
         <nav className="menu">
           <ul className="menu-all">
-            <NavigationItems items={items_all} />
+            <NavigationItems items={items} />
           </ul>
           <ul className="menu-logout">
             <NavigationItems items={items_logout} />

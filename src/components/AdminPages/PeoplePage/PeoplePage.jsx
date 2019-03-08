@@ -35,6 +35,10 @@ class PeoplePage extends React.Component{
           <p>Status: {user.status}</p>
           <p>Team: {user.team}</p>
           <p>Projects: {user.project}</p>
+          <div className="card-btn-block">
+            <button className="card-btn-edit">Edit</button>
+            <button className="card-btn-delete">Delete</button>
+          </div>
         </div>
         ))}
       </div>
