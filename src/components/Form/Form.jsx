@@ -34,7 +34,7 @@ class Form extends Component{
             var obj = {
                 username: this.state.username,
                 password: this.state.password
-            }
+            };
             let headers = new Headers({
                 'Content-Type': 'application/json'
             });
@@ -48,14 +48,14 @@ class Form extends Component{
             })
             .then((user) =>{
                 if (user.status !== 200){
-                    this.setState({messages: user.message})
+                    this.setState({messages: user.message});
                     return 0;
                 }
                 let reg = new RegExp('admin');
-                let userObject = JSON.parse(user.user)[0].fields
+                let userObject = JSON.parse(user.user)[0].fields;
                 console.log(userObject);
                 if (reg.test(user.user_id)){
-                    console.log('You are amdin');
+                    console.log('You are admin');
                     localStorage.setItem('status', 'admin');
                     localStorage.setItem('id', user.user_id);
                     localStorage.setItem('user.name', userObject.name);

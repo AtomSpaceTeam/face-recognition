@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import './UserPages.css';
+import './AdminPages.css';
 
 import Layout from '../../hoc/Layout';
 
