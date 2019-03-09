@@ -12,7 +12,7 @@ class HomePage extends React.Component{
       cards:[]
     }
   }
-  
+
   componentDidMount(){
     fetch('http://localhost:8000/count')
     .then((res) => res.json())

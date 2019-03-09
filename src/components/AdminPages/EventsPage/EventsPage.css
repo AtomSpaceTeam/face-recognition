@@ -16,16 +16,56 @@
   text-align: left;
 }
 
-.btn-event {
-  background: #BDBDBD;
+.btn-event-take-part {
+  margin: 5px;
   border: 0;
-  padding: 3%;
+  background: #0288D1;
+  color: white;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
   font-family: sans-serif;
   cursor: pointer;
   transition: 1s linear;
 }
 
-.btn-event:hover {
-  background: #616161;
+.btn-event-take-part:hover {
+  background: #01579B;
   color: white;
+}
+
+.btn-event-edit:hover {
+  background: #01579B;
+  color: white;
+}
+
+.btn-event-delete:hover {
+  background: #DD2C00;
+  color: white;
+}
+
+.btn-event-edit {
+  margin: 5px;
+  border: 0;
+  background: #0288D1;
+  color: white;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: 1s linear;
+}
+
+.btn-event-delete {
+  margin: 5px;
+  border: 0;
+  background: #F4511E;
+  color: white;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: 1s linear;
 }

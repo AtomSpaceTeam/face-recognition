@@ -10,7 +10,7 @@ class EventPage extends React.Component {
       events: []
     }
   }
-  
+
   componentDidMount(){
     fetch('http://localhost:8000/events')
     .then(res => res.json())
@@ -35,13 +35,17 @@ class EventPage extends React.Component {
             <p>Start time: {new Date(event.start_time).toLocaleTimeString('en-GB')}</p>
             <p>End time: {new Date(event.end_time).toLocaleTimeString('en-GB')}</p>
             <p>Description: {event.description}</p>
-            <button className="btn-event">Take part</button>
+            <div className="btn-event-block">
+              <button className="btn-event-take-part">Take part</button>
+              <button className="btn-event-edit">Edit</button>
+              <button className="btn-event-delete">Delete</button>
+            </div>
           </div>
         ))}
       </div>
     );
   }
 }
-  
+
 
 export default EventPage;
