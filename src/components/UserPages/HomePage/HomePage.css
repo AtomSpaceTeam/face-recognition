@@ -1,3 +1,7 @@
+.home-page {
+  margin-top: 35px;
+}
+
 .col-sm {
   margin: 10px;
 }
@@ -25,6 +29,9 @@
 @media screen and (max-width: 500px) {
   .card {
     flex-direction: column;
+    margin-top: 0;
+  }
+  .home-page {
     margin-top: 0;
   }
 }
