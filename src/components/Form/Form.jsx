@@ -23,12 +23,9 @@ class Form extends Component{
             // passwordReg: new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/),
             // goodPassword: false
         };
-        this.onSubmit = this.onSubmit.bind(this);
-        this.UsernameChange = this.UsernameChange.bind(this);
-        this.PasswordChange = this.PasswordChange.bind(this);
     }
 
-    onSubmit(){
+    onSubmit = () => {
         if (this.state.username.length >= 4 && this.state.password.length >= 8){
             this.setState({loading: true});
             var obj = {
@@ -48,7 +45,7 @@ class Form extends Component{
             })
             .then((user) =>{
                 if (user.status !== 200){
-                    this.setState({messages: user.message});
+                    this.setState({messages: user.message, loading: false});
                     return 0;
                 }
                 let reg = new RegExp('admin');
@@ -81,20 +78,26 @@ class Form extends Component{
             this.setState({messages: 'Invalid login or password'});
         }
     }
-    redirect(){
+    redirect = () => {
         if (this.state.redirect){
             return <Redirect to='/home'/>
         }
     }
 
-    UsernameChange(e){
+    UsernameChange = e => {
         this.setState({messages: ''});
         this.setState({username: e.target.value});
     }
 
-    PasswordChange(e){
+    PasswordChange = e => {
         this.setState({messages: ''});
         this.setState({password: e.target.value});
+    }
+
+    key = (e) => {
+        if (e.key === 'Enter'){
+            console.log(this.onSubmit());
+        }
     }
 
     render(){
@@ -109,14 +112,14 @@ class Form extends Component{
             <div className="login-block">
                 <div className={'login-form ' + this.props.class}>
                     {this.redirect()}
-                        <h3 className="messages">{this.state.messages}</h3>
-                        <div className="input-container">
-                            <input onChange={this.UsernameChange} type="text" placeholder="Username"/>
-                        </div>
-                        <div className="input-container">
-                            <input onChange={this.PasswordChange} type="password" placeholder="Password"/>
-                        </div>
-                        {button}
+                    <h3 className="messages">{this.state.messages}</h3>
+                    <div className="input-container">
+                        <input onKeyPress={this.key} onChange={this.UsernameChange} type="text" placeholder="Username"/>
+                    </div>
+                    <div className="input-container">
+                        <input onKeyPress={this.key} onChange={this.PasswordChange} type="password" placeholder="Password"/>
+                    </div>
+                    {button}
                 </div>
             </div>
         );

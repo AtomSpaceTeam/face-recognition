@@ -35,7 +35,7 @@ class Chart extends React.Component {
     fetch('http://localhost:8000/api-attendance', {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
-      body: JSON.stringify({surname: localStorage.getItem('user.surname'), team: localStorage.getItem('user.team')})
+      body: JSON.stringify({surname: localStorage.getItem('user.surname'), team: localStorage.getItem('user.team'), status: localStorage.getItem('status')})
     })
     .then((res) => res.json())
     .then((data) => {
@@ -49,14 +49,11 @@ class Chart extends React.Component {
         labels,
         datasets
       };
-      chartData.datasets[0] = {
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
-        borderColor: 'rgba(255,99,132,1)',
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)'
-      }
-      
+      chartData.datasets[0].backgroundColor = 'rgba(255,99,132,0.2)';
+      chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
+      chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
+      chartData.datasets[0].hoverBackgroundColor = 'rgba(255,99,132,0.4)';
+      chartData.datasets[0].hoverBorderColor = 'rgba(255,99,132,1)';
       this.setState({chartData});
     })
     .catch((err) => console.log(err))

@@ -10,6 +10,7 @@ import ProfilePage from './ProfilePage';
 import PeoplePage from './PeoplePage';
 import EventsPage from './EventsPage';
 import CoursesPage from './CoursesPage';
+import CreatePage from './CreatePage';
 
 const routes = [
   { path: '/home', component: HomePage, exact: true },
@@ -17,6 +18,7 @@ const routes = [
   { path: '/people', component: PeoplePage },
   { path: '/events', component: EventsPage },
   { path: '/courses', component: CoursesPage },
+  { path: '/create', component: CreatePage }
 ];
 
 const UserPages = ({ match }) => (
