@@ -77,7 +77,7 @@ def index(request):
 @csrf_exempt
 def api_attendance(request):
     data = json.loads(request.body.decode('utf-8'))
-    if data['team']:
+    if data['status'] == 'user':
         team_users = json.loads(serializers.serialize('json', User.objects.filter(team=data['team'])))
         team_names = []
         for i in team_users:

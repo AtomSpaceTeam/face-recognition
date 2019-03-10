@@ -27,8 +27,8 @@ class ProfilePage extends React.Component{
     })
     .then(res => res.json())
     .then(data => {
-      let {name, surname, birth_date, status, team, project} = data[0].fields
-      let age = this.countAge(new Date(birth_date))
+      let {name, surname, birth_date, status, team, project} = data[0].fields;
+      let age = this.countAge(new Date(birth_date));
       this.setState({
         user: {
           name,

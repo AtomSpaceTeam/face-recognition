@@ -34,11 +34,7 @@ const items_logout = [
   { key: 1, icon: logout_i, title: 'Logout', path: '/logout' },
 ]
 
-const items = (
-  localStorage.getItem('status') === 'admin'
-    ? items_all_admin
-    : items_all
-);
+const items = localStorage.getItem('status') === 'admin' ? items_all_admin : items_all;
 
 let onHam = false;
 
@@ -69,12 +65,12 @@ class SideBar extends React.Component {
         </nav>
         <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>
           <ul>
-            <NavigationItems style={{ opacity:"10" }} items={items_all} />
+            <NavigationItems style={{ opacity:"10" }} items={localStorage.getItem('status') == 'admin' ? items_all_admin : items_all} />
           </ul>
         </nav>
         <nav className="menu">
           <ul className="menu-all">
-            <NavigationItems items={items} />
+            <NavigationItems items={localStorage.getItem('status') == 'admin' ? items_all_admin : items_all} />
           </ul>
           <ul className="menu-logout">
             <NavigationItems items={items_logout} />
