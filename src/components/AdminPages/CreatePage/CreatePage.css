@@ -27,6 +27,29 @@
   padding: 3%;
 }
 
+.login-form-row {
+  display: flex;
+  max-height: 70vh;
+  /* flex-direction: column; */
+  /* overflow-y: scroll; */
+}
+
+.form-left {
+  margin-right: 10px;
+}
+
+.form-right {
+  margin-left: 10px;
+}
+
+.login-form-row::-webkit-scrollbar {
+  background-color: gray;
+}
+
+.login-form-row::-webkit-scrollbar-thumb {
+  background-color: #434347;
+}
+
 @media screen and (max-width: 650px) {
   .profile-top {
     flex-direction: column;
@@ -40,6 +63,23 @@
     padding-right: 0;
     padding-bottom: 20px;
   }
+
+}
+
+@media screen and (max-width: 1250px) {
+  .form-left {
+    margin-right: 0;
+  }
+  
+  .form-right {
+    margin-left: 0;
+  }
+  
+  .login-form-row {
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
 }
 
 .create-categories {

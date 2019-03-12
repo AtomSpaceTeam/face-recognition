@@ -26,8 +26,8 @@ body {
 
 .login-form {
   background: #27282d;
-  height: 340px;
-  width: 520px;
+  /* height: 340px; */
+  width: 80%;
   margin: 0 auto;
   border-radius: 5px;
   box-shadow: 0px 4px 30px -5px rgba(0, 0, 0, 0.65);
@@ -86,7 +86,8 @@ input:focus + i {
   cursor: pointer;
   transition: all 0.3s;
   margin-top: 20px;
-  margin-bottom: -30px;
+  margin-bottom: 20px;
+  /* margin-bottom: -30px; */
   box-shadow: 0px 4px 15px -5px rgba(0, 0, 0, 0.65);
   transition: all 0.3s;
   text-decoration: none;
@@ -105,12 +106,12 @@ input:focus + i {
   }
 
   .input-container {
-    width: 80%;
+    width: 95%;
     margin-bottom: 40px;
   }
 
   .login-button {
     margin-top: 10px;
-    margin-bottom: -20px;
+    margin-bottom: 20px;
   }
 }
