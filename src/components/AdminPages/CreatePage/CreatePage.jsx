@@ -17,14 +17,19 @@ class CreatePage extends React.Component{
       form: {}
     }
   }
-  
+
   componentDidMount(){
-    
+
   }
 
   changePage = (e) => {
-    let page = e.target.innerHTML.toLowerCase();
-    this.setState({ page });
+    if (e.target.children.length == 0){
+      let page = e.target.innerHTML.toLowerCase();
+      this.setState({ page });
+    } else {
+      let page = e.target.children[0].innerHTML.toLowerCase();
+      this.setState({ page });
+    }
   }
 
   redirect = () => {
@@ -46,7 +51,7 @@ class CreatePage extends React.Component{
       case 'course':
         page = <Course />;
         break;
-      default: 
+      default:
         page = <User loader={ <Loader/> } />;
         break;
     }
@@ -54,9 +59,15 @@ class CreatePage extends React.Component{
     return (
       <div className="create-block">
         <div className="create-categories d-flex justify-content-around">
-          <span onClick={this.changePage} className="create-category">User</span>
-          <span onClick={this.changePage} className="create-category">Event</span>
-          <span onClick={this.changePage} className="create-category">Course</span>
+          <div className="user-btn" onClick={this.changePage}>
+            <span className="create-category">User</span>
+          </div>
+          <div className="event-btn" onClick={this.changePage}>
+            <span className="create-category">Event</span>
+          </div>
+          <div className="course-btn" onClick={this.changePage}>
+           <span className="create-category">Course</span>
+          </div>
         </div>
         {this.redirect()}
         { page }

@@ -66,8 +66,6 @@ a.btn.active {
   background: #424242;
   box-shadow: 0 0 30px 3px #212121;
   width: 100%;
-  filter: blur;
-  filter: alpha(Opacity=70);
   transition: 1s;
   display: none;
 }

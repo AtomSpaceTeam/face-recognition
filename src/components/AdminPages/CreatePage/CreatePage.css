@@ -82,12 +82,3 @@
 
 }
 
-.create-categories {
-  height: 5vh;
-  background-color: #2B2C30;
-  border-radius: 5px;
-  margin-bottom: 5%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
