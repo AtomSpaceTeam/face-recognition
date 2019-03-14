@@ -34,6 +34,19 @@
   /* overflow-y: scroll; */
 }
 
+.create-form {
+  background: #27282d;
+  /* height: 340px; */
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 5px;
+  box-shadow: 0px 4px 30px -5px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .form-left {
   margin-right: 10px;
 }
@@ -48,6 +61,28 @@
 
 .login-form-row::-webkit-scrollbar-thumb {
   background-color: #434347;
+}
+
+
+.create-categories {
+  height: 5vh;
+  background-color: #2B2C30;
+  border-radius: 5px;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.user-btn, .event-btn, .course-btn {
+  padding: 15px;
+  width: 33.3%;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.user-btn:hover, .event-btn:hover, .course-btn:hover {
+  background: #424242;
 }
 
 @media screen and (max-width: 650px) {

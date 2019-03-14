@@ -110,7 +110,7 @@ class Form extends Component{
 
         return (
             <div className="login-block">
-                <div className={'login-form ' + this.props.class}>
+                <div className={'login-form'}>
                     {this.redirect()}
                     <h3 className="messages">{this.state.messages}</h3>
                     <div className="input-container">

@@ -26,7 +26,7 @@ class CreateUser extends React.Component{
 			button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
 		}	
 		return (
-			<div className={'login-form'}>
+			<div className={'create-form'}>
 				<h2>Create new user</h2>
 				<div className="login-form-row">
 					<div className="form-left">
