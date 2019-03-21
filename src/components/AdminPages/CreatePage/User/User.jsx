@@ -60,7 +60,7 @@ class CreateUser extends React.Component{
 			let obj = { ...this.state.user };
 			fetch('http://localhost:8000/api/create-user', {
 				method: 'POST',
-				body: this.state.user.photo
+				body: JSON.stringify(obj)
 			})
 			.then(res => res.json())
 			.then(data => {
