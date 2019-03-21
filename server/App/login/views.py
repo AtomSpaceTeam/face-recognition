@@ -53,15 +53,27 @@ def login_user_api(request):
                 'status': 412,
                 'message': 'User not found'
             })
-        # return JsonResponse({
-        #     'status': 200,
-        #     'user': user
-        # })
+
+@csrf_exempt
+def create_user(request):
+    print(request.body)
+    return JsonResponse({
+        'status': 200,
+        'message': 'User has created successfully'
+    })
 
 def calculate_age(born):
     today = datetime.date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
+
+@csrf_exempt
+def get_usernames(request):
+    all_users = json.loads(serializers.serialize('json', User.objects.filter(superuser=0)))
+    usernames = []
+    for i in all_users:
+        usernames.append(i['fields']['username'])
+    return JsonResponse({'usernames': usernames})
 
 @login_required
 def index(request):

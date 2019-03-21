@@ -12,7 +12,9 @@ class PeoplePage extends React.Component{
 
   componentDidMount(){
     fetch('http://localhost:8000/users')
-    .then(res => res.json())
+    .then(res => {
+      return(res.json());
+    })
     .then(data => {
       let users = [];
       data.map(user => {
@@ -23,7 +25,7 @@ class PeoplePage extends React.Component{
       }
       this.setState({ users });
     })
-    .catch(err => console.error(err))
+    .catch(err => console.log(err))
   }
 
   render(){
