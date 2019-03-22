@@ -1,10 +1,12 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class CreateUser extends React.Component{
 	constructor(){
 		super();
 		this.state = {
 			loading: false,
+			redirect: false,
 			all_filled: true,
 			user: {
 				username: '',
@@ -48,25 +50,34 @@ class CreateUser extends React.Component{
 	}
 	onSubmit = () => {
 		if(!this.state.usernames.includes(this.state.user.username) && this.state.user.username.length >= 4){
-			for(let i in this.state.user){
-				if (this.state.user[i] === ''){
-					this.setState({ all_filled: false, messages: 'You have not filled all fields in'})
-					return 0;
-				} else{
-					continue;
+			if(new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$").test(this.state.user.email)){
+				for(let i in this.state.user){
+					if (this.state.user[i] === ''){
+						this.setState({ all_filled: false, messages: 'You have not filled all fields in'})
+						return 0;
+					} else{
+						continue;
+					}
 				}
+				this.setState({ loading: true });
+				let form = new FormData();
+				for(let i in this.state.user) {form.append(i, this.state.user[i]);}
+				fetch('http://localhost:8000/api/create-user', {
+					method: 'POST',
+					body: form
+				})
+				.then(res => res.json())
+				.then(data => {
+					if (data.status === 200){
+						this.setState({ loading: false, redirect: true });
+					} else{
+						this.setState({ messages: 'There is some troubles with server, please try again later'});
+					}
+				})
+				.catch(err => console.error(err));
+			} else{
+				this.setState({ messages: 'You have entered irregular e-mail address'});
 			}
-			this.setState({ loading: true });
-			let obj = { ...this.state.user };
-			fetch('http://localhost:8000/api/create-user', {
-				method: 'POST',
-				body: JSON.stringify(obj)
-			})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-			})
-			.catch(err => console.error(err));
 		} else{
 			this.setState({ messages: 'This username is less than 4 chars or already exist'});
 		}
@@ -90,7 +101,13 @@ class CreateUser extends React.Component{
         if (e.key === 'Enter'){
             console.log(this.onSubmit());
         }
-    }
+	}
+	
+	redirect = () => {
+		if (this.state.redirect){
+			return <Redirect to="/people"/>
+		}
+	}
 
 	render() {
 		let button;
@@ -103,6 +120,7 @@ class CreateUser extends React.Component{
 			<div className={'create-form'}>
 				<h2>Create new user</h2>
 				<h3 className="messages">{this.state.messages}</h3>
+				{ this.redirect() }
 				<div className="login-form-row">
 					<div className="form-left">
 						<div className="input-container">

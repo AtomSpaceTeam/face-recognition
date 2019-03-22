@@ -1,10 +1,7 @@
 import os
 import json
-import shutil
-import calendar
-import datetime
-import bcrypt
-import requests
+import datetime, time
+import secrets, string # for generating password
 
 from django.conf import settings
 from django.contrib.auth import logout as django_logout
@@ -15,11 +12,11 @@ from django.http import  HttpResponse, JsonResponse
 from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.hashers import BCryptSHA256PasswordHasher
-from django import forms
+from django.core.mail import send_mail
+
 
 from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm, GuestForm
 from .models import User, Seen, Event, Guest
-from .loginUserDecorator import decorator
 
 @csrf_exempt
 def login_user_api(request):
@@ -56,11 +53,37 @@ def login_user_api(request):
 
 @csrf_exempt
 def create_user(request):
-    print(request.body)
-    return JsonResponse({
-        'status': 200,
-        'message': 'User has created successfully'
-    })
+    if request.method == 'POST':
+        user = User()
+        post = request.POST
+        user.username = post['username']
+        user.name = post['first_name']
+        user.surname = post['last_name']
+        user.birth_date = post['date']
+        user.email = post['email']
+        user.team = post['team']
+        user.project = post['project']
+        user.status = post['status']
+        user.specialization = post['specialisation']
+        user.profile_photo = request.FILES['photo']
+
+        alphabet = string.ascii_letters + string.digits
+        password = ''.join(secrets.choice(alphabet) for i in range(20))
+        user.password = password
+
+        subject = 'Atom Space Statistics System'
+        from_email = settings.EMAIL_HOST_USER
+        contact_message = f'Dear {user.name} {user.surname}\nYour account was created on Atom Space Statistic System website, here is your password for first entry to our site\n{user.password}\nPlease do not show this password to anyone else. After you will enter, you will be suggested to change your password to another one'
+        send_mail(subject, contact_message, from_email, [user.email], fail_silently=False)
+
+        user.superuser = 0
+        user.save()
+
+        return JsonResponse({
+            'status': 200,
+            'message': 'User has created successfully'
+        })
+
 
 def calculate_age(born):
     today = datetime.date.today()
