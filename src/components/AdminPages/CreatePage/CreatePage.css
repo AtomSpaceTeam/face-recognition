@@ -75,7 +75,7 @@
 }
 
 .user-btn, .event-btn, .course-btn {
-  padding: 15px;
+  padding: 9px;
   width: 33.3%;
   cursor: pointer;
   transition: 1s;
@@ -175,11 +175,11 @@ select::-ms-expand {
   .form-left {
     margin-right: 0;
   }
-  
+
   .form-right {
     margin-left: 0;
   }
-  
+
   .login-form-row {
     flex-direction: column;
     overflow-y: scroll;

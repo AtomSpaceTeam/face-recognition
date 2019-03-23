@@ -15,18 +15,6 @@
   width: 100;
 }
 
-.card-btn-edit {
-  margin: 5px;
-  border: 0;
-  background: #0288D1;
-  color: white;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  font-family: sans-serif;
-  cursor: pointer;
-}
-
 .card-btn-delete {
   margin: 5px;
   border: 0;

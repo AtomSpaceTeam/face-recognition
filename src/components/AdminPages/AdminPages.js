@@ -11,6 +11,7 @@ import PeoplePage from './PeoplePage';
 import EventsPage from './EventsPage';
 import CoursesPage from './CoursesPage';
 import CreatePage from './CreatePage';
+import Error404 from '../Error404/Error404';
 
 const routes = [
   { path: '/home', component: HomePage, exact: true },
@@ -33,7 +34,7 @@ const UserPages = ({ match }) => (
             exact={route.exact}
           />
         ))}
-        <Redirect to="/home" />
+        <Route component={Error404} />
       </Switch>
     </div>
   </Layout>
