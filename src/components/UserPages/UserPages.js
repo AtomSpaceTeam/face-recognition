@@ -31,7 +31,7 @@ const UserPages = ({ match }) => (
             exact={route.exact}
           />
         ))}
-        <Redirect to="/home" />
+        {/* <Redirect to="/home" /> */}
       </Switch>
     </div>
   </Layout>
