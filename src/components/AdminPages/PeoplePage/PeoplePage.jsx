@@ -26,6 +26,15 @@ class PeoplePage extends React.Component{
     .catch(err => console.error(err))
   }
 
+  delete = (key) => {
+    let item = this.state.users[key].surname;
+    fetch(`http://localhost:8000/api/v1/delete-user/${item}`, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .catch(err => console.error(err));
+  }
+
   render(){
     return (
       <div className="people-block">
@@ -36,8 +45,7 @@ class PeoplePage extends React.Component{
           <p>Team: {user.team}</p>
           <p>Projects: {user.project}</p>
           <div className="card-btn-block">
-            <button className="card-btn-edit">Edit</button>
-            <button className="card-btn-delete">Delete</button>
+            <button key={ id } onClick={ () => this.delete(id) } className="card-btn-delete">Delete</button>
           </div>
         </div>
         ))}

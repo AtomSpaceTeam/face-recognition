@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
     url(r'^event/(?P<pk>\d+)/edit$', views.edit_event, name='edit_event'),
     url(r'^event/(?P<pk>\d+)/delete$', views.delete_event, name='delete_event'),
+    url(r'^api/v1/delete-user/(?P<surname>\w+)$', views.delete_user, name='delete_user'),
 
 ]
 

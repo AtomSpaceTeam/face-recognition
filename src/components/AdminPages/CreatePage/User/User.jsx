@@ -22,7 +22,6 @@ class CreateUser extends React.Component{
 			},
 			usernames: [],
 			typeDate: 'text',
-			typePhoto: 'text',
 			messages: ''
 		}
 	}
@@ -36,18 +35,10 @@ class CreateUser extends React.Component{
 		.catch(err => console.error(err));
 	}
 
-	onFocus = () => {
-		this.setState({ typeDate: 'date' })
+	onChangeType = (e) => {
+		e.target.type === 'text' ? this.setState({ typeDate: 'date' }) : this.setState({ typeDate: 'text' });
 	}
-	onBlur = () => {
-		this.setState({ typeDate: 'text' })
-	}
-	onFocusPhoto = () => {
-		this.setState({ typePhoto: 'file' })
-	}
-	onBlurPhoto = () => {
-		this.setState({ typePhoto: 'text' })
-	}
+
 	onSubmit = () => {
 		if(!this.state.usernames.includes(this.state.user.username) && this.state.user.username.length >= 4){
 			if(new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$").test(this.state.user.email)){
@@ -133,7 +124,7 @@ class CreateUser extends React.Component{
 							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="last_name" placeholder="Last Name" />
 						</div>			
 						<div className="input-container">
-							<input onChange={ this.onChange } onKeyPress={this.key} name="date" onFocus={ this.onFocus } onBlur={ this.onBlur } type={this.state.typeDate} placeholder="Birth Date" />
+							<input onChange={ this.onChange } onKeyPress={this.key} name="date" onFocus={ this.onChangeType } onBlur={ this.onChangeType } type={this.state.typeDate} placeholder="Birth Date" />
 						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} name="email" type="text" placeholder="E-mail" />
@@ -164,6 +155,7 @@ class CreateUser extends React.Component{
 								<option value="designer">Designer</option>
 								<option value="back-end">Back-End</option>
 								<option value="front-end">Front-End</option>
+								<option value="software engineer">Software Engineer</option>
 								<option value="QA">QA</option>
 							</select>
 						</div>

@@ -155,6 +155,13 @@ def count(request):
     })
 
 @csrf_exempt
+def delete_user(request, surname):
+    user = User.objects.get(surname=surname)
+    os.remove(os.path.join(settings.MEDIA_ROOT, str(user.profile_photo)))
+    user.delete()
+    return JsonResponse({'deleted': True})
+
+@csrf_exempt
 def user_info(request):
     req = json.loads(request.body.decode('utf-8'))
     user = serializers.serialize('json', User.objects.filter(name=req['name']))
