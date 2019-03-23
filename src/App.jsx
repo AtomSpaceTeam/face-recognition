@@ -17,18 +17,23 @@ class App extends Component {
     return <Redirect to='/home' />
   }
 
+  onError404 = () => {
+    return <Redirect to='/Error404' />
+  }
+
   render() {
     return this.isAuthenticated() ? (
       <Switch>
         <Route path="/logout" render={this.onLogout} exact />
         <Route path="/:pageName" component={Home} />
-        <Route path='/*' component={Error404} exact />
+        <Route path="/" render={this.onHome} />
+        <Route component={Error404} />
       </Switch>
     ) : (
       <Switch>
         <Route path="/login" component={Login} exact />
         <Redirect to="/login" />
-        <Route path='/*' component={Error404} exact />
+        <Route component={Error404} />
       </Switch>
     );
   }

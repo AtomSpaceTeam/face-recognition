@@ -44,19 +44,6 @@
   color: white;
 }
 
-.btn-event-edit {
-  margin: 5px;
-  border: 0;
-  background: #0288D1;
-  color: white;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  font-family: sans-serif;
-  cursor: pointer;
-  transition: 1s linear;
-}
-
 .btn-event-delete {
   margin: 5px;
   border: 0;
