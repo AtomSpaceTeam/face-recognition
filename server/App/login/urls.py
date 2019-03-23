@@ -9,6 +9,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('api/create-user', views.create_user, name='create_user'),
+    path('get-usernames', views.get_usernames, name='get_usernames'),
     path('count', views.count, name='count'),
     path('user-info', views.user_info, name='user_info'),
     path('users', views.users, name='users'),

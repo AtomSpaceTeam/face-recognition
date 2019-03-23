@@ -12,16 +12,6 @@ class Form extends Component{
             messages: '',
             redirect: false,
             loading: false
-            // password2: '',
-            // firstName: '',
-            // lastName: '',
-            // email: '',
-            // bitrhDate: '',
-            // spec: '',
-            // team: '',
-            // project: '',
-            // passwordReg: new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/),
-            // goodPassword: false
         };
     }
 
@@ -110,7 +100,7 @@ class Form extends Component{
 
         return (
             <div className="login-block">
-                <div className={'login-form ' + this.props.class}>
+                <div className={'login-form'}>
                     {this.redirect()}
                     <h3 className="messages">{this.state.messages}</h3>
                     <div className="input-container">
