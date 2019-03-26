@@ -34,8 +34,6 @@ const items_logout = [
   { key: 1, icon: logout_i, title: 'Logout', path: '/logout' },
 ]
 
-const items = localStorage.getItem('status') === 'admin' ? items_all_admin : items_all;
-
 let onHam = false;
 
 const change = () => {
@@ -46,7 +44,8 @@ class SideBar extends React.Component {
   constructor(){
     super();
     this.state = {
-      onHam: false
+      onHam: false,
+      status: null
     }
   }
 
@@ -54,7 +53,18 @@ class SideBar extends React.Component {
     return (this.setState({onHam: !this.state.onHam}))
   }
 
-
+  componentDidMount(){
+    fetch('http://localhost:8000/check', {
+      method: 'POST',
+      body: JSON.stringify(localStorage.getItem('id'))
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'admin'){ this.setState({status: 1}) }
+      else { this.setState({status: 0}) }
+    })
+    .catch(err => console.error(err));
+  }
 
   render () {
     return (
@@ -65,12 +75,12 @@ class SideBar extends React.Component {
         </nav>
         <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>
           <ul>
-            <NavigationItems style={{ opacity:"10" }} items={localStorage.getItem('status') == 'admin' ? items_all_admin : items_all} />
+            <NavigationItems style={{ opacity:"10" }} items={this.state.status === 1 ? items_all_admin : items_all} />
           </ul>
         </nav>
         <nav className="menu">
           <ul className="menu-all">
-            <NavigationItems items={localStorage.getItem('status') == 'admin' ? items_all_admin : items_all} />
+            <NavigationItems items={this.state.status === 1 ? items_all_admin : items_all} />
           </ul>
           <ul className="menu-logout">
             <NavigationItems items={items_logout} />

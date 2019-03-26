@@ -35,7 +35,7 @@ class Chart extends React.Component {
     fetch('http://localhost:8000/api-attendance', {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
-      body: JSON.stringify({surname: localStorage.getItem('user.surname'), team: localStorage.getItem('user.team'), status: localStorage.getItem('status')})
+      body: JSON.stringify(localStorage.getItem('id'))
     })
     .then((res) => res.json())
     .then((data) => {

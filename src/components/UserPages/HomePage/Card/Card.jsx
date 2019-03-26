@@ -2,7 +2,6 @@ import React from 'react';
 
 import './Card.css';
 import team_i from '../../../../static/img/team.svg';
-import project_i from '../../../../static/img/project.svg';
 
 const Card = (props) => (
   <div className="card-block" key={props.id}>

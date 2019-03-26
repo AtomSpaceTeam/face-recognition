@@ -11,16 +11,16 @@ class PeoplePage extends React.Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:8000/users')
+    fetch('http://localhost:8000/users', {
+      method: 'POST',
+      body: JSON.stringify(localStorage.getItem('id'))
+    })
     .then(res => res.json())
     .then(data => {
       let users = [];
       data.map(user => {
         users.push(user.fields);
       })
-      for(let i in users) {
-        if(users[i].name === localStorage.getItem('user.name')) users.splice(i, 1)
-      }
       this.setState({ users });
     })
     .catch(err => console.error(err))

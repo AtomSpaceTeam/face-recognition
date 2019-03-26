@@ -23,11 +23,11 @@ class ProfilePage extends React.Component{
     fetch('http://localhost:8000/user-info', {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
-      body: JSON.stringify({'name': localStorage.getItem('user.name')})
+      body: JSON.stringify(localStorage.getItem('id'))
     })
     .then(res => res.json())
     .then(data => {
-      let {name, surname, birth_date, status, team, project} = data[0].fields
+      let {name, surname, birth_date, status, team, project} = data.fields
       let age = this.countAge(new Date(birth_date))
       this.setState({
         user: {

@@ -39,23 +39,14 @@ class Form extends Component{
                     return 0;
                 }
                 let reg = new RegExp('admin');
-                let userObject = JSON.parse(user.user)[0].fields;
-                console.log(userObject);
                 if (reg.test(user.user_id)){
                     console.log('You are admin');
-                    localStorage.setItem('status', 'admin');
                     localStorage.setItem('id', user.user_id);
-                    localStorage.setItem('user.name', userObject.name);
-                    localStorage.setItem('user.surname', userObject.surname);
                     this.setState({redirect: true, loading: false});
                 }
                 else{
                     console.log('You are common user');
-                    localStorage.setItem('status', 'user');
                     localStorage.setItem('id', user.user_id);
-                    localStorage.setItem('user.name', userObject.name);
-                    localStorage.setItem('user.surname', userObject.surname);
-                    localStorage.setItem('user.team', userObject.team);
                     this.setState({redirect: true, loading: false});
                 }
             })

@@ -26,19 +26,24 @@ def login_user_api(request):
             user = User.objects.get(username=data['username'])
             bcr = BCryptSHA256PasswordHasher()
             if bcr.verify(data['password'], user.password) == True:
-                hashed = bcr.encode(data['password'], bcr.salt())
-                user_object = serializers.serialize('json', User.objects.filter(username=data['username']))
+                hashed = bcr.encode(data['username'], bcr.salt())
+                user_object = json.loads(serializers.serialize('json', User.objects.filter(username=data['username'])))
+                print(user_object)
                 if user.superuser == 1:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': 'admin-{}'.format(hashed),
-                        'user': user_object
+                        'user_id': f'{hashed}',
+                        'user_name': user_object[0]['fields']['name'],
+                        'user_team': user_object[0]['fields']['team'],
+                        'user_surname': user_object[0]['fields']['surname']
                     })
                 else:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': 'user-{}'.format(hashed),
-                        'user': user_object
+                        'user_id': f'{hashed}',
+                        'user_name': user_object[0]['fields']['name'],
+                        'user_team': user_object[0]['fields']['team'],
+                        'user_surname': user_object[0]['fields']['surname']
                     })
             else:
                 return JsonResponse({
@@ -98,6 +103,18 @@ def get_usernames(request):
         usernames.append(i['fields']['username'])
     return JsonResponse({'usernames': usernames})
 
+@csrf_exempt
+def check(request):
+    data = json.loads(request.body.decode('utf-8'))
+    users_list = json.loads(serializers.serialize('json', User.objects.all()))
+    for i in users_list:
+        if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data):
+            if i['fields']['superuser'] == 1:
+                return JsonResponse({'status': 'admin'})
+            else:
+                return JsonResponse({'status': 'user'})
+    return JsonResponse({'ok': 'True'})
+
 @login_required
 def index(request):
     context = {
@@ -112,8 +129,13 @@ def index(request):
 @csrf_exempt
 def api_attendance(request):
     data = json.loads(request.body.decode('utf-8'))
-    if data['status'] == 'user':
-        team_users = json.loads(serializers.serialize('json', User.objects.filter(team=data['team'])))
+    users_list = json.loads(serializers.serialize('json', User.objects.all()))
+    for i in users_list:
+        if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data):
+            user = i['fields']
+    
+    if user['superuser'] == 0:
+        team_users = json.loads(serializers.serialize('json', User.objects.filter(team=user['team'])))
         team_names = []
         for i in team_users:
             team_names.append(f"{i['fields']['name']} {i['fields']['surname']}")
@@ -128,6 +150,7 @@ def api_attendance(request):
         for i in new_arr:
             obj.update({f'{i}': all_users.count(i)})
         return JsonResponse(obj)
+
     else:
         users = json.loads(serializers.serialize("json", Seen.objects.all()))
         all_users = [x['fields']['name'].split(' ')[1] for x in users]
@@ -163,14 +186,20 @@ def delete_user(request, surname):
 
 @csrf_exempt
 def user_info(request):
-    req = json.loads(request.body.decode('utf-8'))
-    user = serializers.serialize('json', User.objects.filter(name=req['name']))
-    return HttpResponse(user)
+    data = json.loads(request.body.decode('utf-8'))
+    users_list = json.loads(serializers.serialize('json', User.objects.all()))
+    for i in users_list:
+        if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data):
+            return JsonResponse(i)
 
 @csrf_exempt
 def users(request):
-    users = serializers.serialize('json', User.objects.all(), fields=('name', 'surname', 'status', 'team', 'project'))
-    return HttpResponse(users)
+    users_list = json.loads(serializers.serialize('json', User.objects.all(), fields=('username', 'name', 'surname', 'status', 'team', 'project')))
+    data = json.loads(request.body.decode('utf-8'))
+    for i in users_list:
+        if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data):
+            del users_list[users_list.index(i)]
+    return JsonResponse(users_list, safe=False)
 
 @csrf_exempt
 def events(request):
