@@ -22,8 +22,8 @@
   transition: 1s linear;
   display: flex;
   width: 100%;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .btn:hover {
@@ -36,7 +36,7 @@ ul {
 }
 
 .menu-logout li:last-child{
-  border-top: 1px solid;
+  border-top: 1px solid #424242;
   border-bottom: 0;
 }
 
@@ -44,7 +44,7 @@ ul {
   text-align: left;
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #424242;
 }
 
 a.btn.active {
@@ -75,7 +75,11 @@ a.btn.active {
     width: auto;
     margin-right: 0;
     height: auto;
-    position: inherit;
+    position: fixed;
+    width: 98%;
+    padding-right: 2%;
+    top: 0;
+    background: #262626;
     }
 
   .menu {
@@ -86,9 +90,13 @@ a.btn.active {
     flex-direction: row;
     justify-content: space-between;
     height: 60px;
-    margin-right: 25px;
-    margin-left: 25px;
+    padding-left: 2%;
+  }
+}
 
+@media screen and (max-height: 700px) {
+  .menu-mobile {
+    overflow-y: scroll;
   }
 }
 

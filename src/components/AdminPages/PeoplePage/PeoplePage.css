@@ -26,3 +26,12 @@
   font-family: sans-serif;
   cursor: pointer;
 }
+
+@media screen and (max-width: 700px) {
+  .people-block {
+    margin-top: 90px;
+  }
+  .card-people {
+    margin-bottom: 10px;
+  }
+}

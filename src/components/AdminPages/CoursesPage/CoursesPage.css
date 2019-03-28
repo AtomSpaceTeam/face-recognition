@@ -1,3 +1,10 @@
+.soon-text {
+  text-align: center;
+  position: relative;
+  top: 50vh;
+  width: 100%;
+}
+
 .courses-block {
   margin-right: 30px;
   margin-top: 30px;
@@ -28,4 +35,10 @@
 .btn-courses:hover {
   background: #616161;
   color: white;
+}
+
+@media screen and (max-width: 700px) {
+  .courses-block {
+    margin-top: 90px;
+  }
 }

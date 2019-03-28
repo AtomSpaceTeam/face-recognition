@@ -73,9 +73,12 @@ class SideBar extends React.Component {
           <h3>Face recognition</h3>
           <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
         </nav>
-        <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95'} : {'display': 'none'}}>
+        <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95', 'maxHeight': '80vh' } : {'display': 'none'}}>
           <ul>
             <NavigationItems style={{ opacity:"10" }} items={this.state.status === 1 ? items_all_admin : items_all} />
+          </ul>
+          <ul className="menu-logout">
+            <NavigationItems items={items_logout} />
           </ul>
         </nav>
         <nav className="menu">
