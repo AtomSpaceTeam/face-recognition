@@ -1,5 +1,5 @@
 .home-page {
-  margin-top: 35px;
+  margin-top: 15px;
 }
 
 .col-sm {
@@ -14,13 +14,13 @@
 }
 
 .card-text {
-  text-align: left;
+  text-align: center;
 }
 
 .chart {
   margin-top: 30px;
   background-color: #212121;
-  box-shadow: 0 0 30px 3px #212121;
+  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.5);
   height: 71vh;
   width: 100%;
   margin-bottom: 30px;
