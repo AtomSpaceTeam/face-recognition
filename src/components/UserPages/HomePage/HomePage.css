@@ -24,12 +24,14 @@
   height: 71vh;
   width: 100%;
   margin-bottom: 30px;
+  position: static;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .card {
     flex-direction: column;
     margin-top: 0;
+    margin-top: 55px;
   }
   .home-page {
     margin-top: 0;

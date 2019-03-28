@@ -2,7 +2,7 @@ import React from 'react';
 
 import './ProfilePage.css';
 
-import avatar_i from '../../../static/img/man.svg';
+import avatar_i from '../../../static/img/avatar.png';
 
 class ProfilePage extends React.Component{
   constructor(){
@@ -18,7 +18,7 @@ class ProfilePage extends React.Component{
     diff = new Date(diff).getFullYear()
     return (diff - 1970);
   }
-  
+
   componentDidMount(){
     fetch('http://localhost:8000/user-info', {
       method: 'POST',
@@ -59,10 +59,6 @@ class ProfilePage extends React.Component{
               <p>Team: {this.state.user.team}</p>
               <p>Project: {this.state.user.project}</p>
             </div>
-          </div>
-        <h2 className="profile-text-title">Your activity</h2>
-          <div className="profile-bottom">
-            <div className="active-block"></div>
           </div>
       </div>
     );
