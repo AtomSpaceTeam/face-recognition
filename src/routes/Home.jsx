@@ -2,12 +2,14 @@ import React from 'react';
 
 import HomeAdmin from '../components/AdminPages';
 import UserPages from '../components/UserPages';
+import Loader from '../components/Loader';
 
 class Home extends React.Component {
   constructor(){
     super();
     this.state = {
-      status: null
+      status: null,
+      loading: true
     };
   }
 
@@ -18,8 +20,8 @@ class Home extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.status === 'admin'){ this.setState({status: 1}); }
-      else { this.setState({status: 0}) }
+      if (data.status === 'admin'){ this.setState({status: 1, loading: false}); }
+      else { this.setState({status: 0, loading: false}) }
     })
     .catch(err => console.error(err));
   }
@@ -27,10 +29,14 @@ class Home extends React.Component {
   render() {
     let component;
    
-    if (this.state.status === 1) {
-      component = <HomeAdmin />
-    } else {
-      component = <UserPages />
+    if (this.state.loading){
+      component = <Loader />
+    } else{
+      if (this.state.status === 1) {
+        component = <HomeAdmin />
+      } else {
+        component = <UserPages />
+      }
     }
     return component;
   }
