@@ -27,7 +27,7 @@ class ProfilePage extends React.Component{
     })
     .then(res => res.json())
     .then(data => {
-      let {name, surname, birth_date, status, team, project} = data.fields
+      let {name, surname, birth_date, status, team, project, profile_photo} = data.fields
       let age = this.countAge(new Date(birth_date))
       this.setState({
         user: {
@@ -36,7 +36,8 @@ class ProfilePage extends React.Component{
           age,
           status,
           team,
-          project
+          project,
+          profile_photo
         }
       });
     })
@@ -49,15 +50,15 @@ class ProfilePage extends React.Component{
         <h2 className="profile-text-title">Profile</h2>
           <div className="profile-top">
             <div className="profile-left">
-              <img src={avatar_i} style={{ width:"230px" }}/>
+              <img src={'http://localhost:8000/media/'+this.state.user.profile_photo} alt="Your photo" style={{ width:"230px" }}/>
             </div>
             <div className="profile-right">
-              <p>Name: {this.state.user.name}</p>
-              <p>Surname: {this.state.user.surname}</p>
-              <p>Age: {this.state.user.age}</p>
-              <p>Status: {this.state.user.status}</p>
-              <p>Team: {this.state.user.team}</p>
-              <p>Project: {this.state.user.project}</p>
+              <p>Name: {this.state.user.name || '   Loading...'}</p>
+              <p>Surname: {this.state.user.surname || '   Loading...'}</p>
+              <p>Age: {this.state.user.age || '   Loading...'}</p>
+              <p>Status: {this.state.user.status || '   Loading...'}</p>
+              <p>Team: {this.state.user.team || '   Loading...'}</p>
+              <p>Project: {this.state.user.project || '   Loading...'}</p>
             </div>
           </div>
       </div>

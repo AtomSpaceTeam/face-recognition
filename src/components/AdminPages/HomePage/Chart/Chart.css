@@ -2,6 +2,13 @@ canvas{
     width: 100%;
 }
 
+.soon-chart {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    width: 100%;
+  }
+
 .chart{
     position: relative;
 }

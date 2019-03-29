@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import Loader from '../../../Loader';
 
 import './Chart.css';
 
@@ -7,6 +8,7 @@ class Chart extends React.Component {
   constructor(){
     super();
     this.state = {
+      loading: true,
       chartData: {
         labels: [],
         datasets: []
@@ -54,18 +56,22 @@ class Chart extends React.Component {
       chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
       chartData.datasets[0].hoverBackgroundColor = 'rgba(255,99,132,0.4)';
       chartData.datasets[0].hoverBorderColor = 'rgba(255,99,132,1)';
-      this.setState({chartData});
+      this.setState({chartData, loading: false});
     })
     .catch((err) => console.log(err))
   }
 
   render() {
-    return (
-        <Bar 
-          data={this.state.chartData}
-          options={this.state.options}
-        />
-    );
+    if (this.state.loading) {
+      return (<div className="soon-chart"><Loader /></div>);
+    } else {
+      return (
+          <Bar 
+            data={this.state.chartData}
+            options={this.state.options}
+          />
+      );
+    }
   }
 }
 

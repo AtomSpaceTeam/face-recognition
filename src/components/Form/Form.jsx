@@ -11,6 +11,7 @@ class Form extends Component{
             password: '',
             messages: '',
             redirect: false,
+            changePass: false,
             loading: false
         };
     }
@@ -38,17 +39,8 @@ class Form extends Component{
                     this.setState({messages: user.message, loading: false});
                     return 0;
                 }
-                let reg = new RegExp('admin');
-                if (reg.test(user.user_id)){
-                    console.log('You are admin');
-                    localStorage.setItem('id', user.user_id);
-                    this.setState({redirect: true, loading: false});
-                }
-                else{
-                    console.log('You are common user');
-                    localStorage.setItem('id', user.user_id);
-                    this.setState({redirect: true, loading: false});
-                }
+                localStorage.setItem('id', user.user_id);
+                this.setState({redirect: true, loading: false});
             })
             .catch((err) => {
                 this.setState({messages: 'Some troubles with server, please try again later', loading: false});

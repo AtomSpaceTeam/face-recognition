@@ -25,25 +25,26 @@ def login_user_api(request):
         if User.objects.filter(username=data['username']).exists():
             user = User.objects.get(username=data['username'])
             bcr = BCryptSHA256PasswordHasher()
+            
+            if not user.password.startswith('bcrypt_sha256'):
+                hashed = bcr.encode(data['username'], bcr.salt())
+                return JsonResponse({
+                    'status': 200,
+                    'user_id': f'{hashed}',
+                    'password': 'incorrect'
+                })
+
             if bcr.verify(data['password'], user.password) == True:
                 hashed = bcr.encode(data['username'], bcr.salt())
-                user_object = json.loads(serializers.serialize('json', User.objects.filter(username=data['username'])))
-                print(user_object)
                 if user.superuser == 1:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'{hashed}',
-                        'user_name': user_object[0]['fields']['name'],
-                        'user_team': user_object[0]['fields']['team'],
-                        'user_surname': user_object[0]['fields']['surname']
+                        'user_id': f'{hashed}'
                     })
                 else:
                     return JsonResponse({
                         'status': 200,
-                        'user_id': f'{hashed}',
-                        'user_name': user_object[0]['fields']['name'],
-                        'user_team': user_object[0]['fields']['team'],
-                        'user_surname': user_object[0]['fields']['surname']
+                        'user_id': f'{hashed}'
                     })
             else:
                 return JsonResponse({
@@ -71,7 +72,6 @@ def create_user(request):
         user.status = post['status']
         user.specialization = post['specialisation']
         user.profile_photo = request.FILES['photo']
-
         alphabet = string.ascii_letters + string.digits
         password = ''.join(secrets.choice(alphabet) for i in range(20))
         user.password = password

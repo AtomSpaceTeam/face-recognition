@@ -1,5 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
+import Loader from '../../../Loader';
 
 import './Chart.css';
 
@@ -7,6 +8,7 @@ class Chart extends React.Component {
   constructor(){
     super();
     this.state = {
+      loading: true,
       chartData: {
         labels: [],
         datasets: []
@@ -27,7 +29,7 @@ class Chart extends React.Component {
             }
           }]
         }
-      }
+      },
     }
   }
 
@@ -60,12 +62,16 @@ class Chart extends React.Component {
   }
 
   render() {
-    return (
-        <Bar 
-          data={this.state.chartData}
-          options={this.state.options}
-        />
-    );
+    if (this.state.loading) {
+      return (<div className="soon-text"><Loader /></div>);
+    } else {
+      return (
+          <Bar 
+            data={this.state.chartData}
+            options={this.state.options}
+          />
+      );
+    }
   }
 }
 

@@ -30,7 +30,7 @@ class Home extends React.Component {
     let component;
    
     if (this.state.loading){
-      component = <Loader />
+      component = <div className="soon-text"><Loader /></div>
     } else{
       if (this.state.status === 1) {
         component = <HomeAdmin />

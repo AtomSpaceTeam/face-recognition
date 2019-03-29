@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from '../../Loader';
 
 import './PeoplePage.css';
 
@@ -6,7 +7,8 @@ class PeoplePage extends React.Component{
   constructor(){
     super();
     this.state = {
-      users: []
+      users: [],
+      loading: true
     }
   }
 
@@ -21,7 +23,7 @@ class PeoplePage extends React.Component{
       data.map(user => {
         users.push(user.fields);
       })
-      this.setState({ users });
+      this.setState({ users, loading: false });
     })
     .catch(err => console.error(err))
   }
@@ -36,21 +38,25 @@ class PeoplePage extends React.Component{
   }
 
   render(){
-    return (
-      <div className="people-block">
-        {this.state.users.map((user, id) => (
-        <div key={id} className="card-people">
-          <h3>{`${user.name} ${user.surname}`}</h3>
-          <p>Status: {user.status}</p>
-          <p>Team: {user.team}</p>
-          <p>Projects: {user.project}</p>
-          <div className="card-btn-block">
-            <button key={ id } onClick={ () => this.delete(id) } className="card-btn-delete">Delete</button>
+    if (this.state.loading){
+      return (<div className="soon-text"><Loader /></div>);
+    } else{
+      return (
+        <div className="people-block">
+          {this.state.users.map((user, id) => (
+          <div key={id} className="card-people">
+            <h3>{`${user.name} ${user.surname}`}</h3>
+            <p>Status: {user.status}</p>
+            <p>Team: {user.team}</p>
+            <p>Projects: {user.project}</p>
+            <div className="card-btn-block">
+              <button key={ id } onClick={ () => this.delete(id) } className="card-btn-delete">Delete</button>
+            </div>
           </div>
+          ))}
         </div>
-        ))}
-      </div>
-    );
+      );
+    }
   }
 }
 
