@@ -93,7 +93,7 @@ class CreateUser extends React.Component{
             console.log(this.onSubmit());
         }
 	}
-	
+
 	redirect = () => {
 		if (this.state.redirect){
 			return <Redirect to="/people"/>
@@ -106,10 +106,10 @@ class CreateUser extends React.Component{
 			button = <button className='login-button' type="submit">{this.props.loader}</button>
 		} else{
 			button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
-		}	
+		}
 		return (
 			<div className={'create-form'}>
-				<h2>Create new user</h2>
+				<h2 style={{ 'marginBottom': '0' }}>Create new user</h2>
 				<h3 className="messages">{this.state.messages}</h3>
 				{ this.redirect() }
 				<div className="login-form-row">
@@ -122,7 +122,7 @@ class CreateUser extends React.Component{
 						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="last_name" placeholder="Last Name" />
-						</div>			
+						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} name="date" onFocus={ this.onChangeType } onBlur={ this.onChangeType } type={this.state.typeDate} placeholder="Birth Date" />
 						</div>

@@ -1,10 +1,10 @@
 .profile-block {
-  margin-top: 30px;
   background-color: #212121;
-  box-shadow: 0 0 30px 3px #212121;
-  height: auto;
+  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.5);
   width: 100%;
-  margin-bottom: 30px;
+  height: auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .profile-top {
@@ -25,12 +25,13 @@
 .profile-text-title {
   margin: 0;
   font-size: 2em;
-  padding: 3%;
+  padding-bottom: 3%;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
   .profile-block {
-    margin-top: 90px;
+    margin-top: 80px;
+    margin-bottom: 3vh;
   }
 }
 

@@ -8,6 +8,8 @@
   height: 100vh;
   width: 100%;
   margin-left: 282px;
+  margin-top: 3vh;
+  height: 97vh;
 }
 
 @media screen and (max-width: 900px) {
