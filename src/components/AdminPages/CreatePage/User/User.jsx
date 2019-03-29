@@ -93,7 +93,7 @@ class CreateUser extends React.Component{
             console.log(this.onSubmit());
         }
 	}
-	
+
 	redirect = () => {
 		if (this.state.redirect){
 			return <Redirect to="/people"/>
@@ -106,10 +106,10 @@ class CreateUser extends React.Component{
 			button = <button className='login-button' type="submit">{this.props.loader}</button>
 		} else{
 			button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
-		}	
+		}
 		return (
 			<div className={'create-form'}>
-				<h2>Create new user</h2>
+				<h2 style={{ 'marginBottom': '0' }}>Create new user</h2>
 				<h3 className="messages">{this.state.messages}</h3>
 				{ this.redirect() }
 				<div className="login-form-row">
@@ -122,7 +122,7 @@ class CreateUser extends React.Component{
 						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="last_name" placeholder="Last Name" />
-						</div>			
+						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} name="date" onFocus={ this.onChangeType } onBlur={ this.onChangeType } type={this.state.typeDate} placeholder="Birth Date" />
 						</div>
@@ -143,20 +143,20 @@ class CreateUser extends React.Component{
 						<div className="input-container select-tag">
 							<label htmlFor="select-status">Status</label>
 							<select onChange={ this.onChange } className="select" id="select-status" onKeyPress={this.key} name="status" >
-								<option value=""  disabled>Select your option</option>
-								<option defaultValue value="resident">Resident</option>
-								<option value="mentor">Mentor</option>
+								<option className="option" value=""  disabled>Select your option</option>
+								<option className="option" defaultValue value="resident">Resident</option>
+								<option className="option" value="mentor">Mentor</option>
 							</select>
 						</div>
 						<div className="input-container select-tag">
 							<label htmlFor="select-spec">Specialisation</label>
 							<select onChange={ this.onChange } className="select" id="select-spec" onKeyPress={this.key} name="specialisation" >
-								<option value="" defaultValue disabled>Select your option</option>
-								<option value="designer">Designer</option>
-								<option value="back-end">Back-End</option>
-								<option value="front-end">Front-End</option>
-								<option value="software engineer">Software Engineer</option>
-								<option value="QA">QA</option>
+								<option className="option" value="" defaultValue disabled>Select your option</option>
+								<option className="option" value="designer">Designer</option>
+								<option className="option" value="back-end">Back-End</option>
+								<option className="option" value="front-end">Front-End</option>
+								<option className="option" value="software engineer">Software Engineer</option>
+								<option className="option" value="QA">QA</option>
 							</select>
 						</div>
 					</div>

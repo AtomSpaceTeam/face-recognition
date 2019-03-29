@@ -71,7 +71,7 @@ class SideBar extends React.Component {
       <div className="side-bar">
         <nav className="menu-h">
           <h3>Face recognition</h3>
-          <img src={menu_h} style={{ width:"40px", padding:"2%", cursor:"pointer" }} onClick={this.change}/>
+          <img src={menu_h} style={{ width:"40px", paddingRight:"5%", paddingLeft:"5%", cursor:"pointer" }} onClick={this.change}/>
         </nav>
         <nav className="menu-mobile" style={this.state.onHam ? {'display': 'block', 'opacity': '0.95', 'maxHeight': '80vh' } : {'display': 'none'}}>
           <ul>

@@ -1,6 +1,8 @@
 import React from 'react';
 import Loader from '../../Loader';
 
+import cross_i from '../../../static/img/cross.svg';
+
 import './EventsPage.css';
 
 class EventPage extends React.Component {

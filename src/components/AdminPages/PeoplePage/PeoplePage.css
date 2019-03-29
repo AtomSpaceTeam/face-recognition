@@ -1,6 +1,5 @@
 .people-block {
   margin-right: 30px;
-  margin-top: 30px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -10,28 +9,28 @@
 
 .card-people {
   background-color: #212121;
-  box-shadow: 0 0 30px 3px #212121;
+  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.5);
   padding: 20px;
   width: 100;
 }
 
-.card-btn-delete {
-  margin: 5px;
-  border: 0;
-  background: #DD2C00;
-  color: white;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+.delete-cross {
+  padding-bottom: 10px;
   font-family: sans-serif;
   cursor: pointer;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 900px) {
   .people-block {
-    margin-top: 90px;
+    margin-top: 80px;
   }
   .card-people {
     margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .card-people {
+    width: 82%;
   }
 }

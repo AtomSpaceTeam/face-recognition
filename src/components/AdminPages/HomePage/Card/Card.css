@@ -5,12 +5,12 @@
   display: flex;
   flex-direction: row;
   border-radius: 3px;
-  box-shadow: 0 0 30px 3px #212121;
+  box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.5);
 }
 
 .card-right {
-  text-align: left;
-  margin-left: 5%;
+  width: 100%;
+  text-align: center;
 }
 
 .title-text {
@@ -27,6 +27,6 @@
   .card-block {
     width: 98%;
     margin-right: 30px;
-    margin-top: 30px;
+    margin-bottom: 3vh;
   }
 }
