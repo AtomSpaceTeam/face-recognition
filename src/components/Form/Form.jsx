@@ -39,6 +39,11 @@ class Form extends Component{
                     this.setState({messages: user.message, loading: false});
                     return 0;
                 }
+                if (user.password) {
+                    localStorage.setItem('id', user.user_id);
+                    localStorage.setItem('password', 'incorrect');
+                    this.setState({changePass: true, loading: false});
+                }
                 localStorage.setItem('id', user.user_id);
                 this.setState({redirect: true, loading: false});
             })
@@ -51,9 +56,16 @@ class Form extends Component{
             this.setState({messages: 'Invalid login or password'});
         }
     }
+
     redirect = () => {
         if (this.state.redirect){
             return <Redirect to='/home'/>
+        }
+    }
+
+    change = () => {
+        if(this.state.changePass){
+            return <Redirect to='/'/>
         }
     }
 
@@ -85,6 +97,7 @@ class Form extends Component{
             <div className="login-block">
                 <div className={'login-form'}>
                     {this.redirect()}
+                    {this.change()}
                     <h3 className="messages">{this.state.messages}</h3>
                     <div className="input-container">
                         <input onKeyPress={this.key} onChange={this.UsernameChange} type="text" placeholder="Username"/>

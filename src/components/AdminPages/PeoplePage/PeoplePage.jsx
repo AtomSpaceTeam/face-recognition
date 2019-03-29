@@ -23,7 +23,7 @@ class PeoplePage extends React.Component{
     .then(data => {
       let users = [];
       data.map(user => {
-        users.push(user.fields);
+        return (users.push(user.fields));
       })
       this.setState({ users, loading: false });
     })
@@ -48,7 +48,7 @@ class PeoplePage extends React.Component{
           {this.state.users.map((user, id) => (
           <div key={id} className="card-people">
             <div className="delete-cross">
-              <img src={cross_i} key={ id } onClick={ () => this.delete(id) } style={{ 'width': '25px' }} />
+              <img src={cross_i} key={ id } alt="User Photo" onClick={ () => this.delete(id) } style={{ 'width': '25px' }} />
             </div>
             <h3>{`${user.name} ${user.surname}`}</h3>
             <p>Status: {user.status}</p>

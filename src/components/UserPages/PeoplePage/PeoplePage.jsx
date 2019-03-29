@@ -1,6 +1,6 @@
 import React from 'react';
 
-import cross_i from '../../../static/img/cross.svg';
+// import cross_i from '../../../static/img/cross.svg';
 
 import './PeoplePage.css';
 
@@ -20,9 +20,7 @@ class PeoplePage extends React.Component{
     .then(res => res.json())
     .then(data => {
       let users = [];
-      data.map(user => {
-        users.push(user.fields);
-      })
+      data.map(user => users.push(user.fields))
       this.setState({ users });
     })
     .catch(err => console.error(err))

@@ -31,9 +31,7 @@ class HomePage extends React.Component{
   render(){
     let {cards} = this.state;
     let cardList = [];
-    cards.map(item => {
-      cardList.push(<Card key={item.id} number={item.number} title={item.title} />)
-    })
+    cards.map(item => cardList.push(<Card key={item.id} number={item.number} title={item.title} />))
     return (
       <div className="home-page">
         <div className="card">

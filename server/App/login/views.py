@@ -26,7 +26,7 @@ def login_user_api(request):
             user = User.objects.get(username=data['username'])
             bcr = BCryptSHA256PasswordHasher()
             
-            if not user.password.startswith('bcrypt_sha256'):
+            if not user.password.startswith('bcrypt_sha256') and user.password == data['password']:
                 hashed = bcr.encode(data['username'], bcr.salt())
                 return JsonResponse({
                     'status': 200,
@@ -114,6 +114,17 @@ def check(request):
             else:
                 return JsonResponse({'status': 'user'})
     return JsonResponse({'ok': 'True'})
+
+@csrf_exempt
+def set_pass(request):
+    data = json.loads(request.body.decode('utf-8'))
+    users_list = json.loads(serializers.serialize('json', User.objects.all()))
+    for i in users_list:
+        if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data['id']):
+            user = User.objects.get(username=i['fields']['username'])
+            user.password = BCryptSHA256PasswordHasher().encode(data['password'], BCryptSHA256PasswordHasher().salt())
+            user.save()
+            return JsonResponse({'ok': 'true'})
 
 @login_required
 def index(request):

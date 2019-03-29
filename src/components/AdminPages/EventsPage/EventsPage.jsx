@@ -20,8 +20,8 @@ class EventPage extends React.Component {
     .then(data => {
       let events = [];
       data.map(event => {
-        event.fields.id = event.pk
-        events.push(event.fields)
+        event.fields.id = event.pk;
+        return (events.push(event.fields));
       });
       this.setState({ events, loading: false });
     })
@@ -37,7 +37,7 @@ class EventPage extends React.Component {
           {this.state.events.map(event => (
             <div key={event.id} className="card-event">
               <div className="delete-cross">
-                <img src={cross_i} style={{ 'width': '25px' }} />
+                <img alt="Cross" src={cross_i} style={{ 'width': '25px' }} />
               </div>
               <h2>{event.name}</h2>
               <p>Date: {new Date(event.start_time).toLocaleDateString('en-GB')}</p>

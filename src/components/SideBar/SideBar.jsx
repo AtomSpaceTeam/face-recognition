@@ -34,12 +34,6 @@ const items_logout = [
   { key: 1, icon: logout_i, title: 'Logout', path: '/logout' },
 ]
 
-let onHam = false;
-
-const change = () => {
-  return (onHam = !onHam)
-}
-
 class SideBar extends React.Component {
   constructor(){
     super();

@@ -18,12 +18,8 @@ class CreatePage extends React.Component{
     }
   }
 
-  componentDidMount(){
-
-  }
-
   changePage = (e) => {
-    if (e.target.children.length == 0){
+    if (e.target.children.length === 0){
       let page = e.target.innerHTML.toLowerCase();
       this.setState({ page });
     } else {

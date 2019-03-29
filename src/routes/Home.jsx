@@ -3,6 +3,7 @@ import React from 'react';
 import HomeAdmin from '../components/AdminPages';
 import UserPages from '../components/UserPages';
 import Loader from '../components/Loader';
+import ChangePass from '../components/ChangePass/ChangePass';
 
 class Home extends React.Component {
   constructor(){
@@ -31,7 +32,10 @@ class Home extends React.Component {
    
     if (this.state.loading){
       component = <div className="soon-text"><Loader /></div>
-    } else{
+    } else if(localStorage.getItem('password')) {
+      component = <ChangePass />
+    }
+    else{
       if (this.state.status === 1) {
         component = <HomeAdmin />
       } else {

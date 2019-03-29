@@ -16,8 +16,8 @@ class EventPage extends React.Component {
     .then(data => {
       let events = [];
       data.map(event => {
-        event.fields.id = event.pk
-        events.push(event.fields)
+        event.fields.id = event.pk;
+        return (events.push(event.fields));
       });
       this.setState({ events });
     })
