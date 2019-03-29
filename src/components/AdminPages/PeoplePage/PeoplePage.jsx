@@ -47,13 +47,13 @@ class PeoplePage extends React.Component{
         <div className="people-block">
           {this.state.users.map((user, id) => (
           <div key={id} className="card-people">
+            <div className="delete-cross">
+              <img src={cross_i} key={ id } onClick={ () => this.delete(id) } style={{ 'width': '25px' }} />
+            </div>
             <h3>{`${user.name} ${user.surname}`}</h3>
             <p>Status: {user.status}</p>
             <p>Team: {user.team}</p>
             <p>Projects: {user.project}</p>
-            <div className="card-btn-block">
-              <button key={ id } onClick={ () => this.delete(id) } className="card-btn-delete">Delete</button>
-            </div>
           </div>
           ))}
         </div>

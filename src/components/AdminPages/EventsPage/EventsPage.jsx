@@ -36,6 +36,9 @@ class EventPage extends React.Component {
         <div className="event-block">
           {this.state.events.map(event => (
             <div key={event.id} className="card-event">
+              <div className="delete-cross">
+                <img src={cross_i} style={{ 'width': '25px' }} />
+              </div>
               <h2>{event.name}</h2>
               <p>Date: {new Date(event.start_time).toLocaleDateString('en-GB')}</p>
               <p>Start time: {new Date(event.start_time).toLocaleTimeString('en-GB')}</p>
@@ -43,13 +46,12 @@ class EventPage extends React.Component {
               <p>Description: {event.description}</p>
               <div className="btn-event-block">
                 <button className="btn-event-take-part">Take part</button>
-                <button className="btn-event-delete">Delete</button>
               </div>
             </div>
           ))}
         </div>
       );
-    }  
+    }
   }
 }
 

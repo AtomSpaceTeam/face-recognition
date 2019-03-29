@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './EventsPage.css';
-import { SequenceSpinner } from 'react-spinners-kit';
 
 class EventPage extends React.Component {
   constructor(){
@@ -10,7 +9,7 @@ class EventPage extends React.Component {
       events: []
     }
   }
-  
+
   componentDidMount(){
     fetch('http://localhost:8000/events')
     .then(res => res.json())
@@ -42,6 +41,6 @@ class EventPage extends React.Component {
     );
   }
 }
-  
+
 
 export default EventPage;

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import cross_i from '../../../static/img/cross.svg';
+
 import './PeoplePage.css';
 
 class PeoplePage extends React.Component{
