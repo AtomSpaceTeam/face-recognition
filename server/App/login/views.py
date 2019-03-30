@@ -16,7 +16,7 @@ from django.core.mail import send_mail
 
 
 from .forms import EditForm, UserForm, UserLogin, EventForm, EditEventForm, GuestForm
-from .models import User, Seen, Event, Guest
+from .models import User, Seen, Event, Guest, SeenToday
 
 @csrf_exempt
 def login_user_api(request):
@@ -143,33 +143,33 @@ def api_attendance(request):
     users_list = json.loads(serializers.serialize('json', User.objects.all()))
     for i in users_list:
         if BCryptSHA256PasswordHasher().verify(i['fields']['username'], data):
-            user = i['fields']
+            users = json.loads(serializers.serialize("json", Seen.objects.all()))
+            all_users = [x['fields']['name'].split(' ')[1] for x in users]
+            once_users = list(dict.fromkeys(all_users))
+            obj = {}
+            for i in once_users:
+                obj.update({f'{i}': all_users.count(i)})
+            return JsonResponse(obj)
     
-    if user['superuser'] == 0:
-        team_users = json.loads(serializers.serialize('json', User.objects.filter(team=user['team'])))
-        team_names = []
-        for i in team_users:
-            team_names.append(f"{i['fields']['name']} {i['fields']['surname']}")
-        users = json.loads(serializers.serialize("json", Seen.objects.all()))
-        all_users = [x['fields']['name'] for x in users]
-        once_users = list(dict.fromkeys(all_users))
-        new_arr = []
-        for i in team_names:
-            if i in once_users:
-                new_arr.append(i)
-        obj = {}
-        for i in new_arr:
-            obj.update({f'{i}': all_users.count(i)})
-        return JsonResponse(obj)
+    # if user['superuser'] == 0:
+    #     team_users = json.loads(serializers.serialize('json', User.objects.filter(team=user['team'])))
+    #     team_names = []
+    #     for i in team_users:
+    #         team_names.append(f"{i['fields']['name']} {i['fields']['surname']}")
+    #     users = json.loads(serializers.serialize("json", Seen.objects.all()))
+    #     all_users = [x['fields']['name'] for x in users]
+    #     once_users = list(dict.fromkeys(all_users))
+    #     new_arr = []
+    #     for i in team_names:
+    #         if i in once_users:
+    #             new_arr.append(i)
+    #     obj = {}
+    #     for i in new_arr:
+    #         obj.update({f'{i}': all_users.count(i)})
+    #     print(obj)
+    #     return JsonResponse(obj)
 
-    else:
-        users = json.loads(serializers.serialize("json", Seen.objects.all()))
-        all_users = [x['fields']['name'].split(' ')[1] for x in users]
-        once_users = list(dict.fromkeys(all_users))
-        obj = {}
-        for i in once_users:
-            obj.update({f'{i}': all_users.count(i)})
-        return JsonResponse(obj)
+    # else:
 
 @csrf_exempt
 def count(request):
