@@ -21,8 +21,6 @@
   transition: 1s linear;
   display: flex;
   width: 100%;
-  /* padding-bottom: 5px;
-  padding-top: 5px; */
 }
 
 .btn:hover {
