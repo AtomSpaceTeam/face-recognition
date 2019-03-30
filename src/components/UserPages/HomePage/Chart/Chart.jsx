@@ -56,14 +56,14 @@ class Chart extends React.Component {
       chartData.datasets[0].borderColor = 'rgba(255,99,132,1)';
       chartData.datasets[0].hoverBackgroundColor = 'rgba(255,99,132,0.4)';
       chartData.datasets[0].hoverBorderColor = 'rgba(255,99,132,1)';
-      this.setState({chartData});
+      this.setState({chartData, loading: false});
     })
     .catch((err) => console.log(err))
   }
 
   render() {
     if (this.state.loading) {
-      return (<div className="soon-text"><Loader /></div>);
+      return (<div className="soon-chart"><Loader /></div>);
     } else {
       return (
           <Bar 

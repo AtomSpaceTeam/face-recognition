@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from '../../Loader';
+import { Redirect } from 'react-router-dom';
 
 import cross_i from '../../../static/img/cross.svg';
 
@@ -31,12 +32,25 @@ class PeoplePage extends React.Component{
   }
 
   delete = (key) => {
-    let item = this.state.users[key].surname;
-    fetch(`http://localhost:8000/api/v1/delete-user/${item}`, {
-      method: 'POST'
-    })
-    .then(res => res.json())
-    .catch(err => console.error(err));
+    let ask = window.confirm('Delete user?');
+    if (ask){
+      let item = this.state.users[key].surname;
+      fetch(`http://localhost:8000/api/v1/delete-user/${item}`, {
+        method: 'POST'
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({redirect: true});
+      })
+      .catch(err => console.error(err));
+    }
+  }
+
+  redirect = () => {
+    if (this.state.redirect){
+      return <Redirect to='/people' />
+    }
   }
 
   render(){
@@ -45,6 +59,7 @@ class PeoplePage extends React.Component{
     } else{
       return (
         <div className="people-block">
+          {this.redirect()}
           {this.state.users.map((user, id) => (
           <div key={id} className="card-people">
             <div className="delete-cross">

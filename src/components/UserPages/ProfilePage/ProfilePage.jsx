@@ -52,12 +52,12 @@ class ProfilePage extends React.Component{
               <img src={avatar_i} style={{ width:"230px" }}/>
             </div>
             <div className="profile-right">
-              <p>Name: {this.state.user.name}</p>
-              <p>Surname: {this.state.user.surname}</p>
-              <p>Age: {this.state.user.age}</p>
-              <p>Status: {this.state.user.status}</p>
-              <p>Team: {this.state.user.team}</p>
-              <p>Project: {this.state.user.project}</p>
+              <p>Name: {this.state.user.name || '  Loading...'}</p>
+              <p>Surname: {this.state.user.surname || '  Loading...'}</p>
+              <p>Age: {this.state.user.age || '  Loading...'}</p>
+              <p>Status: {this.state.user.status || '  Loading...'}</p>
+              <p>Team: {this.state.user.team || '  Loading...'}</p>
+              <p>Project: {this.state.user.project || '  Loading...'}</p>
             </div>
           </div>
       </div>
