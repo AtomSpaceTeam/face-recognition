@@ -24,6 +24,7 @@ class PeoplePage extends React.Component{
     .then(data => {
       let users = [];
       data.map(user => {
+        user.fields.id = user.pk;
         return (users.push(user.fields));
       })
       this.setState({ users, loading: false });
@@ -34,13 +35,11 @@ class PeoplePage extends React.Component{
   delete = (key) => {
     let ask = window.confirm('Delete user?');
     if (ask){
-      let item = this.state.users[key].surname;
-      fetch(`http://localhost:8000/api/v1/delete-user/${item}`, {
+      fetch(`http://localhost:8000/api/v1/delete-user/${key}`, {
         method: 'POST'
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({redirect: true});
       })
       .catch(err => console.error(err));
@@ -49,7 +48,8 @@ class PeoplePage extends React.Component{
 
   redirect = () => {
     if (this.state.redirect){
-      return <Redirect to='/people' />
+      this.componentDidMount();
+      this.setState({redirect: false});      
     }
   }
 

@@ -12,6 +12,7 @@ urlpatterns = [
     path('set-pass', views.set_pass, name='set_pass'),
     path('check', views.check, name='check'),
     path('api/create-user', views.create_user, name='create_user'),
+    path('api/create-event', views.create_event, name='create_event'),
     path('get-usernames', views.get_usernames, name='get_usernames'),
     path('count', views.count, name='count'),
     path('user-info', views.user_info, name='user_info'),
@@ -22,7 +23,7 @@ urlpatterns = [
     path('owners', views.list_owners, name='list_owners'),
     path('users_list', views.list_users, name='list_users'),
     path('events', views.list_events, name='list_events'),
-    path('create-event', views.create_event, name='create_event'),
+    path('create-event', views.create_eventt, name='create_eventt'),
     path('login/', auth_views.LoginView.as_view(template_name='login/index.html')),
     path('login-user/', views.login_user, name='login_user'),
     path('telegram-login/', views.telegram_login, name='telegram_login'),
@@ -41,8 +42,9 @@ urlpatterns = [
     url(r'^user/(?P<pk>\d+)/edit$', views.edit_profile, name='edit_profile'),
     url(r'^user/(?P<pk>\d+)/delete$', views.delete_profile, name='delete_profile'),
     url(r'^event/(?P<pk>\d+)/edit$', views.edit_event, name='edit_event'),
-    url(r'^event/(?P<pk>\d+)/delete$', views.delete_event, name='delete_event'),
-    url(r'^api/v1/delete-user/(?P<surname>\w+)$', views.delete_user, name='delete_user'),
+    url(r'^event/(?P<pk>\d+)/delete$', views.remove_event, name='remove_event'),
+    url(r'^api/v1/delete-user/(?P<pk>\d+)$', views.delete_user, name='delete_user'),
+    url(r'^api/v1/delete-event/(?P<pk>\d+)$', views.delete_event, name='delete_event'),
 
 ]
 
