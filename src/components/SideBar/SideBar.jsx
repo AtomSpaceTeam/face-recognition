@@ -60,9 +60,17 @@ class SideBar extends React.Component {
     .catch(err => console.error(err));
   }
 
+  checkMenu = () => {
+    if(localStorage.getItem('menu')) {
+      this.setState({ onHam: false });
+      localStorage.removeItem('menu');
+    }
+  }
+
   render () {
     return (
       <div className="side-bar">
+        { this.checkMenu() }
         <nav className="menu-h">
           <h3>Face recognition</h3>
           <img src={menu_h} style={{ width:"40px", paddingRight:"5%", paddingLeft:"5%", cursor:"pointer" }} onClick={this.change}/>

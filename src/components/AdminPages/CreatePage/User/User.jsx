@@ -105,7 +105,7 @@ class CreateUser extends React.Component{
 		if (this.state.loading){
 			button = <button className='login-button' type="submit">{this.props.loader}</button>
 		} else{
-			button = <button onClick={this.onSubmit} className='login-button' type="submit">Log In</button>
+			button = <button onClick={this.onSubmit} className='login-button' type="submit">Create</button>
 		}
 		return (
 			<div className={'create-form'}>

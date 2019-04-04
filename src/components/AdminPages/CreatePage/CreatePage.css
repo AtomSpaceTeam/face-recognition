@@ -113,6 +113,14 @@ select::-ms-expand {
 	z-index: -1;
 }
 
+.input-container textarea{
+  background: bottom;
+  width: 100%;
+  color: white;
+  border-color: #616571;
+  height: 70px;
+}
+
 .inputfile + label {
   font-size: 1.25em;
   font-weight: 700;

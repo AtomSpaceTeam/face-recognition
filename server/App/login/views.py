@@ -89,6 +89,21 @@ def create_user(request):
             'message': 'User has created successfully'
         })
 
+@csrf_exempt
+def create_event(request):
+    if request.method == 'POST':
+        event = Event()
+        post = request.POST
+        event.name = post['name']
+        event.description = post['description']
+        event.organizer = post['organizer']
+        event.start_time = datetime.datetime.strptime(post['start_time'], '%Y-%m-%dT%H:%M')
+        event.end_time = datetime.datetime.strptime(post['end_time'], '%Y-%m-%dT%H:%M')
+        event.save()
+        return JsonResponse({
+            'status': 200,
+            'message': 'User has created successfully'
+        })
 
 def calculate_age(born):
     today = datetime.date.today()
@@ -150,26 +165,6 @@ def api_attendance(request):
             for i in once_users:
                 obj.update({f'{i}': all_users.count(i)})
             return JsonResponse(obj)
-    
-    # if user['superuser'] == 0:
-    #     team_users = json.loads(serializers.serialize('json', User.objects.filter(team=user['team'])))
-    #     team_names = []
-    #     for i in team_users:
-    #         team_names.append(f"{i['fields']['name']} {i['fields']['surname']}")
-    #     users = json.loads(serializers.serialize("json", Seen.objects.all()))
-    #     all_users = [x['fields']['name'] for x in users]
-    #     once_users = list(dict.fromkeys(all_users))
-    #     new_arr = []
-    #     for i in team_names:
-    #         if i in once_users:
-    #             new_arr.append(i)
-    #     obj = {}
-    #     for i in new_arr:
-    #         obj.update({f'{i}': all_users.count(i)})
-    #     print(obj)
-    #     return JsonResponse(obj)
-
-    # else:
 
 @csrf_exempt
 def count(request):
@@ -189,10 +184,16 @@ def count(request):
     })
 
 @csrf_exempt
-def delete_user(request, surname):
-    user = User.objects.get(surname=surname)
+def delete_user(request, pk):
+    user = User.objects.get(id=pk)
     os.remove(os.path.join(settings.MEDIA_ROOT, str(user.profile_photo)))
     user.delete()
+    return JsonResponse({'deleted': True})
+
+@csrf_exempt
+def delete_event(request, pk):
+    event_item = Event.objects.get(id=pk)
+    event_item.delete()
     return JsonResponse({'deleted': True})
 
 @csrf_exempt
@@ -299,7 +300,7 @@ def edit_event(request, pk):
             )
             return HttpResponseRedirect('/events')
 
-def delete_event(request, pk):
+def remove_event(request, pk):
     event = Event.objects.get(id=pk)
     event.delete()
     return HttpResponseRedirect('/events')
@@ -333,7 +334,7 @@ def list_events(request):
     return render(request, 'events/index.html', context)
 
 @login_required
-def create_event(request):
+def create_eventt(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
