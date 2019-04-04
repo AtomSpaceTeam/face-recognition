@@ -46,6 +46,7 @@ class EventPage extends React.Component {
               <p>Description: {event.description}</p>
               <div className="btn-event-block">
                 <button className="btn-event-take-part">Take part</button>
+                <button className="btn-event-take-part">Add guest</button>
               </div>
             </div>
           ))}
