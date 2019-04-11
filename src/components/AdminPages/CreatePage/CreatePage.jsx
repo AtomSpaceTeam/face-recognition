@@ -6,6 +6,7 @@ import Loader from '../../Loader';
 import Course from './Course/Course';
 import Event from './Event/Event';
 import User from './User/User';
+import Guest from './Guest/Guest';
 
 class CreatePage extends React.Component{
   constructor(){
@@ -44,8 +45,8 @@ class CreatePage extends React.Component{
       case 'event':
         page = <Event loader={ <Loader/> } />;
         break;
-      case 'course':
-        page = <Course />;
+      case 'guest':
+        page = <Guest />;
         break;
       default:
         page = <User loader={ <Loader/> } />;
@@ -62,7 +63,7 @@ class CreatePage extends React.Component{
             <span className="create-category">Event</span>
           </div>
           <div className="course-btn" onClick={this.changePage}>
-           <span className="create-category">Course</span>
+           <span className="create-category">Guest</span>
           </div>
         </div>
         {this.redirect()}

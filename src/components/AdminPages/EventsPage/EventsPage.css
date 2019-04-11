@@ -18,18 +18,19 @@
 .btn-event-take-part {
   margin: 5px;
   border: 0;
-  background: #0288D1;
+  background: #404040;
   color: white;
   padding: 5px;
   padding-left: 15px;
   padding-right: 15px;
   font-family: sans-serif;
   cursor: pointer;
+  border-radius: 5px;
   transition: 1s linear;
 }
 
 .btn-event-take-part:hover {
-  background: #01579B;
+  background: #2f2f2f;
   color: white;
 }
 

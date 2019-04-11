@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-class CreateUser extends React.Component{
+class CreateGuest extends React.Component{
 	constructor(){
 		super();
 		this.state = {
@@ -109,14 +109,11 @@ class CreateUser extends React.Component{
 		}
 		return (
 			<div className={'create-form'}>
-				<h2 style={{ 'marginBottom': '0' }}>Create new user</h2>
+				<h2 style={{ 'marginBottom': '0' }}>Create new guest</h2>
 				<h3 className="messages">{this.state.messages}</h3>
 				{ this.redirect() }
 				<div className="login-form-row">
 					<div className="form-left">
-						<div className="input-container">
-							<input onChange={ this.onChange } onKeyPress={this.key} name="username" type="text" placeholder="Username" />
-						</div>
 						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="first_name" placeholder="First Name" />
 						</div>
@@ -124,39 +121,16 @@ class CreateUser extends React.Component{
 							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="last_name" placeholder="Last Name" />
 						</div>
 						<div className="input-container">
-							<input onChange={ this.onChange } onKeyPress={this.key} name="date" onFocus={ this.onChangeType } onBlur={ this.onChangeType } type={this.state.typeDate} placeholder="Birth Date" />
-						</div>
-						<div className="input-container">
 							<input onChange={ this.onChange } onKeyPress={this.key} name="email" type="text" placeholder="E-mail" />
-						</div>
-					</div>
-					<div className="form-right">
-						<div className="input-container">
-							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="team" placeholder="Team" />
-						</div>
-						<div className="input-container">
-							<input onChange={ this.onChange } onKeyPress={this.key} type="text" name="project" placeholder="Project" />
 						</div>
 						<div className="input-container">
 							<input onChange={ this.photo } onKeyPress={this.key} className="" type="file" placeholder="Photo" />
 						</div>
 						<div className="input-container select-tag">
-							<label htmlFor="select-status">Status</label>
-							<select onChange={ this.onChange } className="select" id="select-status" onKeyPress={this.key} name="status" >
-								<option className="option" value=""  disabled>Select your option</option>
-								<option className="option" defaultValue value="resident">Resident</option>
-								<option className="option" value="mentor">Mentor</option>
-							</select>
-						</div>
-						<div className="input-container select-tag">
-							<label htmlFor="select-spec">Specialisation</label>
-							<select onChange={ this.onChange } className="select" id="select-spec" onKeyPress={this.key} name="specialisation" >
-								<option className="option" value="" defaultValue disabled>Select your option</option>
-								<option className="option" value="designer">Designer</option>
-								<option className="option" value="back-end">Back-End</option>
-								<option className="option" value="front-end">Front-End</option>
-								<option className="option" value="software engineer">Software Engineer</option>
-								<option className="option" value="QA">QA</option>
+							<label htmlFor="select-spec">Event</label>
+							<select onChange={ this.onChange } className="select" id="select-spec" onKeyPress={this.key} name="event" >
+								<option className="option" value="" defaultValue disabled>Select your event</option>
+								<option className="option" value="none">None</option>
 							</select>
 						</div>
 					</div>
@@ -167,4 +141,4 @@ class CreateUser extends React.Component{
 	}
 }
 
-export default CreateUser;
+export default CreateGuest;

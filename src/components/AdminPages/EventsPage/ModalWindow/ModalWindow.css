@@ -1,0 +1,22 @@
+.modal-position {
+  position: absolute;
+  left: 57%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 97vh;
+}
+
+.modal-block {
+  width: 200px;
+  position: relative;
+  height: 40vh;
+  background: #292929;
+  padding: 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .modal-position {
+    left: 41%;
+  }
+}
