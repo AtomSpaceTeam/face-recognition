@@ -2,6 +2,8 @@ import React from 'react';
 import Loader from '../../Loader';
 import { Redirect } from 'react-router-dom';
 
+import ModalWindow from './ModalWindow/ModalWindow';
+
 import cross_i from '../../../static/img/cross.svg';
 
 import './EventsPage.css';
@@ -54,24 +56,27 @@ class EventPage extends React.Component {
       return (<div className="soon-text"><Loader /></div>);
     } else{
       return (
-        <div className="event-block">
-          {this.redirect()}
-          {this.state.events.map(event => (
-            <div key={event.id} className="card-event">
-              <div className="delete-cross">
-                <img alt="Cross" src={cross_i} onClick={ () => this.delete(event.id) } style={{ 'width': '25px' }} />
+        <div>
+          <ModalWindow />
+          <div className="event-block">
+            {this.redirect()}
+            {this.state.events.map(event => (
+              <div key={event.id} className="card-event">
+                <div className="delete-cross">
+                  <img alt="Cross" src={cross_i} onClick={ () => this.delete(event.id) } style={{ 'width': '25px' }} />
+                </div>
+                <h2>{event.name}</h2>
+                <p>Date: {new Date(event.start_time).toLocaleDateString('en-GB')}</p>
+                <p>Start time: {new Date(event.start_time).toLocaleTimeString('en-GB').slice(0, -3)}</p>
+                <p>End time: {new Date(event.end_time).toLocaleTimeString('en-GB').slice(0, -3)}</p>
+                <p>Description: {event.description}</p>
+                <div className="btn-event-block">
+                  <button className="btn-event-take-part">Take part</button>
+                  <button className="btn-event-take-part">Guests list</button>
+                </div>
               </div>
-              <h2>{event.name}</h2>
-              <p>Date: {new Date(event.start_time).toLocaleDateString('en-GB')}</p>
-              <p>Start time: {new Date(event.start_time).toLocaleTimeString('en-GB').slice(0, -3)}</p>
-              <p>End time: {new Date(event.end_time).toLocaleTimeString('en-GB').slice(0, -3)}</p>
-              <p>Description: {event.description}</p>
-              <div className="btn-event-block">
-                <button className="btn-event-take-part">Take part</button>
-                <button className="btn-event-take-part">Add guest</button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       );
     }

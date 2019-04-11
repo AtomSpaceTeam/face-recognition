@@ -57,11 +57,11 @@ class CreateEvent extends React.Component{
     onChangeType1 = (e) => {
         e.target.type === 'text' ? this.setState({ type1: 'datetime-local' }) : this.setState({ type1: 'text' });
     }
-    
+
     onChangeType2 = (e) => {
 		e.target.type === 'text' ? this.setState({ type2: 'datetime-local' }) : this.setState({ type2: 'text' });
     }
-    
+
     onChange = (e) => {
 		this.setState({ messages: '', all_filled: true });
 		let obj = this.state.event;
@@ -69,7 +69,7 @@ class CreateEvent extends React.Component{
         let user = Object.assign(obj, {[key]: e.target.value});
 		this.setState({ user });
     }
-    
+
     key = (e) => {
         if (e.key === 'Enter'){
             console.log(this.onSubmit());
@@ -85,13 +85,13 @@ class CreateEvent extends React.Component{
     render() {
 		let button;
 		if (this.state.loading){
-			button = <button className='login-button' type="submit">{this.props.loader}</button>
+			button = <button className='create-btn' type="submit">{this.props.loader}</button>
 		} else{
-			button = <button onClick={this.onSubmit} className='login-button' type="submit">Create</button>
+			button = <button onClick={this.onSubmit} className='create-btn' type="submit">Create</button>
 		}
 		return (
 			<div className={'create-form'}>
-				<h2 style={{ 'marginBottom': '0' }}>Create new user</h2>
+				<h2 style={{ 'marginBottom': '0' }}>Create new event</h2>
 				<h3 className="messages">{this.state.messages}</h3>
 				{ this.redirect() }
 				<div className="login-form-row">
