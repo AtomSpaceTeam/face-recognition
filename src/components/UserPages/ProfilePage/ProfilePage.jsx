@@ -20,7 +20,7 @@ class ProfilePage extends React.Component{
   }
 
   componentDidMount(){
-    fetch('http://localhost:8000/user-info', {
+    fetch('http://localhost:8000/api/v1/user-info', {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify(localStorage.getItem('id'))

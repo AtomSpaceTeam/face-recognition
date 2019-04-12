@@ -34,7 +34,7 @@ class Chart extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:8000/api-attendance', {
+    fetch('http://localhost:8000/api/v1/attendance', {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify(localStorage.getItem('id'))

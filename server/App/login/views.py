@@ -105,6 +105,23 @@ def create_event(request):
             'message': 'User has created successfully'
         })
 
+@csrf_exempt
+def create_guest(request):
+    if request.method == 'POST':
+        guest = Guest()
+        post = request.POST
+        guest.name = post['first_name']
+        guest.surname = post['last_name']
+        guest.email = post['email']
+        event_id = json.loads(serializers.serialize('json', Event.objects.filter(name=post['event'])))[0]['pk']
+        guest.event_id = event_id
+        guest.photo = request.FILES['photo']
+        guest.save()
+        return JsonResponse({
+            'status': 200,
+            'message': 'Guest has created successfully'
+        })
+
 def calculate_age(born):
     today = datetime.date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
@@ -306,7 +323,7 @@ def remove_event(request, pk):
     return HttpResponseRedirect('/events')
 
 @login_required
-def create_guest(request):
+def create_guestt(request):
     if request.method == 'GET':
         context = {
             'form': GuestForm()

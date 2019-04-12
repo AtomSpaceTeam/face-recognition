@@ -32,7 +32,7 @@ class ChangePass extends React.Component{
                     password: this.state.password,
                     id: localStorage.getItem('id')
                 };
-                fetch('http://localhost:8000/set-pass', {
+                fetch('http://localhost:8000/api/v1/set-pass', {
                     method: 'POST',
                     body: JSON.stringify(obj)
                 })

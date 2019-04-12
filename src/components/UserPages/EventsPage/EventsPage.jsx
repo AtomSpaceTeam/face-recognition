@@ -11,7 +11,7 @@ class EventPage extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:8000/events')
+    fetch('http://localhost:8000/api/v1/events')
     .then(res => res.json())
     .then(data => {
       let events = [];

@@ -46,7 +46,7 @@ class CreatePage extends React.Component{
         page = <Event loader={ <Loader/> } />;
         break;
       case 'guest':
-        page = <Guest />;
+        page = <Guest loader={ <Loader/> } />;
         break;
       default:
         page = <User loader={ <Loader/> } />;

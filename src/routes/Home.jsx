@@ -15,7 +15,7 @@ class Home extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:8000/check', {
+    fetch('http://localhost:8000/api/v1/check', {
       method: 'POST',
       body: JSON.stringify(localStorage.getItem('id'))
     })

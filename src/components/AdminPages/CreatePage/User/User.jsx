@@ -27,7 +27,7 @@ class CreateUser extends React.Component{
 	}
 
 	componentDidMount(){
-		fetch('http://localhost:8000/get-usernames')
+		fetch('http://localhost:8000/api/v1/get-usernames')
 		.then(res => res.json())
 		.then(data => {
 			this.setState({ usernames: data.usernames })
@@ -53,7 +53,7 @@ class CreateUser extends React.Component{
 				this.setState({ loading: true });
 				let form = new FormData();
 				for(let i in this.state.user) {form.append(i, this.state.user[i]);}
-				fetch('http://localhost:8000/api/create-user', {
+				fetch('http://localhost:8000/api/v1/create-user', {
 					method: 'POST',
 					body: form
 				})
@@ -142,7 +142,7 @@ class CreateUser extends React.Component{
 						</div>
 						<div className="input-container select-tag">
 							<label htmlFor="select-status">Status</label>
-							<select onChange={ this.onChange } className="select" id="select-status" onKeyPress={this.key} name="status" >
+							<select onChange={ this.onChange } className="select" id="select-status" name="status" >
 								<option className="option" value=""  disabled>Select your option</option>
 								<option className="option" defaultValue value="resident">Resident</option>
 								<option className="option" value="mentor">Mentor</option>
@@ -150,7 +150,7 @@ class CreateUser extends React.Component{
 						</div>
 						<div className="input-container select-tag">
 							<label htmlFor="select-spec">Specialisation</label>
-							<select onChange={ this.onChange } className="select" id="select-spec" onKeyPress={this.key} name="specialisation" >
+							<select onChange={ this.onChange } className="select" id="select-spec" name="specialisation" >
 								<option className="option" value="" defaultValue disabled>Select your option</option>
 								<option className="option" value="designer">Designer</option>
 								<option className="option" value="back-end">Back-End</option>

@@ -14,7 +14,7 @@ class HomePage extends React.Component{
   }
   
   componentDidMount(){
-    fetch('http://localhost:8000/count')
+    fetch('http://localhost:8000/api/v1/count')
     .then((res) => res.json())
     .then((data) => {
       let cards = [

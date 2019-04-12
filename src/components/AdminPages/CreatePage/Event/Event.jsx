@@ -27,7 +27,6 @@ class CreateEvent extends React.Component{
     }
 
     onSubmit = () => {
-        console.log(this.state.event);
         for(let i in this.state.event){
             if (this.state.event[i] === ''){
                 this.setState({ all_filled: false, messages: 'You have not filled all fields in' })
@@ -39,7 +38,7 @@ class CreateEvent extends React.Component{
         this.setState({ loading: true });
         let form = new FormData();
         for(let i in this.state.event) {form.append(i, this.state.event[i]);}
-        fetch('http://localhost:8000/api/create-event', {
+        fetch('http://localhost:8000/api/v1/create-event', {
             method: 'POST',
             body: form
         })
@@ -66,8 +65,8 @@ class CreateEvent extends React.Component{
 		this.setState({ messages: '', all_filled: true });
 		let obj = this.state.event;
 		let key = e.target.name;
-        let user = Object.assign(obj, {[key]: e.target.value});
-		this.setState({ user });
+        let event = Object.assign(obj, {[key]: e.target.value});
+		this.setState({ event });
     }
 
     key = (e) => {
