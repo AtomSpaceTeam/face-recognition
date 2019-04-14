@@ -122,6 +122,11 @@ def create_guest(request):
             'message': 'Guest has created successfully'
         })
 
+@csrf_exempt
+def get_guests(request, event_id):
+    data = serializers.serialize('json', Guest.objects.filter(event_id=event_id))
+    return HttpResponse(data)
+
 def calculate_age(born):
     today = datetime.date.today()
     return today.year - born.year - ((today.month, today.day) < (born.month, born.day))

@@ -1,22 +1,67 @@
-.modal-position {
-  position: absolute;
-  left: 57%;
+.modal-window {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.65);
+  padding: 50;
   display: flex;
   align-items: center;
+}
+
+.person{
+  display: flex;
+  border-bottom: 1px solid white;
+  padding: 0.7em;
+}
+
+.col-1{
+  flex: 1;
+  flex-direction: column;
+}
+
+.col-2{
+  flex: 2;
+}
+
+.photo img{
+  width: 100%;
+}
+
+.close-cross{
+  display: flex;
   justify-content: center;
-  height: 97vh;
+  height: 25px;
+  margin-top: 10%;
+}
+
+.people{
+  height: 80%;
+}
+
+.people::-webkit-scrollbar{
+  background-color: gray;
+}
+
+.people::-webkit-scrollbar-thumb{
+  background-color: #434347;
+}
+
+.close-cross img{
+  cursor: pointer;
 }
 
 .modal-block {
-  width: 200px;
-  position: relative;
+  width: 40%;
+  margin: 0 auto;
   height: 40vh;
   background: #292929;
   padding: 20px;
 }
 
 @media screen and (max-width: 900px) {
-  .modal-position {
-    left: 41%;
+  .modal-block {
+    width: 75%;
   }
 }

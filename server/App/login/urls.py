@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/v1/get-events', views.events, name='events'),
     url(r'^api/v1/delete-user/(?P<pk>\d+)$', views.delete_user, name='delete_user'),
     url(r'^api/v1/delete-event/(?P<pk>\d+)$', views.delete_event, name='delete_event'),
+    url(r'api/v1/get-guests/(?P<event_id>\d+)$', views.get_guests, name='get_guests'),
 
     # -------------------- FOR DJANGO TEMPLATES --------------------
     path('residents', views.list_residents, name='list_residents'),

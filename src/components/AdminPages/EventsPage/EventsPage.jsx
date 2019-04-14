@@ -51,13 +51,19 @@ class EventPage extends React.Component {
     }
   }
 
+  modal = () => {
+    if (this.state.modal) return <ModalWindow close={this.close} event_id={this.state.event_id} />
+  }
+
+  close = () => this.setState({ modal: false })
+
   render() {
     if (this.state.loading) {
       return (<div className="soon-text"><Loader /></div>);
     } else{
       return (
         <div>
-          <ModalWindow />
+          {this.modal()}
           <div className="event-block">
             {this.redirect()}
             {this.state.events.map(event => (
@@ -72,7 +78,7 @@ class EventPage extends React.Component {
                 <p>Description: {event.description}</p>
                 <div className="btn-event-block">
                   <button className="btn-event-take-part">Take part</button>
-                  <button className="btn-event-take-part">Guests list</button>
+                  <button onClick={() => this.setState({modal: true, event_id: event.id})} className="btn-event-take-part">Guests list</button>
                 </div>
               </div>
             ))}
