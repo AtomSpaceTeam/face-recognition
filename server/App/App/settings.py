@@ -165,9 +165,9 @@ LOGIN_URL = 'login/'
 LOGIN_REDIRECT_URL = '/'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'localhost'
-)
+#CORS_ORIGIN_WHITELIST = (
+#    'localhost'
+#)
 SECURE_SSL_REDIRECT = False
 SECURE_REDIRECT_EXEMPT = [
     'localhost'
